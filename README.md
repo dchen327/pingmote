@@ -16,6 +16,10 @@ I recommend binding this python command to a global keyboard shortcut (in GNOME:
 - Set `AUTO_ENTER` if you want to automatically hit enter after pasting
 - Check the top of `pingmote.py` for a couple additional configs
 
+# Adding Your Own Emotes
+- Drop image files in the original directory, then run `image_resizer.py` which will resize all the images and drop them in the resized directory
+- https://discordmojis.com/emojis/popular_static is a good source (right click save image)
+
 # Dependencies
 These can be installed with `pip3 install -r requirements.txt`
 
