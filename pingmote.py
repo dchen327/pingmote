@@ -8,6 +8,11 @@ import PySimpleGUI as sg
 import subprocess
 from pathlib import Path
 
+# CONFIGS
+GUI_BG_COLOR = '#36393F'  # copied from discord colors
+WINDOW_LOCATION = (1250, 750)
+NUM_COLS = 10  # max number of images per row in picker
+
 
 def copy_to_clipboard(img_path):
     """ Given an an image path, copy the image to clipboard """
@@ -17,16 +22,13 @@ def copy_to_clipboard(img_path):
 
 
 sg.theme('LightBrown1')  # Use this as base theme
-BG_COLOR = '#36393F'  # copied from discord colors
 # Set location for where the window opens, (0, 0) is top left
-WINDOW_LOCATION = (1250, 750)
-sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
-              text_element_background_color=BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
+sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
+              text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
 
 image_path = Path('.') / 'assets' / 'resized'
 
-# layout the window\
-NUM_COLS = 10  # max number of images per row
+# layout the window
 layout = []
 curr_row = []
 print(len(list(image_path.iterdir())))
