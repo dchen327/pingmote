@@ -17,6 +17,8 @@ IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
+# if pasting or enter isn't working, add a short delay (in seconds)
+SLEEP_TIME = 0
 
 
 def copy_to_clipboard(img_path):
@@ -54,9 +56,10 @@ while True:
     copy_to_clipboard(event)  # copy clicked image to clipboard
 
 if AUTO_PASTE:
-    # sleep(0.1)  # wait a bit for copy operation before pasting
+    sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
     paste_cmd = 'xdotool key ctrl+v'
     subprocess.run(paste_cmd.split())
     if AUTO_ENTER:
+        sleep(SLEEP_TIME)
         enter_cmd = 'xdotool key Return'  # in Discord
         subprocess.run(enter_cmd.split())
