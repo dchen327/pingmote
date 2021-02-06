@@ -11,22 +11,25 @@ from pathlib import Path
 
 def copy_to_clipboard(img_path):
     """ Given an an image path, copy the image to clipboard """
-    command = f'xclip -sel clip -t image/png {img_path.absolute()}'
+    # command = f'xclip -sel clip -t image/png {img_path.absolute()}'
+    command = f'xclip -sel clip -t image/gif {img_path.absolute()}'
     subprocess.run(command.split())
 
 
 sg.theme('LightBrown1')  # Use this as base theme
-bg_color = '#2C2F33'  # copied from discord colors
-sg.SetOptions(button_color=(bg_color, bg_color), background_color=bg_color,
-              text_element_background_color=bg_color, text_color='white', border_width=0)
+BG_COLOR = '#2C2F33'  # copied from discord colors
+# Set location for where the window opens, (0, 0) is top left
+WINDOW_LOCATION = (1250, 750)
+sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
+              text_element_background_color=BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
 
-image_path = Path('.') / 'assets'
+image_path = Path('.') / 'assets' / 'resized'
 
 # layout the window
 layout = [[sg.Text('Pick an emote!')]]
 for img in image_path.iterdir():  # add images to layout
     layout.append(
-        [sg.Button('', key=img, image_filename=img, image_subsample=2)])
+        [sg.Button('', key=img, image_filename=img, image_subsample=1)])
 
 # create the window
 window = sg.Window('Emote Picker', layout)
