@@ -11,11 +11,11 @@ from time import sleep
 # CONFIGS
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
-WINDOW_LOCATION = (0, 0)
+WINDOW_LOCATION = (200, 800)
 NUM_COLS = 10  # max number of images per row in picker
 # absolute path necessary here if running the program globally
-# IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
-IMAGE_PATH = Path('.') / 'assets/resized'
+IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
+# IMAGE_PATH = Path('.') / 'assets/resized'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -57,11 +57,11 @@ while True:
     window.close()
     copy_to_clipboard(event)  # copy clicked image to clipboard
 
-if AUTO_PASTE:
-    sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
-    paste_cmd = 'xdotool key ctrl+v'
-    subprocess.run(paste_cmd.split())
-    if AUTO_ENTER:
-        sleep(SLEEP_TIME)
-        enter_cmd = 'xdotool key Return'  # in Discord
-        subprocess.run(enter_cmd.split())
+    if AUTO_PASTE:
+        sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
+        paste_cmd = 'xdotool key ctrl+v'
+        subprocess.run(paste_cmd.split())
+        if AUTO_ENTER:
+            sleep(SLEEP_TIME)
+            enter_cmd = 'xdotool key Return'  # in Discord
+            subprocess.run(enter_cmd.split())
