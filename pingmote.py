@@ -10,7 +10,8 @@ from time import sleep
 
 # CONFIGS
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
-WINDOW_LOCATION = (200, 800)
+# top left corner of emote picker, (0, 0) is screen top left
+WINDOW_LOCATION = (0, 0)
 NUM_COLS = 10  # max number of images per row in picker
 # absolute path necessary here if running the program globally
 # IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')

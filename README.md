@@ -1,7 +1,7 @@
 # PingMote
 Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
 # Getting Started
-Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract. Change into the main directory and run the below command.
+Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract. Change into the pingmote directory and run `pingmote.py`.
 # Usage
 Running `python3 pingmote.py` will bring up the emote picker, closing when you pick an image.
 
