@@ -17,7 +17,7 @@ def copy_to_clipboard(img_path):
 
 
 sg.theme('LightBrown1')  # Use this as base theme
-BG_COLOR = '#2C2F33'  # copied from discord colors
+BG_COLOR = '#36393F'  # copied from discord colors
 # Set location for where the window opens, (0, 0) is top left
 WINDOW_LOCATION = (1250, 750)
 sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
@@ -26,9 +26,10 @@ sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
 image_path = Path('.') / 'assets' / 'resized'
 
 # layout the window\
-NUM_COLS = 5  # max number of images per row
+NUM_COLS = 10  # max number of images per row
 layout = []
 curr_row = []
+print(len(list(image_path.iterdir())))
 for idx, img in enumerate(image_path.iterdir(), start=1):  # add images to layout
     curr_row.append(
         sg.Button('', key=img, image_filename=img, image_subsample=1))
