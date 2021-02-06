@@ -10,10 +10,10 @@ def copy_to_clipboard(img_path):
     subprocess.run(command.split())
 
 
-sg.theme('LightBrown1')   # Add a touch of color
-# copied from discord's colors, disable button borders
-sg.SetOptions(button_color=('#2C2F33', '#2C2F33'), background_color='#2C2F33',
-              text_element_background_color='#2C2F33', text_color='white', border_width=0)
+sg.theme('LightBrown1')  # Use this as base theme
+bg_color = '#2C2F33'  # copied from discord colors
+sg.SetOptions(button_color=(bg_color, bg_color), background_color=bg_color,
+              text_element_background_color=bg_color, text_color='white', border_width=0)
 
 image_path = Path('.') / 'assets'
 
