@@ -15,7 +15,7 @@ orig_path = Path('./assets/original')
 resized_path = Path('./assets/resized')
 new_size = (64, 64)
 
-# shutil.rmtree(resized_path)  # clear previous files
+shutil.rmtree(resized_path)  # clear previous files
 os.mkdir(resized_path)  # re-add resized directory
 for img_path in orig_path.iterdir():
     img = Image.open(img_path)
