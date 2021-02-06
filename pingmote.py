@@ -25,11 +25,17 @@ sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
 
 image_path = Path('.') / 'assets' / 'resized'
 
-# layout the window
-layout = [[sg.Text('Pick an emote!')]]
-for img in image_path.iterdir():  # add images to layout
-    layout.append(
-        [sg.Button('', key=img, image_filename=img, image_subsample=1)])
+# layout the window\
+NUM_COLS = 10  # max number of images per row
+layout = []
+curr_row = []
+for idx, img in enumerate(image_path.iterdir()):  # add images to layout
+    curr_row.append(
+        sg.Button('', key=img, image_filename=img, image_subsample=1))
+    if idx > 0 and idx % NUM_COLS == 0:  # start new row
+        layout.append(curr_row)
+        curr_row = []
+layout.append(curr_row)
 
 # create the window
 window = sg.Window('Emote Picker', layout)
