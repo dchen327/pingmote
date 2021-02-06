@@ -35,5 +35,5 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
 
 # TODOs
-- Show window where mouse is
-- Fix mac stuff
+- Show window where mouse is (get mouse pos with pyautogui?)
+- Fix mac stuff (GUIs are super weird on mac)
