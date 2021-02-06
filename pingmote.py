@@ -40,7 +40,6 @@ layout = []
 curr_row = []
 # print(len(list(image_path.iterdir())))  # print number of images
 for idx, img in enumerate(IMAGE_PATH.iterdir(), start=1):  # add images to layout
-    print(img.name.startswith('3'))
     curr_row.append(
         sg.Button('', key=img, image_filename=img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
