@@ -1,5 +1,5 @@
 '''
-A Python GUI for selecting and inserting local images
+Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
 
 Author: David Chen
 '''
