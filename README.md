@@ -29,7 +29,11 @@ This program uses `xclip` for copying images to clipboard, and `xdotool` for key
 ## For Windows:
 TODO (if anyone wants to submit a PR that'd be much appreciated)
 
-## Additional Notes
+# Additional Notes
 - Since this program relies on pasting resized images as emotes, we can't use inline emotes.
 - I can't seem to get gifs working with `xclip` but it's possible that there's a way to paste gifs
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
+
+# TODOs
+- Show window where mouse is
+- Fix mac stuff
