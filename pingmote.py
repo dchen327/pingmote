@@ -6,13 +6,17 @@ Author: David Chen
 import PySimpleGUI as sg
 import subprocess
 from pathlib import Path
+from time import sleep
 
 # CONFIGS
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
-WINDOW_LOCATION = (1000, 750)
+WINDOW_LOCATION = (750, 800)
 NUM_COLS = 10  # max number of images per row in picker
 # absolute path necessary here if running the program globally
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
+AUTO_PASTE = True  # if True, automatically pastes the image after selection
+# if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
+AUTO_ENTER = True
 
 
 def copy_to_clipboard(img_path):
@@ -48,3 +52,11 @@ while True:
         break
     window.close()
     copy_to_clipboard(event)  # copy clicked image to clipboard
+
+if AUTO_PASTE:
+    # sleep(0.1)  # wait a bit for copy operation before pasting
+    paste_cmd = 'xdotool key ctrl+v'
+    subprocess.run(paste_cmd.split())
+    if AUTO_ENTER:
+        enter_cmd = 'xdotool key Return'  # in Discord
+        subprocess.run(enter_cmd.split())
