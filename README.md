@@ -1,5 +1,5 @@
 # PingMote
-A Python GUI for picking and inserting local PNG (pronounced ping) emotes
+Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
 # Usage
 This program works very well with AutoKey.
 # Demo
