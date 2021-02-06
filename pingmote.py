@@ -11,6 +11,8 @@ from pathlib import Path
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 WINDOW_LOCATION = (1000, 750)
 NUM_COLS = 10  # max number of images per row in picker
+# absolute path necessary here if running the program globally
+IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 
 
 def copy_to_clipboard(img_path):
@@ -24,13 +26,12 @@ sg.theme('LightBrown1')  # Use this as base theme
 sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
               text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
 
-image_path = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 
 # layout the window
 layout = []
 curr_row = []
 # print(len(list(image_path.iterdir())))  # print number of images
-for idx, img in enumerate(image_path.iterdir(), start=1):  # add images to layout
+for idx, img in enumerate(IMAGE_PATH.iterdir(), start=1):  # add images to layout
     curr_row.append(
         sg.Button('', key=img, image_filename=img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
