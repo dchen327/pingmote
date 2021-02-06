@@ -12,7 +12,7 @@ from pathlib import Path
 def copy_to_clipboard(img_path):
     """ Given an an image path, copy the image to clipboard """
     # command = f'xclip -sel clip -t image/png {img_path.absolute()}'
-    command = f'xclip -sel clip -t image/gif {img_path.absolute()}'
+    command = f'xclip -sel clip -t image/png {img_path.absolute()}'
     subprocess.run(command.split())
 
 
@@ -26,7 +26,7 @@ sg.SetOptions(button_color=(BG_COLOR, BG_COLOR), background_color=BG_COLOR,
 image_path = Path('.') / 'assets' / 'resized'
 
 # layout the window\
-NUM_COLS = 2  # max number of images per row
+NUM_COLS = 5  # max number of images per row
 layout = []
 curr_row = []
 for idx, img in enumerate(image_path.iterdir(), start=1):  # add images to layout
