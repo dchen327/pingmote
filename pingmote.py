@@ -13,7 +13,8 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 WINDOW_LOCATION = (200, 800)
 NUM_COLS = 10  # max number of images per row in picker
 # absolute path necessary here if running the program globally
-IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
+# IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
+IMAGE_PATH = Path('.') / 'assets/resized'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
