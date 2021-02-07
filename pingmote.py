@@ -5,10 +5,7 @@ Author: David Chen
 '''
 import PySimpleGUI as sg
 import subprocess
-import base64
-import io
 from pathlib import Path
-from PIL import Image
 from time import sleep
 
 # CONFIGS
@@ -32,38 +29,6 @@ def copy_to_clipboard(img_path):
     subprocess.run(command.split())
 
 
-def convert_to_bytes(file_or_bytes, resize=None):
-    '''
-    Will convert into bytes and optionally resize an image that is a file or a base64 bytes object.
-    Turns into  PNG format in the process so that can be displayed by tkinter
-    :param file_or_bytes: either a string filename or a bytes base64 image object
-    :type file_or_bytes:  (Union[str, bytes])
-    :param resize:  optional new size
-    :type resize: (Tuple[int, int] or None)
-    :return: (bytes) a byte-string object
-    :rtype: (bytes)
-    '''
-    if isinstance(file_or_bytes, str):
-        img = Image.open(file_or_bytes)
-    else:
-        try:
-            img = Image.open(io.BytesIO(base64.b64decode(file_or_bytes)))
-        except Exception as e:
-            dataBytesIO = io.BytesIO(file_or_bytes)
-            img = Image.open(dataBytesIO)
-
-    cur_width, cur_height = img.size
-    if resize:
-        new_width, new_height = resize
-        scale = min(new_height/cur_height, new_width/cur_width)
-        img = img.resize(
-            (int(cur_width*scale), int(cur_height*scale)), Image.ANTIALIAS)
-    bio = io.BytesIO()
-    img.save(bio, format="PNG")
-    del img
-    return bio.getvalue()
-
-
 sg.theme('LightBrown1')  # Use this as base theme
 # Set location for where the window opens, (0, 0) is top left
 sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
@@ -77,7 +42,7 @@ curr_row = []
 for idx, img in enumerate(IMAGE_PATH.iterdir(), start=1):  # add images to layout
     # print(convert_to_bytes(str(img)))
     curr_row.append(
-        sg.Button('', key=img, image_data=convert_to_bytes(str(img)), image_subsample=1))
+        sg.Button('', key=img, image_filename=img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
         layout.append(curr_row)
         curr_row = []
