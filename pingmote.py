@@ -16,7 +16,8 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 WINDOW_LOCATION = (200, 800)
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 10  # max number of images to show in the frequent section
-# absolute path necessary here if running the program globally
+# absolute paths necessary here if running the program globally
+MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 # IMAGE_PATH = Path('.') / 'assets/resized'
 AUTO_PASTE = False  # if True, automatically pastes the image after selection
@@ -28,13 +29,13 @@ SLEEP_TIME = 0
 
 def load_frequencies():
     """ Load the frequencies dictionary from frequencies.json """
-    with open('frequencies.json', 'r') as f:
+    with open(MAIN_PATH / 'frequencies.json', 'r') as f:
         return json.load(f)
 
 
 def write_frequencies(frequencies):
     """ Write new frequencies to frequencies.json """
-    with open('frequencies.json', 'w') as f:
+    with open(MAIN_PATH / 'frequencies.json', 'w') as f:
         json.dump(frequencies, f)
 
 
@@ -77,9 +78,12 @@ layout.append([sg.HorizontalSeparator()])
 
 # layout the main section
 curr_row = []
-for idx, img in enumerate(IMAGE_PATH.iterdir(), start=1):  # add images to layout
+idx = 0
+for img in IMAGE_PATH.iterdir():  # add images to layout
     if img.name in frequents:  # don't show same image in both sections
         continue
+    idx += 1
+
     curr_row.append(
         sg.Button('', key=img, image_filename=img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
