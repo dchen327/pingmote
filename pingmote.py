@@ -19,9 +19,9 @@ NUM_FREQUENT = 12  # max number of images to show in the frequent section
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
-AUTO_PASTE = False  # if True, automatically pastes the image after selection
+AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = False
+AUTO_ENTER = True
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
 
