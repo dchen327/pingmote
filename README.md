@@ -24,8 +24,7 @@ I recommend binding this python command to a global keyboard shortcut (in GNOME:
 These can be installed with `pip3 install -r requirements.txt`
 
 PySimpleGUI
-
-PIL (if using the image_resizer helper program)
+PIL
 
 ## For Mac:
 This program uses `xclip` for copying images to clipboard, and `xdotool` for keyboard keys (pasting and hitting enter). I think these can be installed with `homebrew`.
