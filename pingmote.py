@@ -15,7 +15,7 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
 WINDOW_LOCATION = (200, 800)
 NUM_COLS = 12  # max number of images per row in picker
-NUM_FREQUENT = 5  # max number of images to show in the frequent section
+NUM_FREQUENT = 10  # max number of images to show in the frequent section
 # absolute path necessary here if running the program globally
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 # IMAGE_PATH = Path('.') / 'assets/resized'
@@ -54,7 +54,6 @@ def copy_to_clipboard(img_path):
 
 frequencies = load_frequencies()
 frequents = get_frequents(frequencies)
-print(frequents)
 
 sg.theme('LightBrown1')  # Use this as base theme
 # Set location for where the window opens, (0, 0) is top left
@@ -67,7 +66,6 @@ layout = []
 curr_row = []
 # layout the frequents section (start idx at 1 for row checking)
 for idx, img in enumerate(frequents, start=1):
-    print(idx, img)
     curr_row.append(
         sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
@@ -114,4 +112,3 @@ while True:
         frequencies[event.name] = 0
     frequencies[event.name] += 1
     write_frequencies(frequencies)
-    print(get_frequents(frequencies))
