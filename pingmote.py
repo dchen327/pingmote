@@ -90,7 +90,8 @@ class PingMote():
             if AUTO_PASTE:
                 # wait a bit for copy operation before pasting
                 sleep(SLEEP_TIME)
-                pyautogui.hotkey('ctrl', 'v')  # paste
+                # paste
+                pyautogui.hotkey('ctrl', 'v')
                 if AUTO_ENTER:
                     sleep(SLEEP_TIME)
                     pyautogui.press('enter')  # hit enter
