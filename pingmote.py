@@ -30,8 +30,14 @@ SLEEP_TIME = 0
 class PingMote():
 
     def __init__(self):
+        # Load frequencies from json for frequents section
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
+
+        # GUI setup
+        self.setup_gui()
+        self.layout_gui()
+        self.create_window_gui()
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
