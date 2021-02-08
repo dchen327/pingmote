@@ -18,9 +18,11 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # WINDOW_LOCATION = pyautogui.position()
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
+SHOW_FREQUENTS = False  # show the frequents section at the top
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
-IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
+# IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
+IMAGE_PATH = MAIN_PATH / 'assets' / 'gifsallowed'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -49,17 +51,18 @@ class PingMote():
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
         self.layout = []
-        curr_row = []
-        # layout the frequents section (start idx at 1 for row checking)
-        for idx, img in enumerate(self.frequents, start=1):
-            curr_row.append(
-                sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
-            if idx % NUM_COLS == 0:  # start new row
-                self.layout.append(curr_row)
-                curr_row = []
-        self.layout.append(curr_row)
+        if SHOW_FREQUENTS:
+            curr_row = []
+            # layout the frequents section (start idx at 1 for row checking)
+            for idx, img in enumerate(self.frequents, start=1):
+                curr_row.append(
+                    sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
+                if idx % NUM_COLS == 0:  # start new row
+                    self.layout.append(curr_row)
+                    curr_row = []
+            self.layout.append(curr_row)
 
-        self.layout.append([sg.HorizontalSeparator()])
+            self.layout.append([sg.HorizontalSeparator()])
 
         # layout the main section
         curr_row = []
