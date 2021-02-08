@@ -43,3 +43,7 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 - Convert keyboard shortcuts to PyAutoGUI?
 - Fix mac stuff (GUIs are super weird on mac)
 - Use imgur links (GIF support!!)
+
+# Contributors
+David Chen (dchen327)
+Luke Tong (Mac/Windows GUI + clipboard testing)
