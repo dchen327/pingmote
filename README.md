@@ -23,11 +23,13 @@ I recommend binding this python command to a global keyboard shortcut (in GNOME:
 # Dependencies
 These can be installed with `pip3 install -r requirements.txt`
 
-PySimpleGUI
-PIL
+PySimpleGUI (to display the image picker GUI)
+PyAutoGUI (getting mouse position and keyboard commands (xdotool no longer needed!))
+PIL (for running `image_resizer.py`)
 
 ## For Mac:
-This program uses `xclip` for copying images to clipboard, and `xdotool` for keyboard keys (pasting and hitting enter). I think these can be installed with `homebrew`.
+This program uses `xclip` for copying images to clipboard. I think this can be installed with `homebrew`.
+There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 
 ## For Windows:
 TODO (if anyone wants to submit a PR that'd be much appreciated)
