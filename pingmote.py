@@ -4,6 +4,7 @@ Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
 Author: David Chen
 '''
 import PySimpleGUI as sg
+import pyautogui
 import subprocess
 import json
 from pathlib import Path
@@ -13,7 +14,8 @@ from time import sleep
 # CONFIGS
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
-WINDOW_LOCATION = (200, 800)
+# WINDOW_LOCATION = (200, 800)
+# WINDOW_LOCATION = pyautogui.position()
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
 # absolute paths necessary here if running the program globally
@@ -42,7 +44,7 @@ class PingMote():
         sg.theme('LightBrown1')  # Use this as base theme
         # Set location for where the window opens, (0, 0) is top left
         sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
-                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
+                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=self.find_window_location())
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
@@ -99,6 +101,14 @@ class PingMote():
                 self.frequencies[event.name] = 0
             self.frequencies[event.name] += 1
             self.write_frequencies(self.frequencies)
+
+    def find_window_location(self):
+        """ Open the window near where the mouse currently is 
+            TODO: Add checking to ensure window is on screen
+        """
+        mouse_x, mouse_y = pyautogui.position()
+        # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
+        return (mouse_x - 125, mouse_y - 60)
 
     def load_frequencies(self):
         """ Load the frequencies dictionary from frequencies.json """
