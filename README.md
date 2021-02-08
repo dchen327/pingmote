@@ -47,4 +47,5 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 
 # Contributors
 David Chen (dchen327)
+
 Luke Tong (Mac/Windows GUI + clipboard testing)
