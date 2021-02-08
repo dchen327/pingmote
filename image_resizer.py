@@ -18,6 +18,9 @@ new_size = (64, 64)
 shutil.rmtree(resized_path)  # clear previous files
 os.mkdir(resized_path)  # re-add resized directory
 for img_path in orig_path.iterdir():
-    img = Image.open(img_path)
-    img_resized = img.resize(new_size, Image.ANTIALIAS)
-    img_resized.save(resized_path / img_path.name)
+    if img_path.suffix == 'gif':  # don't try and resize gifs, just copy them directly
+        shutil.copyfile(img_path, resized_path / img_path.name)
+    else:
+        img = Image.open(img_path)
+        img_resized = img.resize(new_size, Image.ANTIALIAS)
+        img_resized.save(resized_path / img_path.name)
