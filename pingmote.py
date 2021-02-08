@@ -124,57 +124,5 @@ class PingMote():
         subprocess.run(command.split())
 
 
-# # layout the window
-# layout = []
-# curr_row = []
-# # layout the frequents section (start idx at 1 for row checking)
-# for idx, img in enumerate(frequents, start=1):
-#     curr_row.append(
-#         sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
-#     if idx % NUM_COLS == 0:  # start new row
-#         layout.append(curr_row)
-#         curr_row = []
-# layout.append(curr_row)
-
-# layout.append([sg.HorizontalSeparator()])
-
-# # layout the main section
-# curr_row = []
-# idx = 0
-# for img in IMAGE_PATH.iterdir():  # add images to layout
-#     if img.name in frequents:  # don't show same image in both sections
-#         continue
-#     idx += 1
-
-#     curr_row.append(
-#         sg.Button('', key=img, image_filename=img, image_subsample=1))
-#     if idx % NUM_COLS == 0:  # start new row
-#         layout.append(curr_row)
-#         curr_row = []
-# layout.append(curr_row)
-
-# # create the window
-# window = sg.Window('Emote Picker', layout)
-# # event loop to process "events" and get the "values" of the inputs
-# while True:
-#     event, values = window.read()
-#     if event == sg.WIN_CLOSED:  # X clicked
-#         break
-#     window.close()
-#     copy_to_clipboard(event)  # copy clicked image to clipboard
-
-#     if AUTO_PASTE:
-#         sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
-#         paste_cmd = 'xdotool key ctrl+v'
-#         subprocess.run(paste_cmd.split())
-#         if AUTO_ENTER:
-#             sleep(SLEEP_TIME)
-#             enter_cmd = 'xdotool key Return'  # in Discord
-#             subprocess.run(enter_cmd.split())
-#     # increment count for chosen image
-#     if event.name not in frequencies:
-#         frequencies[event.name] = 0
-#     frequencies[event.name] += 1
-#     write_frequencies(frequencies)
 if __name__ == '__main__':
     pingmote = PingMote()
