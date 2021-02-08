@@ -19,9 +19,9 @@ NUM_FREQUENT = 5  # max number of images to show in the frequent section
 # absolute path necessary here if running the program globally
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 # IMAGE_PATH = Path('.') / 'assets/resized'
-AUTO_PASTE = True  # if True, automatically pastes the image after selection
+AUTO_PASTE = False  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = True
+AUTO_ENTER = False
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
 
@@ -38,7 +38,7 @@ def write_frequencies(frequencies):
         json.dump(frequencies, f)
 
 
-def get_most_common(frequencies):
+def get_frequents(frequencies):
     """ Get the images used most frequently """
     # sort in descending order by frequency
     desc_frequencies = sorted(
@@ -52,6 +52,10 @@ def copy_to_clipboard(img_path):
     subprocess.run(command.split())
 
 
+frequencies = load_frequencies()
+frequents = get_frequents(frequencies)
+print(frequents)
+
 sg.theme('LightBrown1')  # Use this as base theme
 # Set location for where the window opens, (0, 0) is top left
 sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
@@ -61,9 +65,23 @@ sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG
 # layout the window
 layout = []
 curr_row = []
-# print(len(list(image_path.iterdir())))  # print number of images
+# layout the frequents section (start idx at 1 for row checking)
+for idx, img in enumerate(frequents, start=1):
+    print(idx, img)
+    curr_row.append(
+        sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
+    if idx % NUM_COLS == 0:  # start new row
+        layout.append(curr_row)
+        curr_row = []
+layout.append(curr_row)
+
+layout.append([sg.HorizontalSeparator()])
+
+# layout the main section
+curr_row = []
 for idx, img in enumerate(IMAGE_PATH.iterdir(), start=1):  # add images to layout
-    # print(convert_to_bytes(str(img)))
+    if img.name in frequents:  # don't show same image in both sections
+        continue
     curr_row.append(
         sg.Button('', key=img, image_filename=img, image_subsample=1))
     if idx % NUM_COLS == 0:  # start new row
@@ -91,9 +109,9 @@ while True:
             subprocess.run(enter_cmd.split())
 
     # increment count for chosen image
-    frequencies = load_frequencies()
+
     if event.name not in frequencies:
         frequencies[event.name] = 0
     frequencies[event.name] += 1
     write_frequencies(frequencies)
-    print(get_most_common(frequencies))
+    print(get_frequents(frequencies))
