@@ -102,7 +102,6 @@ class PingMote():
 
     def find_window_location(self):
         """ Open the window near where the mouse currently is 
-            TODO: Add checking to ensure window is on screen
         """
         mouse_x, mouse_y = pyautogui.position()
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
