@@ -5,8 +5,10 @@ Author: David Chen
 '''
 import PySimpleGUI as sg
 import subprocess
+import json
 from pathlib import Path
 from time import sleep
+
 
 # CONFIGS
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
@@ -21,6 +23,18 @@ AUTO_PASTE = True  # if True, automatically pastes the image after selection
 AUTO_ENTER = True
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
+
+
+def load_frequencies():
+    """ Load the frequencies dictionary from frequencies.json """
+    with open('frequencies.json', 'r') as f:
+        return json.load(f)
+
+
+def write_frequencies(frequencies):
+    """ Write new frequencies to frequencies.json """
+    with open('frequencies.json', 'w') as f:
+        json.dump(frequencies, f)
 
 
 def copy_to_clipboard(img_path):
@@ -66,3 +80,10 @@ while True:
             sleep(SLEEP_TIME)
             enter_cmd = 'xdotool key Return'  # in Discord
             subprocess.run(enter_cmd.split())
+
+    # increment count for chosen image
+    frequencies = load_frequencies()
+    if event.name not in frequencies:
+        frequencies[event.name] = 0
+    frequencies[event.name] += 1
+    write_frequencies(frequencies)
