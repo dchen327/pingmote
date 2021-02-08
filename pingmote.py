@@ -27,92 +27,148 @@ AUTO_ENTER = False
 SLEEP_TIME = 0
 
 
-def load_frequencies():
-    """ Load the frequencies dictionary from frequencies.json """
-    with open(MAIN_PATH / 'frequencies.json', 'r') as f:
-        return json.load(f)
+class PingMote():
 
+    def __init__(self):
+        self.frequencies = self.load_frequencies()
+        self.frequents = self.get_frequents(self.frequencies)
 
-def write_frequencies(frequencies):
-    """ Write new frequencies to frequencies.json """
-    with open(MAIN_PATH / 'frequencies.json', 'w') as f:
-        json.dump(frequencies, f)
+    def setup_gui(self):
+        sg.theme('LightBrown1')  # Use this as base theme
+        # Set location for where the window opens, (0, 0) is top left
+        sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
+                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
 
-
-def get_frequents(frequencies):
-    """ Get the images used most frequently """
-    # sort in descending order by frequency
-    desc_frequencies = sorted(
-        frequencies.items(), key=lambda x: x[-1], reverse=True)
-    return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
-
-
-def copy_to_clipboard(img_path):
-    """ Given an an image path, copy the image to clipboard """
-    command = f'xclip -sel clip -t image/png {img_path.absolute()}'
-    subprocess.run(command.split())
-
-
-frequencies = load_frequencies()
-frequents = get_frequents(frequencies)
-
-sg.theme('LightBrown1')  # Use this as base theme
-# Set location for where the window opens, (0, 0) is top left
-sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
-              text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=WINDOW_LOCATION)
-
-
-# layout the window
-layout = []
-curr_row = []
-# layout the frequents section (start idx at 1 for row checking)
-for idx, img in enumerate(frequents, start=1):
-    curr_row.append(
-        sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
-    if idx % NUM_COLS == 0:  # start new row
-        layout.append(curr_row)
+    def layout_gui(self):
+        """ Layout GUI with PySimpleGui """
+        self.layout = []
         curr_row = []
-layout.append(curr_row)
+        # layout the frequents section (start idx at 1 for row checking)
+        for idx, img in enumerate(self.frequents, start=1):
+            curr_row.append(
+                sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
+            if idx % NUM_COLS == 0:  # start new row
+                self.layout.append(curr_row)
+                curr_row = []
+        self.layout.append(curr_row)
 
-layout.append([sg.HorizontalSeparator()])
+        self.layout.append([sg.HorizontalSeparator()])
 
-# layout the main section
-curr_row = []
-idx = 0
-for img in IMAGE_PATH.iterdir():  # add images to layout
-    if img.name in frequents:  # don't show same image in both sections
-        continue
-    idx += 1
-
-    curr_row.append(
-        sg.Button('', key=img, image_filename=img, image_subsample=1))
-    if idx % NUM_COLS == 0:  # start new row
-        layout.append(curr_row)
+        # layout the main section
         curr_row = []
-layout.append(curr_row)
+        idx = 0
+        for img in IMAGE_PATH.iterdir():  # add images to self.layout
+            if img.name in self.frequents:  # don't show same image in both sections
+                continue
+            idx += 1
 
-# create the window
-window = sg.Window('Emote Picker', layout)
-# event loop to process "events" and get the "values" of the inputs
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED:  # X clicked
-        break
-    window.close()
-    copy_to_clipboard(event)  # copy clicked image to clipboard
+            curr_row.append(
+                sg.Button('', key=img, image_filename=img, image_subsample=1))
+            if idx % NUM_COLS == 0:  # start new row
+                self.layout.append(curr_row)
+                curr_row = []
+        self.layout.append(curr_row)
 
-    if AUTO_PASTE:
-        sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
-        paste_cmd = 'xdotool key ctrl+v'
-        subprocess.run(paste_cmd.split())
-        if AUTO_ENTER:
-            sleep(SLEEP_TIME)
-            enter_cmd = 'xdotool key Return'  # in Discord
-            subprocess.run(enter_cmd.split())
+    def create_window_gui(self):
+        """ Create the window from layout """
+        window = sg.Window('Emote Picker', self.layout)
+        # event loop to process "events" and get the "values" of the inputs
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:  # X clicked
+                break
+            window.close()
+            self.copy_to_clipboard(event)  # copy clicked image to clipboard
 
-    # increment count for chosen image
+            if AUTO_PASTE:
+                # wait a bit for copy operation before pasting
+                sleep(SLEEP_TIME)
+                paste_cmd = 'xdotool key ctrl+v'
+                subprocess.run(paste_cmd.split())
+                if AUTO_ENTER:
+                    sleep(SLEEP_TIME)
+                    enter_cmd = 'xdotool key Return'  # in Discord
+                    subprocess.run(enter_cmd.split())
+            # increment count for chosen image
+            if event.name not in self.frequencies:
+                self.frequencies[event.name] = 0
+            self.frequencies[event.name] += 1
+            self.write_frequencies(self.frequencies)
 
-    if event.name not in frequencies:
-        frequencies[event.name] = 0
-    frequencies[event.name] += 1
-    write_frequencies(frequencies)
+    def load_frequencies(self):
+        """ Load the frequencies dictionary from frequencies.json """
+        with open(MAIN_PATH / 'frequencies.json', 'r') as f:
+            return json.load(f)
+
+    def write_frequencies(self, frequencies):
+        """ Write new frequencies to frequencies.json """
+        with open(MAIN_PATH / 'frequencies.json', 'w') as f:
+            json.dump(frequencies, f)
+
+    def get_frequents(self, frequencies):
+        """ Get the images used most frequently """
+        # sort in descending order by frequency
+        desc_frequencies = sorted(
+            frequencies.items(), key=lambda x: x[-1], reverse=True)
+        return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
+
+    def copy_to_clipboard(self, img_path):
+        """ Given an an image path, copy the image to clipboard """
+        command = f'xclip -sel clip -t image/png {img_path.absolute()}'
+        subprocess.run(command.split())
+
+
+# # layout the window
+# layout = []
+# curr_row = []
+# # layout the frequents section (start idx at 1 for row checking)
+# for idx, img in enumerate(frequents, start=1):
+#     curr_row.append(
+#         sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
+#     if idx % NUM_COLS == 0:  # start new row
+#         layout.append(curr_row)
+#         curr_row = []
+# layout.append(curr_row)
+
+# layout.append([sg.HorizontalSeparator()])
+
+# # layout the main section
+# curr_row = []
+# idx = 0
+# for img in IMAGE_PATH.iterdir():  # add images to layout
+#     if img.name in frequents:  # don't show same image in both sections
+#         continue
+#     idx += 1
+
+#     curr_row.append(
+#         sg.Button('', key=img, image_filename=img, image_subsample=1))
+#     if idx % NUM_COLS == 0:  # start new row
+#         layout.append(curr_row)
+#         curr_row = []
+# layout.append(curr_row)
+
+# # create the window
+# window = sg.Window('Emote Picker', layout)
+# # event loop to process "events" and get the "values" of the inputs
+# while True:
+#     event, values = window.read()
+#     if event == sg.WIN_CLOSED:  # X clicked
+#         break
+#     window.close()
+#     copy_to_clipboard(event)  # copy clicked image to clipboard
+
+#     if AUTO_PASTE:
+#         sleep(SLEEP_TIME)  # wait a bit for copy operation before pasting
+#         paste_cmd = 'xdotool key ctrl+v'
+#         subprocess.run(paste_cmd.split())
+#         if AUTO_ENTER:
+#             sleep(SLEEP_TIME)
+#             enter_cmd = 'xdotool key Return'  # in Discord
+#             subprocess.run(enter_cmd.split())
+#     # increment count for chosen image
+#     if event.name not in frequencies:
+#         frequencies[event.name] = 0
+#     frequencies[event.name] += 1
+#     write_frequencies(frequencies)
+if __name__ == '__main__':
+    pingmote = PingMote()
