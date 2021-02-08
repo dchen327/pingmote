@@ -15,6 +15,7 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
 WINDOW_LOCATION = (200, 800)
 NUM_COLS = 12  # max number of images per row in picker
+NUM_FREQUENT = 5  # max number of images to show in the frequent section
 # absolute path necessary here if running the program globally
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
 # IMAGE_PATH = Path('.') / 'assets/resized'
@@ -35,6 +36,14 @@ def write_frequencies(frequencies):
     """ Write new frequencies to frequencies.json """
     with open('frequencies.json', 'w') as f:
         json.dump(frequencies, f)
+
+
+def get_most_common(frequencies):
+    """ Get the images used most frequently """
+    # sort in descending order by frequency
+    desc_frequencies = sorted(
+        frequencies.items(), key=lambda x: x[-1], reverse=True)
+    return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
 
 
 def copy_to_clipboard(img_path):
@@ -87,3 +96,4 @@ while True:
         frequencies[event.name] = 0
     frequencies[event.name] += 1
     write_frequencies(frequencies)
+    print(get_most_common(frequencies))
