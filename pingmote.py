@@ -15,7 +15,7 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
 WINDOW_LOCATION = (200, 800)
 NUM_COLS = 12  # max number of images per row in picker
-NUM_FREQUENT = 10  # max number of images to show in the frequent section
+NUM_FREQUENT = 12  # max number of images to show in the frequent section
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = Path('/home/dchen327/coding/projects/pingmote/assets/resized')
