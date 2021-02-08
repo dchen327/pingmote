@@ -7,6 +7,7 @@ import PySimpleGUI as sg
 import pyautogui
 import subprocess
 import json
+import pyperclip
 from pathlib import Path
 from time import sleep
 
@@ -23,9 +24,9 @@ SHOW_FREQUENTS = False  # show the frequents section at the top
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 # IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 IMAGE_PATH = MAIN_PATH / 'assets' / 'gifsallowed'
-AUTO_PASTE = True  # if True, automatically pastes the image after selection
+AUTO_PASTE = False  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = True
+AUTO_ENTER = False
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
 
