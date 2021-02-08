@@ -40,9 +40,10 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
 
 # TODOs
-- Convert keyboard shortcuts to PyAutoGUI?
 - Fix mac stuff (GUIs are super weird on mac)
-- Use imgur links (GIF support!!)
+- Use imgur links (GIF support and cross-platform potential!!)
+- Record a new demo vid (with favorites bar)
+- Add OS checking to for cross platform use
 
 # Contributors
 David Chen (dchen327)
