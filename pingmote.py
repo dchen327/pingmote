@@ -90,12 +90,10 @@ class PingMote():
             if AUTO_PASTE:
                 # wait a bit for copy operation before pasting
                 sleep(SLEEP_TIME)
-                paste_cmd = 'xdotool key ctrl+v'
-                subprocess.run(paste_cmd.split())
+                pyautogui.hotkey('ctrl', 'v')  # paste
                 if AUTO_ENTER:
                     sleep(SLEEP_TIME)
-                    enter_cmd = 'xdotool key Return'  # in Discord
-                    subprocess.run(enter_cmd.split())
+                    pyautogui.press('enter')  # hit enter
             # increment count for chosen image
             if event.name not in self.frequencies:
                 self.frequencies[event.name] = 0

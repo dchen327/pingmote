@@ -38,8 +38,6 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
 
 # TODOs
-- Show window where mouse is (get mouse pos with PyAutoGUI?)
 - Convert keyboard shortcuts to PyAutoGUI?
 - Fix mac stuff (GUIs are super weird on mac)
 - Use imgur links (GIF support!!)
-- Paste on next click?
