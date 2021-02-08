@@ -46,6 +46,11 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 - Record a new demo vid (with favorites bar)
 - Add OS checking to for cross platform use
 
+# Reasons you should still buy Discord Nitro
+- Support Discord!
+- Inline emotes/gifs, keyboard shortcuts by name (ex: :emote_name:)
+- React with emotes
+
 # Contributors
 David Chen (dchen327)
 
