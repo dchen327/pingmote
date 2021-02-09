@@ -6,6 +6,8 @@ Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or downloa
 Running `python3 pingmote.py` will bring up the emote picker, closing when you pick an image.
 
 I recommend binding this python command to a global keyboard shortcut (in GNOME: keyboard shortcuts > custom shortcuts > `python3 /abs/path/to/pingmote.py`)
+
+In Windows, this can be done with AutoHotKey, and on Mac there's probably something that'll work too (maybe Automator?)
 # Demo
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/37674516/107125905-81540c80-687a-11eb-9def-b4e51f2b9d32.gif)
 
@@ -17,8 +19,9 @@ I recommend binding this python command to a global keyboard shortcut (in GNOME:
 - Check the top of `pingmote.py` for a couple additional configs
 
 # Adding Your Own Emotes
-- Drop image files in the original directory, then run `image_resizer.py` which will resize all the images and drop them in the resized directory
-- https://discordmojis.com/emojis/popular_static is a good source (right click save image)
+- Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
+- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs, extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
+- Here are some good emote sources for both images/gifs (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
 
 # Dependencies
 These can be installed with `pip3 install -r requirements.txt`
@@ -28,23 +31,15 @@ PyAutoGUI (getting mouse position and keyboard commands (xdotool no longer neede
 PIL (for running `image_resizer.py`)
 
 ## For Mac:
-This program uses `xclip` for copying images to clipboard. I think this can be installed with `homebrew`.
 There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 
-## For Windows:
-TODO (if anyone wants to submit a PR that'd be much appreciated)
-
 # Additional Notes
-- Since this program relies on pasting resized images as emotes, we can't use inline emotes.
-- I can't seem to get gifs working with `xclip` but it's possible that there's a way to paste gifs
+- Since this program relies on pasting resized images as emotes, we can't use inline emotes or reacts.
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
 
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
-- Use imgur links (GIF support and cross-platform potential!!)
-- Add resizing for gifs (maybe link to https://www.iloveimg.com/resize-image/resize-gif)
 - Record a new demo vid (with favorites bar)
-- Add OS checking to for cross platform use
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
