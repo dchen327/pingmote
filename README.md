@@ -42,8 +42,14 @@ TODO (if anyone wants to submit a PR that'd be much appreciated)
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
 - Use imgur links (GIF support and cross-platform potential!!)
+- Add resizing for gifs (maybe link to https://www.iloveimg.com/resize-image/resize-gif)
 - Record a new demo vid (with favorites bar)
 - Add OS checking to for cross platform use
+
+# Reasons you should still buy Discord Nitro
+- Support Discord!
+- Inline emotes/gifs, keyboard shortcuts by name (ex: :emote_name:)
+- React with emotes
 
 # Contributors
 David Chen (dchen327)

@@ -5,10 +5,11 @@ Author: David Chen
 '''
 import PySimpleGUI as sg
 import pyautogui
-import subprocess
 import json
+import pyperclip
 from pathlib import Path
 from time import sleep
+from math import ceil
 
 
 # CONFIGS
@@ -18,8 +19,10 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # WINDOW_LOCATION = pyautogui.position()
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
+SHOW_FREQUENTS = True  # show the frequents section at the top
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
+# IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
@@ -35,6 +38,10 @@ class PingMote():
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
+        # Load links and filenames
+        self.links = self.load_links()
+        self.filenames = sorted(IMAGE_PATH.iterdir())
+
         # GUI setup
         self.setup_gui()
         self.layout_gui()
@@ -49,32 +56,23 @@ class PingMote():
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
         self.layout = []
-        curr_row = []
-        # layout the frequents section (start idx at 1 for row checking)
-        for idx, img in enumerate(self.frequents, start=1):
-            curr_row.append(
-                sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
-            if idx % NUM_COLS == 0:  # start new row
-                self.layout.append(curr_row)
-                curr_row = []
-        self.layout.append(curr_row)
-
-        self.layout.append([sg.HorizontalSeparator()])
-
-        # layout the main section
-        curr_row = []
+        frequents_section = []
+        main_section = []
         idx = 0
-        for img in IMAGE_PATH.iterdir():  # add images to self.layout
+        # add images to self.layout
+        for idx, img in enumerate(self.filenames):
             if img.name in self.frequents:  # don't show same image in both sections
-                continue
-            idx += 1
+                frequents_section.append(
+                    sg.Button('', key=idx, image_filename=img))
+            else:
 
-            curr_row.append(
-                sg.Button('', key=img, image_filename=img, image_subsample=1))
-            if idx % NUM_COLS == 0:  # start new row
-                self.layout.append(curr_row)
-                curr_row = []
-        self.layout.append(curr_row)
+                main_section.append(
+                    sg.Button('', key=idx, image_filename=img))
+        if SHOW_FREQUENTS:
+            self.layout += self.list_to_table(
+                frequents_section)
+            self.layout.append([sg.HorizontalSeparator()])
+        self.layout += self.list_to_table(main_section)
 
     def create_window_gui(self):
         """ Create the window from layout """
@@ -85,21 +83,30 @@ class PingMote():
             if event == sg.WIN_CLOSED:  # X clicked
                 break
             window.close()
-            self.copy_to_clipboard(event)  # copy clicked image to clipboard
+            self.on_select(event)
 
-            if AUTO_PASTE:
-                # wait a bit for copy operation before pasting
+    def on_select(self, event):
+        """ Copy the selected image's link to clipboard and update frequencies """
+        self.copy_to_clipboard(int(event))  # copy clicked image to clipboard
+
+        if AUTO_PASTE:
+            # wait a bit for copy operation before pasting
+            sleep(SLEEP_TIME)
+            # paste
+            pyautogui.hotkey('ctrl', 'v')
+            if AUTO_ENTER:
                 sleep(SLEEP_TIME)
-                # paste
-                pyautogui.hotkey('ctrl', 'v')
-                if AUTO_ENTER:
-                    sleep(SLEEP_TIME)
-                    pyautogui.press('enter')  # hit enter
-            # increment count for chosen image
-            if event.name not in self.frequencies:
-                self.frequencies[event.name] = 0
-            self.frequencies[event.name] += 1
-            self.write_frequencies(self.frequencies)
+                pyautogui.press('enter')  # hit enter
+
+        self.update_frequencies(event)
+
+    def update_frequencies(self, event):
+        """ Increment chosen image's counter in frequencies.json """
+        filename = self.filenames[event].name
+        if filename not in self.frequencies:
+            self.frequencies[filename] = 0
+        self.frequencies[filename] += 1
+        self.write_frequencies(self.frequencies)
 
     def find_window_location(self):
         """ Open the window near where the mouse currently is 
@@ -107,6 +114,11 @@ class PingMote():
         mouse_x, mouse_y = pyautogui.position()
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
         return (mouse_x - 125, mouse_y - 60)
+
+    def load_links(self):
+        """ Load image links from links.txt """
+        with open(MAIN_PATH / 'links.txt') as f:
+            return f.read().splitlines()
 
     def load_frequencies(self):
         """ Load the frequencies dictionary from frequencies.json """
@@ -123,12 +135,18 @@ class PingMote():
         # sort in descending order by frequency
         desc_frequencies = sorted(
             frequencies.items(), key=lambda x: x[-1], reverse=True)
-        return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
+        return [img for img, _ in desc_frequencies[:NUM_FREQUENT]]
 
-    def copy_to_clipboard(self, img_path):
-        """ Given an an image path, copy the image to clipboard """
-        command = f'xclip -sel clip -t image/png {img_path.absolute()}'
-        subprocess.run(command.split())
+    def list_to_table(self, a, num_cols=NUM_COLS):
+        """ Given a list a, convert it to rows and columns 
+            ex) a = [1, 2, 3, 4, 5], num_cols = 2
+            returns: [[1, 2], [3, 4], [5]]
+            """
+        return [a[i*num_cols:i*num_cols+num_cols] for i in range(ceil(len(a) / num_cols))]
+
+    def copy_to_clipboard(self, idx):
+        """ Given an an image idx, copy the image link to clipboard """
+        pyperclip.copy(self.links[idx])
 
 
 if __name__ == '__main__':
