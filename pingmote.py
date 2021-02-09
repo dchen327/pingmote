@@ -19,7 +19,7 @@ GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # WINDOW_LOCATION = pyautogui.position()
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
-SHOW_FREQUENTS = False  # show the frequents section at the top
+SHOW_FREQUENTS = True  # show the frequents section at the top
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 # IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
