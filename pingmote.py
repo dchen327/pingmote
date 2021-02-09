@@ -5,7 +5,6 @@ Author: David Chen
 '''
 import PySimpleGUI as sg
 import pyautogui
-import subprocess
 import json
 import pyperclip
 from pathlib import Path
@@ -38,6 +37,10 @@ class PingMote():
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
+        # Load links
+        self.links = self.load_links()
+        self.filenames = []
+
         # GUI setup
         self.setup_gui()
         self.layout_gui()
@@ -57,7 +60,7 @@ class PingMote():
             # layout the frequents section (start idx at 1 for row checking)
             for idx, img in enumerate(self.frequents, start=1):
                 curr_row.append(
-                    sg.Button('', key=IMAGE_PATH / img, image_filename=IMAGE_PATH / img, image_subsample=1))
+                    sg.Button('', key=idx, image_filename=IMAGE_PATH / img, image_subsample=1))
                 if idx % NUM_COLS == 0:  # start new row
                     self.layout.append(curr_row)
                     curr_row = []
@@ -74,7 +77,7 @@ class PingMote():
             idx += 1
 
             curr_row.append(
-                sg.Button('', key=img, image_filename=img, image_subsample=1))
+                sg.Button('', key=idx, image_filename=img, image_subsample=1))
             if idx % NUM_COLS == 0:  # start new row
                 self.layout.append(curr_row)
                 curr_row = []
@@ -89,7 +92,9 @@ class PingMote():
             if event == sg.WIN_CLOSED:  # X clicked
                 break
             window.close()
-            self.copy_to_clipboard(event)  # copy clicked image to clipboard
+            print(event)
+            # copy clicked image to clipboard
+            self.copy_to_clipboard(int(event))
 
             if AUTO_PASTE:
                 # wait a bit for copy operation before pasting
@@ -112,6 +117,11 @@ class PingMote():
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
         return (mouse_x - 125, mouse_y - 60)
 
+    def load_links(self):
+        """ Load image links from links.txt """
+        with open(MAIN_PATH / 'links.txt') as f:
+            return f.read().splitlines()
+
     def load_frequencies(self):
         """ Load the frequencies dictionary from frequencies.json """
         with open(MAIN_PATH / 'frequencies.json', 'r') as f:
@@ -129,10 +139,9 @@ class PingMote():
             frequencies.items(), key=lambda x: x[-1], reverse=True)
         return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
 
-    def copy_to_clipboard(self, img_path):
-        """ Given an an image path, copy the image to clipboard """
-        command = f'xclip -sel clip -t image/png {img_path.absolute()}'
-        subprocess.run(command.split())
+    def copy_to_clipboard(self, idx):
+        """ Given an an image idx, copy the image link to clipboard """
+        pyperclip.copy(self.links[idx])
 
 
 if __name__ == '__main__':
