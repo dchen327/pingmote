@@ -51,9 +51,10 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 - Fix mac stuff (GUIs are super weird on mac)
 - Record a new demo vid (with favorites bar)
 - Better ordering of emotes (categorization, etc.)
+- Separate gifs and statics?
 - Simplify the process for adding new emotes
-- Gif resizing?
-- Ensure gif thumbnail isn't blank
+- Gif resizing? (idk PIL isn't very good for this)
+- Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
 
 # Reasons you should still buy Discord Nitro
