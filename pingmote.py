@@ -9,6 +9,7 @@ import json
 import pyperclip
 from pathlib import Path
 from time import sleep
+from math import ceil
 
 
 # CONFIGS
@@ -23,9 +24,9 @@ SHOW_FREQUENTS = True  # show the frequents section at the top
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 # IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
-AUTO_PASTE = False  # if True, automatically pastes the image after selection
+AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = False
+AUTO_ENTER = True
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
 
@@ -37,9 +38,9 @@ class PingMote():
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
-        # Load links
+        # Load links and filenames
         self.links = self.load_links()
-        self.filenames = []
+        self.filenames = sorted(IMAGE_PATH.iterdir())
 
         # GUI setup
         self.setup_gui()
@@ -55,33 +56,23 @@ class PingMote():
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
         self.layout = []
-        if SHOW_FREQUENTS:
-            curr_row = []
-            # layout the frequents section (start idx at 1 for row checking)
-            for idx, img in enumerate(self.frequents, start=1):
-                curr_row.append(
-                    sg.Button('', key=idx, image_filename=IMAGE_PATH / img, image_subsample=1))
-                if idx % NUM_COLS == 0:  # start new row
-                    self.layout.append(curr_row)
-                    curr_row = []
-            self.layout.append(curr_row)
-
-            self.layout.append([sg.HorizontalSeparator()])
-
-        # layout the main section
-        curr_row = []
+        frequents_section = []
+        main_section = []
         idx = 0
-        for img in IMAGE_PATH.iterdir():  # add images to self.layout
+        # add images to self.layout
+        for idx, img in enumerate(self.filenames):
             if img.name in self.frequents:  # don't show same image in both sections
-                continue
-            idx += 1
+                frequents_section.append(
+                    sg.Button('', key=idx, image_filename=img))
+            else:
 
-            curr_row.append(
-                sg.Button('', key=idx, image_filename=img, image_subsample=1))
-            if idx % NUM_COLS == 0:  # start new row
-                self.layout.append(curr_row)
-                curr_row = []
-        self.layout.append(curr_row)
+                main_section.append(
+                    sg.Button('', key=idx, image_filename=img))
+        if SHOW_FREQUENTS:
+            self.layout += self.list_to_table(
+                frequents_section)
+            self.layout.append([sg.HorizontalSeparator()])
+        self.layout += self.list_to_table(main_section)
 
     def create_window_gui(self):
         """ Create the window from layout """
@@ -105,9 +96,10 @@ class PingMote():
                     sleep(SLEEP_TIME)
                     pyautogui.press('enter')  # hit enter
             # increment count for chosen image
-            if event.name not in self.frequencies:
-                self.frequencies[event.name] = 0
-            self.frequencies[event.name] += 1
+            filename = self.filenames[event].name
+            if filename not in self.frequencies:
+                self.frequencies[filename] = 0
+            self.frequencies[filename] += 1
             self.write_frequencies(self.frequencies)
 
     def find_window_location(self):
@@ -138,6 +130,13 @@ class PingMote():
         desc_frequencies = sorted(
             frequencies.items(), key=lambda x: x[-1], reverse=True)
         return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
+
+    def list_to_table(self, a, num_cols=NUM_COLS):
+        """ Given a list a, convert it to rows and columns 
+            ex) a = [1, 2, 3, 4, 5], num_cols = 2
+            returns: [[1, 2], [3, 4], [5]]
+            """
+        return [a[i*num_cols:i*num_cols+num_cols] for i in range(ceil(len(a) / num_cols))]
 
     def copy_to_clipboard(self, idx):
         """ Given an an image idx, copy the image link to clipboard """
