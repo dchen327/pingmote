@@ -83,24 +83,30 @@ class PingMote():
             if event == sg.WIN_CLOSED:  # X clicked
                 break
             window.close()
-            print(event)
-            # copy clicked image to clipboard
-            self.copy_to_clipboard(int(event))
+            self.on_select(event)
 
-            if AUTO_PASTE:
-                # wait a bit for copy operation before pasting
+    def on_select(self, event):
+        """ Copy the selected image's link to clipboard and update frequencies """
+        self.copy_to_clipboard(int(event))  # copy clicked image to clipboard
+
+        if AUTO_PASTE:
+            # wait a bit for copy operation before pasting
+            sleep(SLEEP_TIME)
+            # paste
+            pyautogui.hotkey('ctrl', 'v')
+            if AUTO_ENTER:
                 sleep(SLEEP_TIME)
-                # paste
-                pyautogui.hotkey('ctrl', 'v')
-                if AUTO_ENTER:
-                    sleep(SLEEP_TIME)
-                    pyautogui.press('enter')  # hit enter
-            # increment count for chosen image
-            filename = self.filenames[event].name
-            if filename not in self.frequencies:
-                self.frequencies[filename] = 0
-            self.frequencies[filename] += 1
-            self.write_frequencies(self.frequencies)
+                pyautogui.press('enter')  # hit enter
+
+        self.update_frequencies(event)
+
+    def update_frequencies(self, event):
+        """ Increment chosen image's counter in frequencies.json """
+        filename = self.filenames[event].name
+        if filename not in self.frequencies:
+            self.frequencies[filename] = 0
+        self.frequencies[filename] += 1
+        self.write_frequencies(self.frequencies)
 
     def find_window_location(self):
         """ Open the window near where the mouse currently is 
@@ -129,7 +135,7 @@ class PingMote():
         # sort in descending order by frequency
         desc_frequencies = sorted(
             frequencies.items(), key=lambda x: x[-1], reverse=True)
-        return [img for img, freq in desc_frequencies[:NUM_FREQUENT]]
+        return [img for img, _ in desc_frequencies[:NUM_FREQUENT]]
 
     def list_to_table(self, a, num_cols=NUM_COLS):
         """ Given a list a, convert it to rows and columns 
