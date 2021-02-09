@@ -50,6 +50,7 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
 - Record a new demo vid (with favorites bar)
+- Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
 - Better ordering of emotes (categorization, etc.)
 - Separate gifs and statics?
 - Simplify the process for adding new emotes
