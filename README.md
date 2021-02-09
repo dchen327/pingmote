@@ -50,6 +50,7 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
 - Record a new demo vid (with favorites bar)
+- Further simplify the entire process
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
