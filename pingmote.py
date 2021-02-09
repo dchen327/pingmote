@@ -38,9 +38,9 @@ class PingMote():
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
-        # Load links and filenames
+        # Load links and file paths
         self.links = self.load_links()
-        self.filenames = sorted(IMAGE_PATH.iterdir())
+        self.filepaths = sorted(IMAGE_PATH.iterdir())
 
         # GUI setup
         self.setup_gui()
@@ -60,12 +60,11 @@ class PingMote():
         main_section = []
         idx = 0
         # add images to self.layout
-        for idx, img in enumerate(self.filenames):
+        for idx, img in enumerate(self.filepaths):
             if img.name in self.frequents:  # don't show same image in both sections
                 frequents_section.append(
                     sg.Button('', key=idx, image_filename=img))
             else:
-
                 main_section.append(
                     sg.Button('', key=idx, image_filename=img))
         if SHOW_FREQUENTS:
@@ -102,7 +101,7 @@ class PingMote():
 
     def update_frequencies(self, event):
         """ Increment chosen image's counter in frequencies.json """
-        filename = self.filenames[event].name
+        filename = self.filepaths[event].name
         if filename not in self.frequencies:
             self.frequencies[filename] = 0
         self.frequencies[filename] += 1
