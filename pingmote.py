@@ -13,20 +13,20 @@ from math import ceil
 
 
 # CONFIGS
-GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # top left corner of emote picker, (0, 0) is screen top left
-# WINDOW_LOCATION = (200, 800)
-# WINDOW_LOCATION = pyautogui.position()
+WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse cursor
 NUM_COLS = 12  # max number of images per row in picker
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_FREQUENTS = True  # show the frequents section at the top
 # absolute paths necessary here if running the program globally
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
-# IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
+
+# ADDITIONAL CONFIGS
+GUI_BG_COLOR = '#36393F'  # copied from discord colors
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
 
@@ -57,7 +57,6 @@ class PingMote():
         self.layout = []
         frequents_section = []
         main_section = []
-        idx = 0
         # add images to self.layout
         for img in sorted(IMAGE_PATH.iterdir()):
             if img.name in self.frequents:  # don't show same image in both sections
@@ -108,6 +107,8 @@ class PingMote():
     def find_window_location(self):
         """ Open the window near where the mouse currently is 
         """
+        if WINDOW_LOCATION:  # use user provided location
+            return WINDOW_LOCATION
         mouse_x, mouse_y = pyautogui.position()
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
         return (mouse_x - 125, mouse_y - 60)
