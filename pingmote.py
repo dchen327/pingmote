@@ -142,9 +142,9 @@ class PingMote():
             """
         return [a[i*num_cols:i*num_cols+num_cols] for i in range(ceil(len(a) / num_cols))]
 
-    def copy_to_clipboard(self, idx):
-        """ Given an an image idx, copy the image link to clipboard """
-        pyperclip.copy(self.links[idx])
+    def copy_to_clipboard(self, filename):
+        """ Given an an image, copy the image link to clipboard """
+        pyperclip.copy(self.filename_to_link[filename])
 
 
 if __name__ == '__main__':
