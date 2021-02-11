@@ -18,7 +18,8 @@ new_size = (64, 64)
 shutil.rmtree(resized_path)  # clear previous files
 os.mkdir(resized_path)  # re-add resized directory
 for img_path in orig_path.iterdir():
-    save_path = resized_path / img_path.name
+    # replace underscores with dashes since postimages uses dashes only
+    save_path = resized_path / img_path.name.replace('_', '-')
     if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
         shutil.copyfile(img_path, save_path)
     else:
