@@ -39,8 +39,7 @@ class PingMote():
         self.frequents = self.get_frequents(self.frequencies)
 
         # Load links and file paths
-        self.links = self.load_links()
-        self.filepaths = sorted(IMAGE_PATH.iterdir())
+        self.filename_to_link = self.load_links()
 
         # GUI setup
         self.setup_gui()
@@ -60,13 +59,13 @@ class PingMote():
         main_section = []
         idx = 0
         # add images to self.layout
-        for idx, img in enumerate(self.filepaths):
+        for img in sorted(IMAGE_PATH.iterdir()):
             if img.name in self.frequents:  # don't show same image in both sections
                 frequents_section.append(
-                    sg.Button('', key=idx, image_filename=img))
+                    sg.Button('', key=img.name, image_filename=img))
             else:
                 main_section.append(
-                    sg.Button('', key=idx, image_filename=img))
+                    sg.Button('', key=img.name, image_filename=img))
         if SHOW_FREQUENTS:
             self.layout += self.list_to_table(
                 frequents_section)
@@ -78,7 +77,7 @@ class PingMote():
         window = sg.Window('Emote Picker', self.layout)
         # event loop to process "events" and get the "values" of the inputs
         while True:
-            event, values = window.read()
+            event, _ = window.read()
             if event == sg.WIN_CLOSED:  # X clicked
                 break
             window.close()
@@ -86,7 +85,7 @@ class PingMote():
 
     def on_select(self, event):
         """ Copy the selected image's link to clipboard and update frequencies """
-        self.copy_to_clipboard(int(event))  # copy clicked image to clipboard
+        self.copy_to_clipboard(event)  # copy clicked image to clipboard
 
         if AUTO_PASTE:
             # wait a bit for copy operation before pasting
@@ -99,9 +98,8 @@ class PingMote():
 
         self.update_frequencies(event)
 
-    def update_frequencies(self, event):
+    def update_frequencies(self, filename):
         """ Increment chosen image's counter in frequencies.json """
-        filename = self.filepaths[event].name
         if filename not in self.frequencies:
             self.frequencies[filename] = 0
         self.frequencies[filename] += 1
@@ -117,7 +115,8 @@ class PingMote():
     def load_links(self):
         """ Load image links from links.txt """
         with open(MAIN_PATH / 'links.txt') as f:
-            return f.read().splitlines()
+            links = f.read().splitlines()
+            return {link.rsplit('/', 1)[-1]: link for link in links}
 
     def load_frequencies(self):
         """ Load the frequencies dictionary from frequencies.json """
