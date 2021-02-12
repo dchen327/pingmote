@@ -17,8 +17,11 @@ new_size = (64, 64)
 
 
 def sanitize_name(name):
-    """ Remove underscores and hyphens for consistent file upload name preservation """
-    return name.replace('_', '').replace('-', '')
+    """ Remove special and uppercase characters for consistent file upload name preservation """
+    replace_chars = ['_', '-', ' ']
+    for c in replace_chars:
+        name = name.replace(c, '')  # remove these chars
+    return name.lower()
 
 
 shutil.rmtree(resized_path)  # clear previous files
