@@ -123,6 +123,8 @@ class PingMote():
             self.frequencies[filename] = 0
         self.frequencies[filename] += 1
         self.write_frequencies(self.frequencies)
+        self.frequents = self.get_frequents(
+            self.frequencies)  # update frequents list
 
     def find_window_location(self):
         """ Open the window near where the mouse currently is 
