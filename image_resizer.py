@@ -15,11 +15,17 @@ orig_path = Path('./assets/original')
 resized_path = Path('./assets/resized')
 new_size = (64, 64)
 
+
+def sanitize_name(name):
+    """ Remove underscores and hyphens for consistent file upload name preservation """
+    return name.replace('_', '').replace('-', '')
+
+
 shutil.rmtree(resized_path)  # clear previous files
 os.mkdir(resized_path)  # re-add resized directory
 for img_path in orig_path.iterdir():
     # replace underscores with dashes since postimages uses dashes only
-    save_path = resized_path / img_path.name.replace('_', '-')
+    save_path = resized_path / sanitize_name(img_path.name)
     if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
         shutil.copyfile(img_path, save_path)
     else:
