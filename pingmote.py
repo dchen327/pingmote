@@ -17,7 +17,9 @@ from pynput.mouse import Controller as MouseController
 # CONFIGS
 
 SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
-MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
+# if running globally, use an absolute path, otherwise use .
+# MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
+MAIN_PATH = Path('.')
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
 SHOW_FREQUENTS = True  # show the frequents section at the top
