@@ -17,6 +17,8 @@ from pynput.mouse import Controller as MouseController
 # CONFIGS
 
 SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
+# on some operating systems, there might be issues with stuff not closing properly
+KILL_SHORTCUT = '<ctrl>+<alt>+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -54,7 +56,10 @@ class PingMote():
         # Keyboard shortcut setup
         self.keyboard = KeyController()
         self.mouse = MouseController()
-        with keyboard.GlobalHotKeys({SHORTCUT: self.on_activate}) as h:
+        with keyboard.GlobalHotKeys({
+            SHORTCUT: self.on_activate,
+            KILL_SHORTCUT: self.kill_all,
+        }) as h:
             h.join()
 
     def setup_gui(self):
@@ -165,8 +170,13 @@ class PingMote():
         pyperclip.copy(self.filename_to_link[filename])
 
     def on_activate(self):
+        """ When hotkey is activated, layout a new GUI and show it """
         self.layout_gui()
         self.create_window_gui()
+
+    def kill_all(self):
+        """ Kill the script in case it's frozen or buggy """
+        quit()
 
 
 if __name__ == '__main__':
