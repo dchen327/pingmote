@@ -11,6 +11,7 @@ from pathlib import Path
 from time import sleep
 from math import ceil
 from pynput import keyboard
+from pynput.mouse import Controller
 
 
 # CONFIGS
@@ -49,6 +50,7 @@ class PingMote():
         self.setup_gui()
 
         # Keyboard shortcut setup
+        self.mouse = Controller()
         with keyboard.GlobalHotKeys({SHORTCUT: self.on_activate}) as h:
             h.join()
 
@@ -116,7 +118,7 @@ class PingMote():
         """
         if WINDOW_LOCATION:  # use user provided location
             return WINDOW_LOCATION
-        mouse_x, mouse_y = pyautogui.position()
+        mouse_x, mouse_y = self.mouse.position
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
         return (mouse_x - 125, mouse_y - 60)
 
