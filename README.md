@@ -1,7 +1,7 @@
 # PingMote
-### a.k.a. Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
+PingMote (a.k.a. Poor Man's Discord Nitro) - A Python GUI for selecting and inserting local images/gifs
 
-With a clean GUI and a frequents section for your most used emotes, PingMote allows you to send your favorite custom emotes/gifs. The emote picker works globally, so it'll work on any website that auto-converts direct image links to images.
+With a clean GUI and a frequents section for your most used emotes, PingMote allows you to send your favorite custom emotes/gifs. The emote picker works globally, so it'll work on any website that auto-converts direct image links to images (Discord and Slack should work, Facebook Messenger *doesn't work*).
 
 # Demo
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/37674516/107125905-81540c80-687a-11eb-9def-b4e51f2b9d32.gif)
@@ -13,7 +13,7 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract. Change into the pingmote directory and run `pingmote.py`.
 
 # Usage
-Running `python3 pingmote.py` will bring up the emote picker, closing when you pick an image.
+Running `python3 pingmote.py` will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
 
 I recommend binding this python command to a global keyboard shortcut (in GNOME: keyboard shortcuts > custom shortcuts > `python3 /abs/path/to/pingmote.py`)
 
