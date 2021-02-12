@@ -10,7 +10,9 @@ With a clean GUI and a frequents section for your most used emotes, PingMote all
 All images/gifs (properly sized) are stored in `assets/resized`. These images are shown in the GUI, and clicking on them copies the corresponding URL to clipboard (with options to auto-paste). The URLs are stored in `links.txt`, and filenames are in alphabetical order for now.
 
 # Getting Started
-Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract. Change into the pingmote directory and run `pingmote.py`.
+- Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract
+- Change into the pingmote directory
+- Run `pip3 install -r requirements.txt` to install all necessary dependencies
 
 # Usage
 Running `python3 pingmote.py` will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
@@ -25,10 +27,10 @@ Running `python3 pingmote.py` will start the script, and when you hit the shortc
 # Dependencies
 These can be installed with `pip3 install -r requirements.txt`
 
-PySimpleGUI (to display the image picker GUI)
-pynput (getting mouse position and keyboard commands)
-pyperclip (copy pasting)
-PIL (for running `image_resizer.py`)
+- PySimpleGUI (to display the image picker GUI)
+- pynput (getting mouse position and keyboard commands)
+- pyperclip (copy pasting)
+- PIL (for running `image_resizer.py`)
 
 # Configs
 - Set `WINDOW_LOCATION` to where you want the top left corner of the emote picker to come up
