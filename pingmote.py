@@ -15,7 +15,7 @@ from pynput import keyboard
 
 # CONFIGS
 
-SHORTCUT = '<alt>+e'
+SHORTCUT = '<alt>+w'
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
@@ -56,7 +56,7 @@ class PingMote():
         sg.theme('LightBrown1')  # Use this as base theme
         # Set location for where the window opens, (0, 0) is top left
         sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
-                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0, window_location=self.find_window_location())
+                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0)
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
@@ -79,6 +79,7 @@ class PingMote():
 
     def create_window_gui(self):
         """ Create the window from layout """
+        sg.SetOptions(window_location=self.find_window_location())
         window = sg.Window('Emote Picker', self.layout)
         # event loop to process "events" and get the "values" of the inputs
         while True:
