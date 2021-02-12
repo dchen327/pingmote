@@ -15,7 +15,7 @@ from pynput import keyboard
 
 # CONFIGS
 
-SHORTCUT = '<alt>+w'
+SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
@@ -118,7 +118,6 @@ class PingMote():
             return WINDOW_LOCATION
         mouse_x, mouse_y = pyautogui.position()
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
-        print(mouse_x, mouse_y)
         return (mouse_x - 125, mouse_y - 60)
 
     def load_links(self):
@@ -156,7 +155,6 @@ class PingMote():
         pyperclip.copy(self.filename_to_link[filename])
 
     def on_activate(self):
-        print('command pressed')
         self.layout_gui()
         self.create_window_gui()
 
