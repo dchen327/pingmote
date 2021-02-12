@@ -50,17 +50,9 @@ class PingMote():
         # Load links and file paths
         self.filename_to_link = self.load_links()
 
-        # GUI setup
+        # Setup
         self.setup_gui()
-
-        # Keyboard shortcut setup
-        self.keyboard = KeyController()
-        self.mouse = MouseController()
-        with keyboard.GlobalHotKeys({
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        }) as h:
-            h.join()
+        self.setup_pynput()
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -104,20 +96,25 @@ class PingMote():
         self.copy_to_clipboard(event)  # copy clicked image to clipboard
 
         if AUTO_PASTE:
-            # wait a bit for copy operation before pasting
-            sleep(SLEEP_TIME)
-            # paste
-            self.keyboard.press(Key.ctrl)
-            self.keyboard.press('v')
-            self.keyboard.release('v')
-            self.keyboard.release(Key.ctrl)
-
+            self.paste_link()
             if AUTO_ENTER:
-                sleep(SLEEP_TIME)
-                self.keyboard.press(Key.enter)
-                self.keyboard.release(Key.enter)
+                self.keyboard_enter()
 
-        self.update_frequencies(event)
+        self.update_frequencies(event)  # update count for chosen image
+
+    def paste_link(self):
+        """ Press ctrl + v to paste """
+        sleep(SLEEP_TIME)  # wait a bit if needed
+        self.keyboard.press(Key.ctrl)
+        self.keyboard.press('v')
+        self.keyboard.release('v')
+        self.keyboard.release(Key.ctrl)
+
+    def keyboard_enter(self):
+        """ Hit enter on keyboard to send pasted link """
+        sleep(SLEEP_TIME)
+        self.keyboard.press(Key.enter)
+        self.keyboard.release(Key.enter)
 
     def update_frequencies(self, filename):
         """ Increment chosen image's counter in frequencies.json """
@@ -168,6 +165,16 @@ class PingMote():
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
         pyperclip.copy(self.filename_to_link[filename])
+
+    def setup_pynput(self):
+        """ Create mouse and keyboard controllers, setup hotkeys """
+        self.keyboard = KeyController()
+        self.mouse = MouseController()
+        with keyboard.GlobalHotKeys({
+            SHORTCUT: self.on_activate,
+            KILL_SHORTCUT: self.kill_all,
+        }) as h:
+            h.join()
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
