@@ -10,25 +10,29 @@ import pyperclip
 from pathlib import Path
 from time import sleep
 from math import ceil
+from pynput import keyboard
 
 
 # CONFIGS
-# top left corner of emote picker, (0, 0) is screen top left
-WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse cursor
-NUM_COLS = 12  # max number of images per row in picker
-NUM_FREQUENT = 12  # max number of images to show in the frequent section
-SHOW_FREQUENTS = True  # show the frequents section at the top
-# absolute paths necessary here if running the program globally
+
+SHORTCUT = '<alt>+e'
 MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
+NUM_COLS = 12  # max number of images per row in picker
+SHOW_FREQUENTS = True  # show the frequents section at the top
+NUM_FREQUENT = 12  # max number of images to show in the frequent section
+# absolute paths necessary here if running the program globally
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
 
 # ADDITIONAL CONFIGS
-GUI_BG_COLOR = '#36393F'  # copied from discord colors
+
+# top left corner of emote picker, (0, 0) is screen top left
+WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse cursor
 # if pasting or enter isn't working, add a short delay (in seconds)
 SLEEP_TIME = 0
+GUI_BG_COLOR = '#36393F'  # copied from discord colors
 
 
 class PingMote():
@@ -43,8 +47,10 @@ class PingMote():
 
         # GUI setup
         self.setup_gui()
-        self.layout_gui()
-        self.create_window_gui()
+
+        # Keyboard shortcut setup
+        with keyboard.GlobalHotKeys({SHORTCUT: self.on_activate}) as h:
+            h.join()
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -111,6 +117,7 @@ class PingMote():
             return WINDOW_LOCATION
         mouse_x, mouse_y = pyautogui.position()
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
+        print(mouse_x, mouse_y)
         return (mouse_x - 125, mouse_y - 60)
 
     def load_links(self):
@@ -146,6 +153,11 @@ class PingMote():
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
         pyperclip.copy(self.filename_to_link[filename])
+
+    def on_activate(self):
+        print('command pressed')
+        self.layout_gui()
+        self.create_window_gui()
 
 
 if __name__ == '__main__':
