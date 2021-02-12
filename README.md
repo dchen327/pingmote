@@ -62,11 +62,11 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 - Other nitro benefits!
 
 # Contributors
-David Chen (Core Developer)
+[David Chen](https://github.com/dchen327) (Core Developer)
 
-Luke Tong (Mac/Windows GUI + clipboard testing)
+[Luke Tong](https://github.com/luke-rt) (Mac/Windows GUI + clipboard testing)
 
-Stephane Morel (Windows testing)
+[Stephane Morel](https://github.com/SoAsEr) (Windows testing)
 
 # Progress Timeline
 - Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
