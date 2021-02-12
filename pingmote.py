@@ -11,7 +11,8 @@ from pathlib import Path
 from time import sleep
 from math import ceil
 from pynput import keyboard
-from pynput.mouse import Controller
+from pynput.keyboard import Key, Controller as KeyController
+from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
@@ -50,7 +51,8 @@ class PingMote():
         self.setup_gui()
 
         # Keyboard shortcut setup
-        self.mouse = Controller()
+        self.keyboard = KeyController()
+        self.mouse = MouseController()
         with keyboard.GlobalHotKeys({SHORTCUT: self.on_activate}) as h:
             h.join()
 
@@ -99,7 +101,12 @@ class PingMote():
             # wait a bit for copy operation before pasting
             sleep(SLEEP_TIME)
             # paste
-            pyautogui.hotkey('ctrl', 'v')
+            # pyautogui.hotkey('ctrl', 'v')
+            self.keyboard.press(Key.ctrl)
+            self.keyboard.press('v')
+            self.keyboard.release('v')
+            self.keyboard.release(Key.ctrl)
+
             if AUTO_ENTER:
                 sleep(SLEEP_TIME)
                 pyautogui.press('enter')  # hit enter
