@@ -7,7 +7,7 @@ import PySimpleGUI as sg
 import json
 import pyperclip
 from pathlib import Path
-from time import sleep
+from time import sleep, time
 from math import ceil
 from pynput import keyboard
 from pynput.keyboard import Key, Controller as KeyController
@@ -66,13 +66,14 @@ class PingMote():
         frequents_section = []
         main_section = []
         # add images to self.layout
+        for img_name in self.frequents:
+            frequents_section.append(
+                sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name))
         for img in sorted(IMAGE_PATH.iterdir()):
             if img.name in self.frequents:  # don't show same image in both sections
-                frequents_section.append(
-                    sg.Button('', key=img.name, image_filename=img))
-            else:
-                main_section.append(
-                    sg.Button('', key=img.name, image_filename=img))
+                continue
+            main_section.append(
+                sg.Button('', key=img.name, image_filename=img))
         if SHOW_FREQUENTS:
             self.layout += self.list_to_table(
                 frequents_section)
