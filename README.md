@@ -30,7 +30,8 @@ In Windows, this can be done with AutoHotKey, and on Mac there's probably someth
 These can be installed with `pip3 install -r requirements.txt`
 
 PySimpleGUI (to display the image picker GUI)
-PyAutoGUI (getting mouse position and keyboard commands (xdotool no longer needed!))
+pynput (getting mouse position and keyboard commands)
+pyperclip (copy pasting)
 PIL (for running `image_resizer.py`)
 
 # Configs
