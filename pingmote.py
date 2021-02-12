@@ -7,7 +7,7 @@ import PySimpleGUI as sg
 import json
 import pyperclip
 from pathlib import Path
-from time import sleep, time
+from time import sleep
 from math import ceil
 from pynput import keyboard
 from pynput.keyboard import Key, Controller as KeyController
@@ -144,18 +144,18 @@ class PingMote():
 
     def load_links(self):
         """ Load image links from links.txt """
-        with open(MAIN_PATH / 'links.txt') as f:
+        with open(MAIN_PATH / 'assets' / 'links.txt') as f:
             links = f.read().splitlines()
             return {link.rsplit('/', 1)[-1]: link for link in links}
 
     def load_frequencies(self):
         """ Load the frequencies dictionary from frequencies.json """
-        with open(MAIN_PATH / 'frequencies.json', 'r') as f:
+        with open(MAIN_PATH / 'assets' / 'frequencies.json', 'r') as f:
             return json.load(f)
 
     def write_frequencies(self, frequencies):
         """ Write new frequencies to frequencies.json """
-        with open(MAIN_PATH / 'frequencies.json', 'w') as f:
+        with open(MAIN_PATH / 'assets' / 'frequencies.json', 'w') as f:
             json.dump(frequencies, f)
 
     def get_frequents(self, frequencies):
