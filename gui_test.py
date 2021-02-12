@@ -1,9 +1,11 @@
 import PySimpleGUI as sg
+from copy import deepcopy
 from pynput import keyboard
 from pynput.keyboard import Key, Controller as KeyController
 from pynput.mouse import Controller as MouseController
+from time import time
 
-SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
+SHORTCUT = '<alt>+q'  # wrap special keys with <> like <ctrl>
 # on some operating systems, there might be issues with stuff not closing properly
 KILL_SHORTCUT = '<ctrl>+<alt>+k'
 
@@ -29,15 +31,21 @@ class GUITest:
 class GUITestWithKB:
     def __init__(self):
         sg.theme('DarkAmber')   # Add a touch of color
+        self.layout = [[sg.Text('Some text on Row 1')],
+                       [sg.Button('Ok'), sg.Button('Cancel')]]
 
     def create_window_gui(self):
         # Create the Window
-        layout = [[sg.Text('Some text on Row 1')],
-                  [sg.Button('Ok'), sg.Button('Cancel')]]
-        window = sg.Window('Window Title', layout)
+        window = sg.Window('Window Title', deepcopy(self.layout))
         # Event Loop to process "events" and get the "values" of the inputs
-        event, _ = window.read()
-        print('Event:', event)
+        while True:
+            event, _ = window.read(timeout=100)
+            if event == sg.WIN_CLOSED:
+                break  # the use has closed the window
+            if event == sg.TIMEOUT_KEY:
+                continue
+            print(event)
+            window.close()
 
         window.close()
 
