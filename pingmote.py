@@ -63,22 +63,29 @@ class PingMote():
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
         self.layout = []
-        frequents_section = []
+        if SHOW_FREQUENTS:
+            self.layout += self.list_to_table(
+                self.layout_frequents_section())
+            self.layout.append([sg.HorizontalSeparator()])
+        self.layout += self.list_to_table(self.layout_main_section())
+
+    def layout_frequents_section(self):
+        """ Return a list of frequent emotes """
+        return [
+            sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name)
+            for img_name in self.frequents
+        ]
+
+    def layout_main_section(self):
+        """ Return a list of main section emotes """
         main_section = []
-        # add images to self.layout
-        for img_name in self.frequents:
-            frequents_section.append(
-                sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name))
         for img in sorted(IMAGE_PATH.iterdir()):
             if img.name in self.frequents:  # don't show same image in both sections
                 continue
             main_section.append(
                 sg.Button('', key=img.name, image_filename=img))
-        if SHOW_FREQUENTS:
-            self.layout += self.list_to_table(
-                frequents_section)
-            self.layout.append([sg.HorizontalSeparator()])
-        self.layout += self.list_to_table(main_section)
+
+        return main_section
 
     def create_window_gui(self):
         """ Create the window from layout """
