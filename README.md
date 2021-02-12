@@ -15,10 +15,6 @@ Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or downloa
 # Usage
 Running `python3 pingmote.py` will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
 
-I recommend binding this python command to a global keyboard shortcut (in GNOME: keyboard shortcuts > custom shortcuts > `python3 /abs/path/to/pingmote.py`)
-
-In Windows, this can be done with AutoHotKey, and on Mac there's probably something that'll work too (maybe Automator?)
-
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
