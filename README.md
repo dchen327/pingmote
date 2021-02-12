@@ -22,7 +22,7 @@ In Windows, this can be done with AutoHotKey, and on Mac there's probably someth
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
-- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs, extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
+- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
 - Upload all files to an image hoster (I like [postimages](https://postimages.org/)), making sure to upload in alphabetical order. Copy all the direct image links (ending in the file extension) and paste them in `links.txt`
 - Here are some good emote sources for both images/gifs (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
 
@@ -51,20 +51,23 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
 - Record a new demo vid (with favorites bar)
-- Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
 - Better ordering of emotes (categorization, etc.)
 - Separate gifs and statics?
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
+- Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
 - Inline emotes/gifs, keyboard shortcuts by name (ex: :emote_name:)
 - React with emotes
+- Other nitro benefits!
 
 # Contributors
-David Chen (dchen327)
+David Chen (Core Developer)
 
 Luke Tong (Mac/Windows GUI + clipboard testing)
+
+Stephane Morel (Windows testing)
