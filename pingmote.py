@@ -4,7 +4,6 @@ Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
 Author: David Chen
 '''
 import PySimpleGUI as sg
-import pyautogui
 import json
 import pyperclip
 from pathlib import Path
@@ -101,7 +100,6 @@ class PingMote():
             # wait a bit for copy operation before pasting
             sleep(SLEEP_TIME)
             # paste
-            # pyautogui.hotkey('ctrl', 'v')
             self.keyboard.press(Key.ctrl)
             self.keyboard.press('v')
             self.keyboard.release('v')
@@ -109,7 +107,8 @@ class PingMote():
 
             if AUTO_ENTER:
                 sleep(SLEEP_TIME)
-                pyautogui.press('enter')  # hit enter
+                self.keyboard.press(Key.enter)
+                self.keyboard.release(Key.enter)
 
         self.update_frequencies(event)
 
