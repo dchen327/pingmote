@@ -1,7 +1,4 @@
-evdev==1.4.0
 Pillow==8.1.0
 pynput==1.7.3
 pyperclip==1.8.1
 PySimpleGUI==4.34.0
-python-xlib==0.29
-six==1.15.0
