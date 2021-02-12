@@ -67,3 +67,13 @@ David Chen (Core Developer)
 Luke Tong (Mac/Windows GUI + clipboard testing)
 
 Stephane Morel (Windows testing)
+
+# Progress Timeline
+- Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
+- Switched to PyAutoGUI for keyboard simulation, `xdotool` no longer needed
+- Wrote `image_resizer.py` for locally resizing images
+- Uploaded images to postimages; simplified copy pasting of links only and not image data (removed all subprocess calls)
+- Added frequents section for favorite emotes
+- Added feature to open the GUI near the mouse cursor
+- Cleaned up links for better file to link mapping
+- Switched to `pynput` for cross-platform global hotkey mapping, fully removed PyAutoGUI dependencies
