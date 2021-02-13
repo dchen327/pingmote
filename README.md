@@ -11,7 +11,7 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 
 # Getting Started
 - Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract
-- Change into the pingmote directory
+- Change into the pingmote directory (make sure you can see `pingmote.py`)
 - Run `pip3 install -r requirements.txt` to install all necessary dependencies
 
 # Usage
@@ -21,8 +21,11 @@ Running `python3 pingmote.py` will start the script, and when you hit the shortc
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
 - Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
-- Upload all files to an image hoster (I like [postimages](https://postimages.org/)), making sure to upload in alphabetical order. Copy all the direct image links (ending in the file extension) and paste them in `links.txt`
-- Here are some good emote sources for both images/gifs (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
+- Upload all files to an image hoster (I like [postimages](https://postimages.org/)). Copy all the direct image links (ending in the file extension) and paste them in `links.txt`
+- Here are some good emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
+
+# Configs
+- Check the top of `pingmote.py` for configs
 
 # Dependencies
 These can be installed with `pip3 install -r requirements.txt`
@@ -31,13 +34,6 @@ These can be installed with `pip3 install -r requirements.txt`
 - pynput (getting mouse position and keyboard commands)
 - pyperclip (copy pasting)
 - PIL (for running `image_resizer.py`)
-
-# Configs
-- Set `WINDOW_LOCATION` to where you want the top left corner of the emote picker to come up
-- Set `IMAGE_PATH` to the path where your resized images are stored (use an absolute path if you want to run this globally)
-- Set `AUTO_PASTE` if you want to automatically paste after selecting
-- Set `AUTO_ENTER` if you want to automatically hit enter after pasting
-- Check the top of `pingmote.py` for a couple additional configs
 
 ## For Mac:
 There seem to be some weird Mac GUI errors with Tkinter (testing soon)
@@ -64,11 +60,9 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 - Other nitro benefits!
 
 # Contributors
-[David Chen](https://github.com/dchen327) (Core Developer)
-
-[Luke Tong](https://github.com/luke-rt) (Mac/Windows GUI + clipboard testing)
-
-[Stephane Morel](https://github.com/SoAsEr) (Windows testing)
+- [David Chen](https://github.com/dchen327) (Core Developer)
+- [Luke Tong](https://github.com/luke-rt) (Mac/Windows GUI + clipboard testing)
+- [Stephane Morel](https://github.com/SoAsEr) (Windows testing)
 
 # Progress Timeline
 - Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
