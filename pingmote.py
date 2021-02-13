@@ -111,11 +111,9 @@ class PingMote():
     def create_window_gui(self):
         """ Create the window from layout """
         sg.SetOptions(window_location=self.find_window_location())
-        window = sg.Window('Emote Picker', self.layout)
-        # one-shot GUI, no loop needed
-        event, _ = window.read()
-        if event != sg.WIN_CLOSED:  # emote clicked
-            window.close()
+        # single line one-shot GUI, no loop needed
+        event, _ = sg.Window('Emote Picker', self.layout).read(close=True)
+        if event is not None and event != sg.WINDOW_CLOSED:
             self.on_select(event)
 
     def on_select(self, event):
