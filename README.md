@@ -48,7 +48,6 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
-- Record a new demo vid (with favorites bar)
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
