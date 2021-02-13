@@ -154,7 +154,7 @@ class PingMote():
     def write_frequencies(self, frequencies):
         """ Write new frequencies to frequencies.json """
         with open(MAIN_PATH / 'assets' / 'frequencies.json', 'w') as f:
-            json.dump(frequencies, f)
+            json.dump(frequencies, f, indent=4)
 
     def get_frequents(self, frequencies):
         """ Get the images used most frequently """
