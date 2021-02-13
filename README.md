@@ -61,10 +61,9 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 - React with emotes
 - Other nitro benefits!
 
-# Contributors
-- [David Chen](https://github.com/dchen327) (Core Developer)
-- [Luke Tong](https://github.com/luke-rt) (Mac/Windows GUI + clipboard testing)
-- [Stephane Morel](https://github.com/SoAsEr) (Windows testing)
+# Acknowledgements
+- Thanks to [Luke Tong](https://github.com/luke-rt) for cross-platform GUI and clipboard testing
+- Thanks to [Stephane Morel](https://github.com/SoAsEr) for Windows testing
 
 # Progress Timeline
 - Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
@@ -76,3 +75,6 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 - Cleaned up links for better file to link mapping
 - Switched to `pynput` for cross-platform global hotkey mapping, fully removed PyAutoGUI dependencies
 - Added section labels and ability to separate images and gifs
+
+# License
+[MIT License](https://github.com/dchen327/pingmote/blob/master/LICENSE.md)
