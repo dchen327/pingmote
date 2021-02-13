@@ -157,7 +157,7 @@ class PingMote():
             return WINDOW_LOCATION
         mouse_x, mouse_y = self.mouse.position
         # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
-        return (mouse_x - 125, mouse_y - 60)
+        return (mouse_x - 400, mouse_y - 300)
 
     def load_links(self):
         """ Load image links from links.txt """
