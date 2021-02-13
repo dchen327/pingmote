@@ -1,33 +1,36 @@
 # pingmote
-A cross-platform Python global emote picker to quickly insert custom emotes and gifs *(Poor Man's Discord Nitro)*
+A cross-platform Python global emote picker to quickly insert custom images/gifs 
+
+Motivation: *Poor Man's Discord Nitro*
 
 
 # Demo
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/37674516/107125905-81540c80-687a-11eb-9def-b4e51f2b9d32.gif)
 
 # How It Works
-All images/gifs (properly sized) are stored in `assets/resized`. These images are shown in the GUI, and clicking on them copies the corresponding URL to clipboard (with options to auto-paste). The URLs are stored in `links.txt`, and filenames are in alphabetical order for now.
+All images/gifs (properly sized) are stored in `assets/resized`. These images are shown in the GUI, and clicking on them copies the corresponding URL to clipboard (with options to auto-paste). The URLs are stored in `links.txt`.
 
 # Getting Started
 - Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract
 - Change into the pingmote directory (make sure you can see `pingmote.py`)
-- Run `pip3 install -r requirements.txt` to install all necessary dependencies
+- Run `pip install -r requirements.txt` to install all necessary dependencies (use `pip3` if needed)
 
 # Usage
-Running `python3 pingmote.py` will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
+Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
 - Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
 - Upload all files to an image hoster (I like [postimages](https://postimages.org/)). Copy all the direct image links (ending in the file extension) and paste them in `links.txt`
+- Imgur will not work in the current implementation, since imgur links do not contain the original filename
 - Here are some good emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
 
 # Configs
 - Check the top of `pingmote.py` for configs
 
 # Dependencies
-These can be installed with `pip3 install -r requirements.txt`
+These can be installed with `pip install -r requirements.txt`
 
 - PySimpleGUI (to display the image picker GUI)
 - pynput (getting mouse position and keyboard commands)
