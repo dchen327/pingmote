@@ -26,7 +26,7 @@ IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
 SHOW_FREQUENTS = True  # show the frequents section at the top
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
-# absolute paths necessary here if running the program globally
+SHOW_LABELS = True  # show section labels (frequents, static, gifs)
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -64,9 +64,13 @@ class PingMote():
         """ Layout GUI with PySimpleGui """
         self.layout = []
         if SHOW_FREQUENTS:
+            if SHOW_LABELS:
+                self.layout.append([sg.Text('Frequently Used')])
             self.layout += self.list_to_table(
                 self.layout_frequents_section())
             self.layout.append([sg.HorizontalSeparator()])
+        if SHOW_LABELS:
+            self.layout.append([sg.Text('Main Section')])
         self.layout += self.list_to_table(self.layout_main_section())
 
     def layout_frequents_section(self):
@@ -80,7 +84,7 @@ class PingMote():
         """ Return a list of main section emotes """
         main_section = []
         for img in sorted(IMAGE_PATH.iterdir()):
-            if img.name in self.frequents:  # don't show same image in both sections
+            if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
             main_section.append(
                 sg.Button('', key=img.name, image_filename=img))
