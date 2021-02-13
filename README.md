@@ -1,7 +1,6 @@
-# PingMote
-PingMote (a.k.a. Poor Man's Discord Nitro) - A Python GUI for selecting and inserting local images/gifs
+# pingmote
+A cross-platform Python global emote picker to quickly insert custom emotes and gifs *(Poor Man's Discord Nitro)*
 
-With a clean GUI and a frequents section for your most used emotes, PingMote allows you to send your favorite custom emotes/gifs. The emote picker works globally, so it'll work on any website that auto-converts direct image links to images (Discord and Slack should work, Facebook Messenger *doesn't work*).
 
 # Demo
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/37674516/107125905-81540c80-687a-11eb-9def-b4e51f2b9d32.gif)
@@ -36,17 +35,17 @@ These can be installed with `pip3 install -r requirements.txt`
 - PIL (for running `image_resizer.py`)
 
 ## For Mac:
-There seem to be some weird Mac GUI errors with Tkinter (testing soon)
+There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
 # Additional Notes
-- Since this program relies on pasting resized images as emotes, we can't use inline emotes or reacts.
+- Since this program relies on pasting image/gif URLs as emotes, we can't use inline emotes or reacts.
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
+- Websites that don't automembed image links won't work (ex: Facebook Messenger)
 
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
 - Record a new demo vid (with favorites bar)
 - Better ordering of emotes (categorization, etc.)
-- Separate gifs and statics?
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
