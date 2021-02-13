@@ -40,10 +40,11 @@ These can be installed with `pip install -r requirements.txt`
 ## For Mac:
 There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
-# Additional Notes
+# Notes
 - Since this program relies on pasting image/gif URLs as emotes, we can't use inline emotes or reacts.
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
-- Websites that don't automembed image links won't work (ex: Facebook Messenger)
+- Pretty much only Discord works (Facebook Messenger and Slack don't)
+- In addition, Facebook and Slack don't look good when images are directly pasted in either
 
 # TODOs
 - Fix mac stuff (GUIs are super weird on mac)
