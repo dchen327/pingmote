@@ -73,3 +73,4 @@ There seem to be some weird Mac GUI errors with Tkinter (testing soon)
 - Added feature to open the GUI near the mouse cursor
 - Cleaned up links for better file to link mapping
 - Switched to `pynput` for cross-platform global hotkey mapping, fully removed PyAutoGUI dependencies
+- Added section labels and ability to separate images and gifs
