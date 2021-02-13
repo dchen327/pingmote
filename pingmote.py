@@ -68,19 +68,16 @@ class PingMote():
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
                 self.layout.append([sg.Text('Frequently Used')])
-            self.layout += self.list_to_table(
-                self.layout_frequents_section())
+            self.layout += self.layout_frequents_section()
             self.layout.append([sg.HorizontalSeparator()])
-        if SHOW_LABELS:
-            self.layout.append([sg.Text('Main Section')])
         self.layout += self.layout_main_section()
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
-        return [
+        return self.list_to_table([
             sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name)
             for img_name in self.frequents
-        ]
+        ])
 
     def layout_main_section(self):
         """ Return a list of main section emotes.
@@ -100,10 +97,16 @@ class PingMote():
             else:
                 main_section.append(button)
         if SEPARATE_GIFS:
-            main_section = self.list_to_table(
-                statics) + self.list_to_table(gifs)
+            combined = []
+            if SHOW_LABELS:
+                combined.append([sg.Text('Static')])
+            combined += self.list_to_table(statics)
+            if SHOW_LABELS:
+                combined.append([sg.Text('GIFs')])
+            combined += self.list_to_table(gifs)
+            return combined
 
-        return main_section
+        return self.list_to_table(main_section)
 
     def create_window_gui(self):
         """ Create the window from layout """
