@@ -27,6 +27,8 @@ NUM_COLS = 12  # max number of images per row in picker
 SHOW_FREQUENTS = True  # show the frequents section at the top
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_LABELS = True  # show section labels (frequents, static, gifs)
+SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
+
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -71,7 +73,7 @@ class PingMote():
             self.layout.append([sg.HorizontalSeparator()])
         if SHOW_LABELS:
             self.layout.append([sg.Text('Main Section')])
-        self.layout += self.list_to_table(self.layout_main_section())
+        self.layout += self.layout_main_section()
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
@@ -81,13 +83,25 @@ class PingMote():
         ]
 
     def layout_main_section(self):
-        """ Return a list of main section emotes """
+        """ Return a list of main section emotes.
+        If SEPARATE_GIFS is True, split into static and emoji sections
+        """
         main_section = []
+        statics, gifs = [], []
         for img in sorted(IMAGE_PATH.iterdir()):
             if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
-            main_section.append(
-                sg.Button('', key=img.name, image_filename=img))
+            button = sg.Button('', key=img.name, image_filename=img)
+            if SEPARATE_GIFS:
+                if img.suffix == '.png':
+                    statics.append(button)
+                else:  # gif
+                    gifs.append(button)
+            else:
+                main_section.append(button)
+        if SEPARATE_GIFS:
+            main_section = self.list_to_table(
+                statics) + self.list_to_table(gifs)
 
         return main_section
 
