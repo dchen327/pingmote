@@ -47,7 +47,7 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 - In addition, Facebook and Slack don't look good when images are directly pasted in either
 
 # TODOs
-- Fix mac stuff (GUIs are super weird on mac)
+- Testing on Mac (current issue: pynput permissions and ctrl/alt detection broken, GUI seems fine on Python 3.9)
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)

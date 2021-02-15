@@ -1,5 +1,5 @@
 '''
-Poor Man's Discord Nitro - A Python GUI for selecting and inserting local images
+pingmote: a cross-platform Python global emote picker to quickly insert custom images/gifs
 
 Author: David Chen
 '''
