@@ -167,8 +167,7 @@ class PingMote():
             self.frequencies)  # update frequents list
 
     def find_window_location(self):
-        """ Open the window near where the mouse currently is 
-        """
+        """ Open the window near where the mouse currently is """
         if WINDOW_LOCATION:  # use user provided location
             return WINDOW_LOCATION
         mouse_x, mouse_y = self.mouse.position
@@ -199,11 +198,11 @@ class PingMote():
         return [img for img, _ in desc_frequencies[:NUM_FREQUENT]]
 
     def list_to_table(self, a, num_cols=NUM_COLS):
-        """ Given a list a, convert it to rows and columns 
+        """ Given a list a, convert it to rows and columns
             ex) a = [1, 2, 3, 4, 5], num_cols = 2
             returns: [[1, 2], [3, 4], [5]]
             """
-        return [a[i*num_cols:i*num_cols+num_cols] for i in range(ceil(len(a) / num_cols))]
+        return [a[i * num_cols:i * num_cols + num_cols] for i in range(ceil(len(a) / num_cols))]
 
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
