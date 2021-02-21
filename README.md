@@ -48,12 +48,14 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
 # TODOs
 - Testing on Mac (current issue: pynput permissions and ctrl/alt detection broken, GUI seems fine on Python 3.9)
+- Testing on Windows (current issue: pynput being inconsistent, might be because of threading and GUI conflicts)
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
 - Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
+- Non-destructive pasting (store clipboard contents)
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
@@ -64,6 +66,7 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 # Acknowledgements
 - Thanks to [Luke Tong](https://github.com/luke-rt) for cross-platform GUI and clipboard testing
 - Thanks to [Stephane Morel](https://github.com/SoAsEr) for Windows testing
+- Thanks to [Brazil-0034](https://github.com/Brazil-0034) for adding support for non-destructive pasting
 
 # Progress Timeline
 - Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
