@@ -41,6 +41,9 @@ WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse curso
 SLEEP_TIME = 0
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 
+# SAVED CLIPBOARD
+savedClipboard = pyperclip.paste();
+
 
 class PingMote():
 
@@ -117,23 +120,23 @@ class PingMote():
             self.on_select(event)
 
     def on_select(self, event):
-        """ Copy the selected image's link to clipboard and update frequencies """
-        self.copy_to_clipboard(event)  # copy clicked image to clipboard
+        """ Paste Selected Emoji Non-Destructively """
 
         if AUTO_PASTE:
-            self.paste_link()
+            self.pasteSelection(event)
             if AUTO_ENTER:
                 self.keyboard_enter()
+        else:
+        	self.copy_to_clipboard(self.filename_to_link[filename])
 
         self.update_frequencies(event)  # update count for chosen image
 
-    def paste_link(self):
-        """ Press ctrl + v to paste """
-        sleep(SLEEP_TIME)  # wait a bit if needed
-        self.keyboard.press(Key.ctrl)
-        self.keyboard.press('v')
-        self.keyboard.release('v')
-        self.keyboard.release(Key.ctrl)
+    def copy_to_clipboard(self, filename):
+        """ Given an an image, copy the image link to clipboard """
+        pyperclip.copy(self.filename_to_link[filename])
+
+    def pasteSelection(self, filename):
+        self.keyboard.type(self.filename_to_link[filename])
 
     def keyboard_enter(self):
         """ Hit enter on keyboard to send pasted link """
@@ -188,10 +191,6 @@ class PingMote():
             returns: [[1, 2], [3, 4], [5]]
             """
         return [a[i*num_cols:i*num_cols+num_cols] for i in range(ceil(len(a) / num_cols))]
-
-    def copy_to_clipboard(self, filename):
-        """ Given an an image, copy the image link to clipboard """
-        pyperclip.copy(self.filename_to_link[filename])
 
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
