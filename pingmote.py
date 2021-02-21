@@ -41,9 +41,6 @@ WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse curso
 SLEEP_TIME = 0
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 
-# SAVED CLIPBOARD
-savedClipboard = pyperclip.paste();
-
 
 class PingMote():
 
