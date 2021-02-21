@@ -32,6 +32,10 @@ SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
+# if True and AUTO_PASTE is True, will paste without affecting clipboard
+# NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
+# or else the beginning of the URL might get cut off
+PRESERVE_CLIPBOARD = False
 
 # ADDITIONAL CONFIGS
 
@@ -117,14 +121,18 @@ class PingMote():
             self.on_select(event)
 
     def on_select(self, event):
-        """ Paste Selected Emoji Non-Destructively """
+        """ Paste selected image non-destructively (if auto paste is True) """
 
         if AUTO_PASTE:
-            self.pasteSelection(event)
+            if PRESERVE_CLIPBOARD:  # write text with pynput
+                self.paste_selection(event)
+            else:  # copy to clipboard then paste
+                self.copy_to_clipboard(event)
+                self.paste_link()
             if AUTO_ENTER:
                 self.keyboard_enter()
         else:
-        	self.copy_to_clipboard(self.filename_to_link[filename])
+            self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
 
@@ -132,8 +140,16 @@ class PingMote():
         """ Given an an image, copy the image link to clipboard """
         pyperclip.copy(self.filename_to_link[filename])
 
-    def pasteSelection(self, filename):
+    def paste_selection(self, filename):
         self.keyboard.type(self.filename_to_link[filename])
+
+    def paste_link(self):
+        """ Press ctrl + v to paste """
+        sleep(SLEEP_TIME)  # wait a bit if needed
+        self.keyboard.press(Key.ctrl)
+        self.keyboard.press('v')
+        self.keyboard.release('v')
+        self.keyboard.release(Key.ctrl)
 
     def keyboard_enter(self):
         """ Hit enter on keyboard to send pasted link """
