@@ -37,6 +37,11 @@ These can be installed with `pip install -r requirements.txt`
 - pyperclip (copy pasting)
 - PIL (for running `image_resizer.py`)
 
+## For Windows:
+- I cannot get pynput to work with PySimpleGUI (I've spent like 3 weeks on this)
+- For now, I'm triggering `pingmote_no_hotkeys.py` from AutoHotKey
+- The core issue is that both pynput and PySimpleGUI are blocking, and threading is weird
+
 ## For Mac:
 There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
@@ -48,7 +53,6 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 
 # TODOs
 - Testing on Mac (current issue: pynput permissions and ctrl/alt detection broken, GUI seems fine on Python 3.9)
-- Testing on Windows (current issue: pynput being inconsistent, might be because of threading and GUI conflicts)
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
