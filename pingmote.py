@@ -30,9 +30,9 @@ NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_LABELS = True  # show section labels (frequents, static, gifs)
 SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 
-AUTO_PASTE = True  # if True, automatically pastes the image after selection
+AUTO_PASTE = False  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = True
+AUTO_ENTER = False
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
 # NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
@@ -58,7 +58,6 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
-        self.ignore_pynput = False
         self.setup_gui()
         self.setup_pynput()
 
@@ -138,7 +137,6 @@ class PingMote():
             self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
-        self.ignore_pynput = False
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
@@ -220,9 +218,6 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
-        if self.ignore_pynput:  # don't do anything here
-            return
-        self.ignore_pynput = True
         self.layout_gui()
         self.create_window_gui()
 
