@@ -6,7 +6,6 @@ Author: David Chen
 import PySimpleGUI as sg
 import json
 import pyperclip
-import pynput
 from pathlib import Path
 from time import sleep
 from math import ceil
@@ -16,10 +15,6 @@ from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
-
-SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
-# on some operating systems, there might be issues with stuff not closing properly
-KILL_SHORTCUT = '<ctrl>+<alt>+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -30,9 +25,9 @@ NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_LABELS = True  # show section labels (frequents, static, gifs)
 SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 
-AUTO_PASTE = False  # if True, automatically pastes the image after selection
+AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = False
+AUTO_ENTER = True
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
 # NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
@@ -58,8 +53,10 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
-        self.setup_gui()
         self.setup_pynput()
+        self.setup_gui()
+        self.layout_gui()
+        self.create_window_gui()
 
 
     def setup_gui(self):
@@ -137,9 +134,6 @@ class PingMote():
             self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
-        self.listener.start()
-        self.listener.join()
-        print('hi')
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
@@ -213,23 +207,6 @@ class PingMote():
         """ Create mouse and keyboard controllers, setup hotkeys """
         self.keyboard = KeyController()
         self.mouse = MouseController()
-        self.listener = keyboard.GlobalHotKeys({
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        })
-        self.listener.start()
-        self.listener.join()
-
-    def on_activate(self):
-        """ When hotkey is activated, layout a new GUI and show it """
-        self.listener.stop()
-        self.layout_gui()
-        self.create_window_gui()
-
-    def kill_all(self):
-        """ Kill the script in case it's frozen or buggy """
-        quit()
-
 
 if __name__ == '__main__':
     pingmote = PingMote()
