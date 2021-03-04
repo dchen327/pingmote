@@ -60,6 +60,9 @@ class PingMote():
         self.setup_gui()
         self.setup_pynput()
 
+        self.on_activate()
+        print('reacted end of init')
+
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
         # Set location for where the window opens, (0, 0) is top left
@@ -79,7 +82,7 @@ class PingMote():
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
         return self.list_to_table([
-            sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name)
+            sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name, image_subsample=2)
             for img_name in self.frequents
         ])
 
@@ -92,7 +95,7 @@ class PingMote():
         for img in sorted(IMAGE_PATH.iterdir()):
             if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
-            button = sg.Button('', key=img.name, image_filename=img)
+            button = sg.Button('', key=img.name, image_filename=img, image_subsample=2)
             if SEPARATE_GIFS:
                 if img.suffix == '.png':
                     statics.append(button)
