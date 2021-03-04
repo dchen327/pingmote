@@ -10,17 +10,25 @@ KILL_SHORTCUT = '<ctrl>+<alt>+k'
 
 class PynputGUITest:
     def __init__(self):
-        thread2 = threading.Thread(target=self.setup_pynput)
-        thread2.start()
+        # thread2 = threading.Thread(target=self.setup_pynput)
+        # thread2.start()
+        # while True:
+        #     pass
+        print(self.show_gui())
 
     def setup_pynput(self):
-            """ Create mouse and keyboard controllers, setup hotkeys """
-            self.keyboard = KeyController()
-            with keyboard.GlobalHotKeys({
-                SHORTCUT: self.on_activate,
-                KILL_SHORTCUT: self.kill_all,
-            }) as h:
-                h.join()
+        """ Create mouse and keyboard controllers, setup hotkeys """
+        self.keyboard = KeyController()
+        with keyboard.GlobalHotKeys({
+            SHORTCUT: self.on_activate,
+            KILL_SHORTCUT: self.kill_all,
+        }) as h:
+            h.join()
+        # listener = keyboard.GlobalHotKeys({
+        #     SHORTCUT: self.on_activate,
+        #     KILL_SHORTCUT: self.kill_all,
+        # })
+        # listener.start()
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
@@ -36,19 +44,11 @@ class PynputGUITest:
         layout = [[sg.Output(size=(60,10))],
             [sg.Button('Go'), sg.Button('Nothing'), sg.Button('Exit')]  ]
 
-        window = sg.Window('Window Title', layout)
-
-        while True:             # Event Loop
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Exit':
-                break
-            if event == 'Go':
-                print('About to go to call my long function')
-            elif event == '-THREAD DONE-':
-                print('Your long operation completed')
-            else:
-                print(event, values)
-        window.close()
+        print('create window')
+        event, _ = sg.Window('Window Title', layout).read(close=True)
+        print(event, _)
+        print('hi?')
+        return 'hi'
 
 if __name__ == '__main__':
     pynput_gui_test = PynputGUITest()
