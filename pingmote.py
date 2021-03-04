@@ -137,6 +137,9 @@ class PingMote():
             self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
+        self.listener.start()
+        self.listener.join()
+        print('hi')
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
@@ -210,14 +213,16 @@ class PingMote():
         """ Create mouse and keyboard controllers, setup hotkeys """
         self.keyboard = KeyController()
         self.mouse = MouseController()
-        with keyboard.GlobalHotKeys({
+        self.listener = keyboard.GlobalHotKeys({
             SHORTCUT: self.on_activate,
             KILL_SHORTCUT: self.kill_all,
-        }) as h:
-            h.join()
+        })
+        self.listener.start()
+        self.listener.join()
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
+        self.listener.stop()
         self.layout_gui()
         self.create_window_gui()
 
