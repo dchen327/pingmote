@@ -9,7 +9,6 @@ import pyperclip
 from pathlib import Path
 from time import sleep
 from math import ceil
-from pynput import keyboard
 from pynput.keyboard import Key, Controller as KeyController
 from pynput.mouse import Controller as MouseController
 
