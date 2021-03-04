@@ -6,6 +6,7 @@ Author: David Chen
 import PySimpleGUI as sg
 import json
 import pyperclip
+import pynput
 from pathlib import Path
 from time import sleep
 from math import ceil
@@ -57,11 +58,10 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
+        self.ignore_pynput = False
         self.setup_gui()
         self.setup_pynput()
 
-        self.on_activate()
-        print('reacted end of init')
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -138,6 +138,7 @@ class PingMote():
             self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
+        self.ignore_pynput = False
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
@@ -219,6 +220,9 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
+        if self.ignore_pynput:  # don't do anything here
+            return
+        self.ignore_pynput = True
         self.layout_gui()
         self.create_window_gui()
 

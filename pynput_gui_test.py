@@ -14,7 +14,7 @@ class PynputGUITest:
         # thread2.start()
         # while True:
         #     pass
-        print(self.show_gui())
+        self.setup_pynput()
 
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
@@ -24,16 +24,11 @@ class PynputGUITest:
             KILL_SHORTCUT: self.kill_all,
         }) as h:
             h.join()
-        # listener = keyboard.GlobalHotKeys({
-        #     SHORTCUT: self.on_activate,
-        #     KILL_SHORTCUT: self.kill_all,
-        # })
-        # listener.start()
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
         print('gui activated')
-        self.show_gui()
+        # self.show_gui()
 
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
@@ -46,9 +41,7 @@ class PynputGUITest:
 
         print('create window')
         event, _ = sg.Window('Window Title', layout).read(close=True)
-        print(event, _)
-        print('hi?')
-        return 'hi'
 
 if __name__ == '__main__':
+    print('hi')
     pynput_gui_test = PynputGUITest()
