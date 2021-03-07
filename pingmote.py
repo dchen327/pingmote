@@ -32,7 +32,7 @@ AUTO_ENTER = True
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
 # NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
-PRESERVE_CLIPBOARD = False
+PRESERVE_CLIPBOARD = True
 
 # ADDITIONAL CONFIGS
 
@@ -58,7 +58,7 @@ class PingMote():
         self.setup_pynput()
 
         while True:
-            keyboard.wait('alt+w')  # block execution until hotkey
+            keyboard.wait(SHORTCUT)  # block execution until hotkey
             self.on_activate()  # show GUI
 
     def setup_gui(self):
