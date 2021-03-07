@@ -209,9 +209,8 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
-        print('activated')
         self.create_window_gui()
-        self.layout_gui()
+        self.layout_gui()  # layout a new copy of the GUI and store in memory for faster launch
 
 
 if __name__ == '__main__':
