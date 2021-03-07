@@ -16,6 +16,7 @@ from pynput.mouse import Controller as MouseController
 # CONFIGS
 
 SHORTCUT = 'alt+w'
+KILL_SHORTCUT = 'ctrl+alt+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -58,6 +59,7 @@ class PingMote():
         self.setup_gui()
 
         keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
         # while True:
             # keyboard.wait(SHORTCUT)  # block execution until hotkey
             # self.on_activate()  # show GUI
@@ -224,9 +226,11 @@ class PingMote():
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
         print('activated')
-        # self.create_window_gui()
         self.window.un_hide()
-        # self.layout_gui()  # layout a new copy of the GUI and store in memory for faster launch
+    
+    def kill_all(self):
+        """ Kill the script in case it's frozen or buggy """
+        quit()
 
 
 if __name__ == '__main__':
