@@ -15,7 +15,7 @@ from pynput.mouse import Controller as MouseController
 
 # CONFIGS
 
-SHORTCUT = 'alt+w'
+SHORTCUT = 'alt+shift+w'
 KILL_SHORTCUT = 'ctrl+alt+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
@@ -82,6 +82,7 @@ class PingMote():
             self.layout += self.layout_frequents_section()
             self.layout.append([sg.HorizontalSeparator()])
         self.layout += self.layout_main_section()
+        print('creating window...')
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
         self.window.hide()
         print('hidden')
@@ -132,9 +133,11 @@ class PingMote():
         print('show window')
         # Event loop
         while True:
-            event, _ = self.window.read()
+            event, _ = self.window.read(timeout=100, timeout_key='timeout')
             if event == sg.WINDOW_CLOSED:
                 break
+            if event == 'timeout':
+                continue
             self.on_select(event)
 
     def on_select(self, event):
