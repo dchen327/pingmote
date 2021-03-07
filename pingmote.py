@@ -12,7 +12,7 @@ from time import sleep
 from math import ceil
 # from pynput import keyboard as pynput_keyboard
 # from pynput.keyboard import Key, Controller as KeyController
-# from pynput.mouse import Controller as MouseController
+from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
@@ -58,8 +58,11 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
+        self.gui_activated = False
         self.setup_gui()
         self.setup_pynput()
+
+        keyboard.wait('esc')
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -69,6 +72,7 @@ class PingMote():
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
+        print('layout')
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
@@ -210,7 +214,7 @@ class PingMote():
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
         # self.keyboard = KeyController()
-        # self.mouse = MouseController()
+        self.mouse = MouseController()
         # with keyboard.GlobalHotKeys({
         #     SHORTCUT: self.on_activate,
         #     KILL_SHORTCUT: self.kill_all,
@@ -220,6 +224,8 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
+        self.gui_activated = True
+        print('activated')
         self.layout_gui()
         self.create_window_gui()
 
