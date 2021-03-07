@@ -6,12 +6,13 @@ Author: David Chen
 import PySimpleGUI as sg
 import json
 import pyperclip
+import keyboard
 from pathlib import Path
 from time import sleep
 from math import ceil
-from pynput import keyboard
-from pynput.keyboard import Key, Controller as KeyController
-from pynput.mouse import Controller as MouseController
+# from pynput import keyboard as pynput_keyboard
+# from pynput.keyboard import Key, Controller as KeyController
+# from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
@@ -59,9 +60,6 @@ class PingMote():
         # Setup
         self.setup_gui()
         self.setup_pynput()
-
-        self.on_activate()
-        print('reacted end of init')
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -144,15 +142,17 @@ class PingMote():
         pyperclip.copy(self.filename_to_link[filename])
 
     def paste_selection(self, filename):
-        self.keyboard.type(self.filename_to_link[filename])
+        # self.keyboard.type(self.filename_to_link[filename])
+        print('paste')
 
     def paste_link(self):
         """ Press ctrl + v to paste """
-        sleep(SLEEP_TIME)  # wait a bit if needed
-        self.keyboard.press(Key.ctrl)
-        self.keyboard.press('v')
-        self.keyboard.release('v')
-        self.keyboard.release(Key.ctrl)
+        # sleep(SLEEP_TIME)  # wait a bit if needed
+        # self.keyboard.press(Key.ctrl)
+        # self.keyboard.press('v')
+        # self.keyboard.release('v')
+        # self.keyboard.release(Key.ctrl)
+        print('paste')
 
     def keyboard_enter(self):
         """ Hit enter on keyboard to send pasted link """
@@ -209,13 +209,14 @@ class PingMote():
 
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
-        self.keyboard = KeyController()
-        self.mouse = MouseController()
-        with keyboard.GlobalHotKeys({
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        }) as h:
-            h.join()
+        # self.keyboard = KeyController()
+        # self.mouse = MouseController()
+        # with keyboard.GlobalHotKeys({
+        #     SHORTCUT: self.on_activate,
+        #     KILL_SHORTCUT: self.kill_all,
+        # }) as h:
+        #     h.join()
+        keyboard.add_hotkey('alt+w', self.on_activate)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
