@@ -54,8 +54,8 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
-        self.setup_gui()
         self.setup_pynput()
+        self.setup_gui()
 
         while True:
             keyboard.wait(SHORTCUT)  # block execution until hotkey
@@ -78,6 +78,9 @@ class PingMote():
             self.layout += self.layout_frequents_section()
             self.layout.append([sg.HorizontalSeparator()])
         self.layout += self.layout_main_section()
+        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
+        self.window.hide()
+        print('hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
@@ -118,9 +121,17 @@ class PingMote():
     def create_window_gui(self):
         """ Create the window from layout """
         # single line one-shot GUI, no loop needed
-        event, _ = sg.Window('Emote Picker', self.layout,
-                             location=self.find_window_location()).read(close=True)
-        if event is not None and event != sg.WINDOW_CLOSED:
+        # event, _ = sg.Window('Emote Picker', self.layout,
+        #                      location=self.find_window_location()).read(close=True)
+        # window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
+        self.window.un_hide()
+        print('hidden')
+        # Event loop
+        while True:
+            event, _ = self.window.read()
+            if event == sg.WINDOW_CLOSED:
+                break
+        # if event is not None and event != sg.WINDOW_CLOSED:
             self.on_select(event)
 
     def on_select(self, event):
