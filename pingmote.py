@@ -125,17 +125,18 @@ class PingMote():
         #                      location=self.find_window_location()).read(close=True)
         # window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
         self.window.un_hide()
-        print('hidden')
+        print('show window')
         # Event loop
         while True:
             event, _ = self.window.read()
             if event == sg.WINDOW_CLOSED:
                 break
-        # if event is not None and event != sg.WINDOW_CLOSED:
             self.on_select(event)
 
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
+        print('hide window on select')
+        self.window.hide()
 
         if AUTO_PASTE:
             if PRESERVE_CLIPBOARD:  # write text with pynput
@@ -220,8 +221,9 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
+        print('activated')
         self.create_window_gui()
-        self.layout_gui()  # layout a new copy of the GUI and store in memory for faster launch
+        # self.layout_gui()  # layout a new copy of the GUI and store in memory for faster launch
 
 
 if __name__ == '__main__':
