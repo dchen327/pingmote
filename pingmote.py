@@ -57,9 +57,11 @@ class PingMote():
         self.setup_pynput()
         self.setup_gui()
 
-        while True:
-            keyboard.wait(SHORTCUT)  # block execution until hotkey
-            self.on_activate()  # show GUI
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        # while True:
+            # keyboard.wait(SHORTCUT)  # block execution until hotkey
+            # self.on_activate()  # show GUI
+        self.create_window_gui()
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -124,7 +126,7 @@ class PingMote():
         # event, _ = sg.Window('Emote Picker', self.layout,
         #                      location=self.find_window_location()).read(close=True)
         # window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
-        self.window.un_hide()
+        # self.window.un_hide()
         print('show window')
         # Event loop
         while True:
@@ -222,7 +224,8 @@ class PingMote():
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
         print('activated')
-        self.create_window_gui()
+        # self.create_window_gui()
+        self.window.un_hide()
         # self.layout_gui()  # layout a new copy of the GUI and store in memory for faster launch
 
 
