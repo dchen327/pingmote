@@ -58,11 +58,12 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
-        self.gui_activated = False
         self.setup_gui()
         self.setup_pynput()
 
-        keyboard.wait('esc')
+        while True:
+            keyboard.wait('alt+w')  # block execution until hotkey
+            self.on_activate()  # show GUI
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -157,12 +158,12 @@ class PingMote():
         # self.keyboard.release('v')
         # self.keyboard.release(Key.ctrl)
         print('paste')
+        keyboard.send('ctrl+v')
 
     def keyboard_enter(self):
         """ Hit enter on keyboard to send pasted link """
         sleep(SLEEP_TIME)
-        self.keyboard.press(Key.enter)
-        self.keyboard.release(Key.enter)
+        keyboard.send('enter')
 
     def update_frequencies(self, filename):
         """ Increment chosen image's counter in frequencies.json """
@@ -220,11 +221,11 @@ class PingMote():
         #     KILL_SHORTCUT: self.kill_all,
         # }) as h:
         #     h.join()
-        keyboard.add_hotkey('alt+w', self.on_activate)
+        # keyboard.add_hotkey('alt+w', self.on_activate)
+        # keyboard.wait('alt+w', self.on_activate)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
-        self.gui_activated = True
         print('activated')
         self.layout_gui()
         self.create_window_gui()
