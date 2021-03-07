@@ -10,16 +10,12 @@ import keyboard
 from pathlib import Path
 from time import sleep
 from math import ceil
-# from pynput import keyboard as pynput_keyboard
-# from pynput.keyboard import Key, Controller as KeyController
 from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
 
-SHORTCUT = '<alt>+w'  # wrap special keys with <> like <ctrl>
-# on some operating systems, there might be issues with stuff not closing properly
-KILL_SHORTCUT = '<ctrl>+<alt>+k'
+SHORTCUT = 'alt+w'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -70,6 +66,7 @@ class PingMote():
         # Set location for where the window opens, (0, 0) is top left
         sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
                       text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0)
+        self.layout_gui()
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
@@ -147,17 +144,11 @@ class PingMote():
         pyperclip.copy(self.filename_to_link[filename])
 
     def paste_selection(self, filename):
-        # self.keyboard.type(self.filename_to_link[filename])
-        print('paste')
+        keyboard.write(self.filename_to_link[filename])
 
     def paste_link(self):
         """ Press ctrl + v to paste """
-        # sleep(SLEEP_TIME)  # wait a bit if needed
-        # self.keyboard.press(Key.ctrl)
-        # self.keyboard.press('v')
-        # self.keyboard.release('v')
-        # self.keyboard.release(Key.ctrl)
-        print('paste')
+        sleep(SLEEP_TIME)  # wait a bit if needed
         keyboard.send('ctrl+v')
 
     def keyboard_enter(self):
@@ -214,25 +205,13 @@ class PingMote():
 
     def setup_pynput(self):
         """ Create mouse and keyboard controllers, setup hotkeys """
-        # self.keyboard = KeyController()
         self.mouse = MouseController()
-        # with keyboard.GlobalHotKeys({
-        #     SHORTCUT: self.on_activate,
-        #     KILL_SHORTCUT: self.kill_all,
-        # }) as h:
-        #     h.join()
-        # keyboard.add_hotkey('alt+w', self.on_activate)
-        # keyboard.wait('alt+w', self.on_activate)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
         print('activated')
-        self.layout_gui()
         self.create_window_gui()
-
-    def kill_all(self):
-        """ Kill the script in case it's frozen or buggy """
-        quit()
+        self.layout_gui()
 
 
 if __name__ == '__main__':
