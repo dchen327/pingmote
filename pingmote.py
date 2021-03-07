@@ -32,7 +32,7 @@ AUTO_ENTER = True
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
 # NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
-PRESERVE_CLIPBOARD = True
+PRESERVE_CLIPBOARD = False
 
 # ADDITIONAL CONFIGS
 
