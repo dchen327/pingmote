@@ -69,6 +69,7 @@ class PingMote():
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
+        print('creating layout')
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
@@ -80,6 +81,7 @@ class PingMote():
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
         ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
         self.window.hide()
+        print('window created and hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
@@ -221,8 +223,8 @@ class PingMote():
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
-        keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
+        keyboard.add_hotkey(SHORTCUT, self.on_activate, suppress=True)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all, suppress=True)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
