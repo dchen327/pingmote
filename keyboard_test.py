@@ -1,3 +1,5 @@
 import keyboard
 
-keyboard.add_hotkey('alt+w', print, args=('triggered', 'hotkey'))
+keyboard.add_hotkey('windows+a', print, args=('triggered', 'hotkey'))
+
+keyboard.wait('esc')

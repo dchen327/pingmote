@@ -7,6 +7,7 @@ import PySimpleGUI as sg
 import json
 import pyperclip
 import keyboard
+import os
 from pathlib import Path
 from time import sleep
 from math import ceil
@@ -15,8 +16,8 @@ from pynput.mouse import Controller as MouseController
 
 # CONFIGS
 
-SHORTCUT = 'alt+shift+w'
-KILL_SHORTCUT = 'ctrl+alt+k'
+SHORTCUT = 'alt+w'
+KILL_SHORTCUT = 'alt+shift+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -83,7 +84,7 @@ class PingMote():
             self.layout.append([sg.HorizontalSeparator()])
         self.layout += self.layout_main_section()
         print('creating window...')
-        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
+        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), keep_on_top=True, finalize=True)
         self.window.hide()
         print('hidden')
 
@@ -125,12 +126,6 @@ class PingMote():
 
     def create_window_gui(self):
         """ Create the window from layout """
-        # single line one-shot GUI, no loop needed
-        # event, _ = sg.Window('Emote Picker', self.layout,
-        #                      location=self.find_window_location()).read(close=True)
-        # window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), finalize=True)
-        # self.window.un_hide()
-        print('show window')
         # Event loop
         while True:
             event, _ = self.window.read(timeout=100, timeout_key='timeout')
@@ -233,7 +228,9 @@ class PingMote():
     
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
-        quit()
+        print('kill')
+        self.window.close()
+        os._exit(1)  # exit the entire program
 
 
 if __name__ == '__main__':
