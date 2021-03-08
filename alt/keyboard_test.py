@@ -1,4 +1,5 @@
 import keyboard
+import chime
 
 hotkeys = {
     "alt+w": "explorer.exe",
@@ -15,6 +16,7 @@ def customHotkey(event):
         if pressed:
             # do some actions
             print(pressed, hotkeys__value)
+            chime.success()
 
 
 keyboard.hook(customHotkey)
