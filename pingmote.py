@@ -56,14 +56,8 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
-        self.setup_pynput()
+        self.setup_hardware()
         self.setup_gui()
-
-        keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
-        # while True:
-            # keyboard.wait(SHORTCUT)  # block execution until hotkey
-            # self.on_activate()  # show GUI
         self.create_window_gui()
 
     def setup_gui(self):
@@ -79,7 +73,7 @@ class PingMote():
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
-                self.layout.append([sg.Text('Frequently Used')])
+                self.layout.append([sg.Text('Frequently Used'), sg.Button('Hide', button_color=('white', 'orange'))])
             self.layout += self.layout_frequents_section()
             self.layout.append([sg.HorizontalSeparator()])
         self.layout += self.layout_main_section()
@@ -131,9 +125,14 @@ class PingMote():
             event, _ = self.window.read(timeout=100, timeout_key='timeout')
             if event == sg.WINDOW_CLOSED:
                 break
-            if event == 'timeout':
+            elif event == 'timeout':
                 continue
-            self.on_select(event)
+            elif event == 'Hide':
+                self.window.hide()
+            else:
+                self.on_select(event)
+
+        self.window.close()
 
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
@@ -217,9 +216,11 @@ class PingMote():
             """
         return [a[i * num_cols:i * num_cols + num_cols] for i in range(ceil(len(a) / num_cols))]
 
-    def setup_pynput(self):
-        """ Create mouse and keyboard controllers, setup hotkeys """
+    def setup_hardware(self):
+        """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
