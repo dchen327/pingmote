@@ -7,6 +7,7 @@ import PySimpleGUI as sg
 import json
 import pyperclip
 import keyboard
+import os
 from pathlib import Path
 from time import sleep
 from math import ceil
@@ -16,6 +17,7 @@ from pynput.mouse import Controller as MouseController
 # CONFIGS
 
 SHORTCUT = 'alt+w'
+KILL_SHORTCUT = 'alt+shift+k'
 # if running globally, use an absolute path, otherwise use .
 # MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
 MAIN_PATH = Path('.')
@@ -54,12 +56,9 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
+        self.setup_hardware()
         self.setup_gui()
-        self.setup_pynput()
-
-        while True:
-            keyboard.wait(SHORTCUT)  # block execution until hotkey
-            self.on_activate()  # show GUI
+        self.create_window_gui()
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
@@ -70,19 +69,23 @@ class PingMote():
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
-        print('layout')
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
-                self.layout.append([sg.Text('Frequently Used')])
-            self.layout += self.layout_frequents_section()
+                self.layout.append([sg.Text('Frequently Used'),
+                                    sg.Button('Hide', button_color=('white', 'orange'))])
             self.layout.append([sg.HorizontalSeparator()])
+            self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
+        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
+        ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
+        self.window.hide()
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
         return self.list_to_table([
-            sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name, image_subsample=2)
+            sg.Button('', key=img_name, image_filename=IMAGE_PATH /
+                      img_name, image_subsample=2)
             for img_name in self.frequents
         ])
 
@@ -95,7 +98,8 @@ class PingMote():
         for img in sorted(IMAGE_PATH.iterdir()):
             if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
-            button = sg.Button('', key=img.name, image_filename=img, image_subsample=2)
+            button = sg.Button(
+                '', key=img.name, image_filename=img, image_subsample=2)
             if SEPARATE_GIFS:
                 if img.suffix == '.png':
                     statics.append(button)
@@ -106,10 +110,12 @@ class PingMote():
         if SEPARATE_GIFS:
             combined = []
             if SHOW_LABELS:
-                combined.append([sg.Text('Static')])
+                combined.append([sg.Text('Images')])
+                combined.append([sg.HorizontalSeparator()])
             combined += self.list_to_table(statics)
             if SHOW_LABELS:
                 combined.append([sg.Text('GIFs')])
+            combined.append([sg.HorizontalSeparator()])
             combined += self.list_to_table(gifs)
             return combined
 
@@ -117,14 +123,23 @@ class PingMote():
 
     def create_window_gui(self):
         """ Create the window from layout """
-        # single line one-shot GUI, no loop needed
-        event, _ = sg.Window('Emote Picker', self.layout,
-                             location=self.find_window_location()).read(close=True)
-        if event is not None and event != sg.WINDOW_CLOSED:
-            self.on_select(event)
+        # Event loop
+        while True:
+            event, _ = self.window.read(timeout=100, timeout_key='timeout')
+            if event == sg.WINDOW_CLOSED:
+                break
+            elif event == 'timeout':
+                continue
+            elif event == 'Hide':
+                self.window.hide()
+            else:
+                self.on_select(event)
+
+        self.window.close()
 
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
+        self.window.hide()
 
         if AUTO_PASTE:
             if PRESERVE_CLIPBOARD:  # write text with pynput
@@ -203,15 +218,20 @@ class PingMote():
             """
         return [a[i * num_cols:i * num_cols + num_cols] for i in range(ceil(len(a) / num_cols))]
 
-    def setup_pynput(self):
-        """ Create mouse and keyboard controllers, setup hotkeys """
+    def setup_hardware(self):
+        """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
-        print('activated')
-        self.create_window_gui()
-        self.layout_gui()
+        self.window.un_hide()
+
+    def kill_all(self):
+        """ Kill the script in case it's frozen or buggy """
+        self.window.close()
+        os._exit(1)  # exit the entire program
 
 
 if __name__ == '__main__':
