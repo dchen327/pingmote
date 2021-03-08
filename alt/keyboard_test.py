@@ -1,22 +1,28 @@
 import keyboard
 import chime
 
-hotkeys = {
-    "alt+w": "explorer.exe",
-}
-
 
 def customHotkey(event):
-    for hotkeys__key, hotkeys__value in hotkeys.items():
+    for hotkey, func in hotkeys.items():
         pressed = all(
             keyboard.is_pressed(split__value) != False
-            for split__value in hotkeys__key.split('+')
+            for split__value in hotkey.split('+')
         )
 
         if pressed:
             # do some actions
-            print(pressed, hotkeys__value)
+            print(pressed, func)
+            func()
             chime.success()
+
+
+def print_stuff():
+    print('print stuff')
+
+
+hotkeys = {
+    "alt+w": print_stuff
+}
 
 
 keyboard.hook(customHotkey)
