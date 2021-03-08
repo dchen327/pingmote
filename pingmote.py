@@ -69,7 +69,6 @@ class PingMote():
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
-        print('layout')
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
@@ -78,11 +77,9 @@ class PingMote():
             self.layout.append([sg.HorizontalSeparator()])
             self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
-        print('creating window...')
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
-        ), keep_on_top=True, no_titlebar=True, finalize=True)
+        ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
         self.window.hide()
-        print('hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
@@ -142,7 +139,6 @@ class PingMote():
 
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
-        print('hide window on select')
         self.window.hide()
 
         if AUTO_PASTE:
@@ -230,12 +226,10 @@ class PingMote():
 
     def on_activate(self):
         """ When hotkey is activated, layout a new GUI and show it """
-        print('activated')
         self.window.un_hide()
 
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
-        print('kill')
         self.window.close()
         os._exit(1)  # exit the entire program
 
