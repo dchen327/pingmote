@@ -227,11 +227,12 @@ class PingMote():
         keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all, suppress=True)
 
     def on_activate(self):
-        """ When hotkey is activated, layout a new GUI and show it """
+        """ When hotkey is activated, show the GUI """
         self.window.un_hide()
 
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
+        print('exit program')
         self.window.close()
         os._exit(1)  # exit the entire program
 
