@@ -18,6 +18,7 @@ from pynput.mouse import Controller as MouseController
 
 SHORTCUT = 'alt+w'
 KILL_SHORTCUT = 'alt+shift+k'
+# main path is the pingmote directory (containing pingmote.py)
 MAIN_PATH = Path(__file__).parent
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
