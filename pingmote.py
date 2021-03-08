@@ -18,12 +18,10 @@ from pynput.mouse import Controller as MouseController
 
 SHORTCUT = 'alt+w'
 KILL_SHORTCUT = 'alt+shift+k'
-# if running globally, use an absolute path, otherwise use .
-# MAIN_PATH = Path('/home/dchen327/coding/projects/pingmote/')
-MAIN_PATH = Path('.')
+MAIN_PATH = Path(__file__).parent
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
 NUM_COLS = 12  # max number of images per row in picker
-SHOW_FREQUENTS = True  # show the frequents section at the top
+SHOW_FREQUENTS = True  # show the frequents section at the topaaaa
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_LABELS = True  # show section labels (frequents, static, gifs)
 SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
@@ -74,7 +72,7 @@ class PingMote():
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
                 self.layout.append([sg.Text('Frequently Used'),
-                                    sg.Button('Hide', button_color=('white', 'orange'))])
+                                    sg.Button('Hide', button_color=('black', 'orange'))])
             self.layout.append([sg.HorizontalSeparator()])
             self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
@@ -223,8 +221,8 @@ class PingMote():
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
-        keyboard.add_hotkey(SHORTCUT, self.on_activate, suppress=True)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all, suppress=True)
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def on_activate(self):
         """ When hotkey is activated, show the GUI """
