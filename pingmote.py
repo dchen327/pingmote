@@ -73,19 +73,22 @@ class PingMote():
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
-                self.layout.append([sg.Text('Frequently Used'), sg.Button('Hide', button_color=('white', 'orange'))])
-            self.layout += self.layout_frequents_section()
+                self.layout.append([sg.Text('Frequently Used'),
+                                    sg.Button('Hide', button_color=('white', 'orange'))])
             self.layout.append([sg.HorizontalSeparator()])
+            self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
         print('creating window...')
-        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(), keep_on_top=True, finalize=True)
+        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
+        ), keep_on_top=True, no_titlebar=True, finalize=True)
         self.window.hide()
         print('hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
         return self.list_to_table([
-            sg.Button('', key=img_name, image_filename=IMAGE_PATH / img_name, image_subsample=2)
+            sg.Button('', key=img_name, image_filename=IMAGE_PATH /
+                      img_name, image_subsample=2)
             for img_name in self.frequents
         ])
 
@@ -98,7 +101,8 @@ class PingMote():
         for img in sorted(IMAGE_PATH.iterdir()):
             if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
-            button = sg.Button('', key=img.name, image_filename=img, image_subsample=2)
+            button = sg.Button(
+                '', key=img.name, image_filename=img, image_subsample=2)
             if SEPARATE_GIFS:
                 if img.suffix == '.png':
                     statics.append(button)
@@ -109,10 +113,12 @@ class PingMote():
         if SEPARATE_GIFS:
             combined = []
             if SHOW_LABELS:
-                combined.append([sg.Text('Static')])
+                combined.append([sg.Text('Images')])
+                combined.append([sg.HorizontalSeparator()])
             combined += self.list_to_table(statics)
             if SHOW_LABELS:
                 combined.append([sg.Text('GIFs')])
+            combined.append([sg.HorizontalSeparator()])
             combined += self.list_to_table(gifs)
             return combined
 
@@ -226,7 +232,7 @@ class PingMote():
         """ When hotkey is activated, layout a new GUI and show it """
         print('activated')
         self.window.un_hide()
-    
+
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
         print('kill')
