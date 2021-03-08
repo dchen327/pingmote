@@ -38,12 +38,11 @@ These can be installed with `pip install -r requirements.txt`
 - PIL (for running `image_resizer.py`)
 
 ## For Windows:
-- I cannot get pynput to work with PySimpleGUI (I've spent like 3 weeks on this)
-- For now, I'm triggering `pingmote_no_hotkeys.py` from AutoHotKey
-- The core issue is that both pynput and PySimpleGUI are blocking, and threading is weird
+- If you experience issues with hotkeys, check if you have software like Display Fusion installed (for me it was eating my alt hotkeys)
 
 ## For Mac:
-There seems to be some weird Mac GUI errors with Tkinter (testing soon)
+- There seems to be some weird Mac GUI errors with Tkinter (testing soon)
+- Working on testing hotkeys
 
 # Notes
 - Since this program relies on pasting image/gif URLs as emotes, we can't use inline emotes or reacts.
@@ -59,7 +58,6 @@ There seems to be some weird Mac GUI errors with Tkinter (testing soon)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
 - Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
-- Non-destructive pasting (store clipboard contents)
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
