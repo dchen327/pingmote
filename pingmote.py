@@ -48,7 +48,6 @@ class PingMote():
 
     def __init__(self):
         # Load frequencies from json for frequents section
-        print('init')
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
@@ -70,7 +69,7 @@ class PingMote():
 
     def layout_gui(self):
         """ Layout GUI with PySimpleGui """
-        print('creating layout')
+        print('loading layout...')
         self.layout = []
         if SHOW_FREQUENTS:
             if SHOW_LABELS:
@@ -82,7 +81,7 @@ class PingMote():
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
         ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
         self.window.hide()
-        print('window created and hidden')
+        print('ready - window created and hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
