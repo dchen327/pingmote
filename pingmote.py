@@ -16,7 +16,7 @@ from pynput.mouse import Controller as MouseController
 
 # CONFIGS
 
-SHORTCUT = 'alt+w'
+SHORTCUT = 'ctrl+q'
 KILL_SHORTCUT = 'alt+shift+k'
 # main path is the pingmote directory (containing pingmote.py)
 MAIN_PATH = Path(__file__).parent
