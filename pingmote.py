@@ -48,6 +48,7 @@ class PingMote():
 
     def __init__(self):
         # Load frequencies from json for frequents section
+        print('init')
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
@@ -56,6 +57,7 @@ class PingMote():
 
         # Setup
         self.setup_hardware()
+        keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -222,8 +224,22 @@ class PingMote():
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
-        keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
+        # keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        # keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
+        self.hotkeys = {
+            SHORTCUT: self.on_activate,
+            KILL_SHORTCUT: self.kill_all,
+        }
+
+    def custom_hotkey(self, event):
+        for hotkey, func in self.hotkeys.items():
+            pressed = all(
+                keyboard.is_pressed(split_val) != False
+                for split_val in hotkey.split('+')
+            )
+
+            if pressed:
+                func()
 
     def on_activate(self):
         """ When hotkey is activated, show the GUI """
