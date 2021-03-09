@@ -1,6 +1,8 @@
 import keyboard
 import chime
 
+print('hi from kb test')
+
 
 def customHotkey(event):
     for hotkey, func in hotkeys.items():
