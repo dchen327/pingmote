@@ -70,7 +70,7 @@ class PingMote():
         self.layout_gui()
 
     def layout_gui(self):
-        """ Layout GUI with PySimpleGui """
+        """ Layout GUI, then build a window and hide it """
         print('loading layout...')
         self.layout = []
         if SHOW_FREQUENTS:
@@ -80,7 +80,7 @@ class PingMote():
             self.layout.append([sg.HorizontalSeparator()])
             self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
-        if self.window:  # close old window before opening new
+        if self.window:  # close old window before opening new (for rebuilds)
             self.window.close()
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
         ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
@@ -128,7 +128,7 @@ class PingMote():
         return self.list_to_table(main_section)
 
     def create_window_gui(self):
-        """ Create the window from layout """
+        """ Run the event loop for the GUI, listening for clicks """
         # Event loop
         while True:
             event, _ = self.window.read(timeout=100, timeout_key='timeout')
@@ -144,7 +144,7 @@ class PingMote():
         self.window.close()
 
     def on_select(self, event):
-        """ Paste selected image non-destructively (if auto paste is True) """
+        """ Paste selected image link """
         self.hide_gui()
 
         if AUTO_PASTE:
@@ -165,6 +165,7 @@ class PingMote():
         pyperclip.copy(self.filename_to_link[filename])
 
     def paste_selection(self, filename):
+        """ Use keyboard to write the link instead of copy paste """
         keyboard.write(self.filename_to_link[filename])
 
     def paste_link(self):
@@ -178,7 +179,9 @@ class PingMote():
         keyboard.send('enter')
 
     def update_frequencies(self, filename):
-        """ Increment chosen image's counter in frequencies.json """
+        """ Increment chosen image's counter in frequencies.json
+            Rebuilds GUI if layout changes (frequents section changes)
+        """
         if filename not in self.frequencies:
             self.frequencies[filename] = 0
         self.frequencies[filename] += 1
