@@ -57,7 +57,7 @@ class PingMote():
         # Setup
         self.hidden = True
         self.setup_hardware()
-        # keyboard.hook(self.custom_hotkey)
+        keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -81,7 +81,7 @@ class PingMote():
         self.layout += self.layout_main_section()
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
         ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
-        self.window.hide()
+        self.hide_gui()
         print('ready - window created and hidden')
 
     def layout_frequents_section(self):
@@ -134,8 +134,7 @@ class PingMote():
             elif event == 'timeout':
                 continue
             elif event == 'Hide':
-                self.window.hide()
-                self.hidden = True
+                self.hide_gui()
             else:
                 self.on_select(event)
 
@@ -143,8 +142,7 @@ class PingMote():
 
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
-        self.window.hide()
-        self.hidden = True
+        self.hide_gui()
 
         if AUTO_PASTE:
             if PRESERVE_CLIPBOARD:  # write text with pynput
@@ -226,17 +224,36 @@ class PingMote():
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
-        keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
+        self.hotkeys = {
+            SHORTCUT: self.on_activate,
+            KILL_SHORTCUT: self.kill_all,
+        }
+
+    def custom_hotkey(self, event):
+        """ Hook and react to hotkeys with custom handler """
+        for hotkey, func in self.hotkeys.items():
+            pressed = all(
+                keyboard.is_pressed(split_val) != False
+                for split_val in hotkey.split('+')
+            )
+
+            if pressed:
+                func()
+
+    def hide_gui(self):
+        self.window.hide()
+        self.hidden = True
+
+    def show_gui(self):
+        self.window.un_hide()
+        self.hidden = False
 
     def on_activate(self):
         """ When hotkey is activated, toggle the GUI """
         if self.hidden:
-            self.window.un_hide()
-            self.hidden = False
+            self.show_gui()
         else:
-            self.window.hide()
-            self.hidden = True
+            self.hide_gui()
 
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
