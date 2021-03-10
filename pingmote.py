@@ -55,6 +55,7 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
+        self.hidden = True
         self.setup_hardware()
         keyboard.hook(self.custom_hotkey)
         self.setup_gui()
@@ -134,6 +135,7 @@ class PingMote():
                 continue
             elif event == 'Hide':
                 self.window.hide()
+                self.hidden = True
             else:
                 self.on_select(event)
 
@@ -241,8 +243,13 @@ class PingMote():
                 func()
 
     def on_activate(self):
-        """ When hotkey is activated, show the GUI """
-        self.window.un_hide()
+        """ When hotkey is activated, toggle the GUI """
+        if self.hidden:
+            self.window.un_hide()
+            self.hidden = False
+        else:
+            self.window.hide()
+            self.hidden = True
 
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
