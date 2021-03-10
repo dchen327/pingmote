@@ -57,7 +57,7 @@ class PingMote():
         # Setup
         self.hidden = True
         self.setup_hardware()
-        keyboard.hook(self.custom_hotkey)
+        # keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -144,6 +144,7 @@ class PingMote():
     def on_select(self, event):
         """ Paste selected image non-destructively (if auto paste is True) """
         self.window.hide()
+        self.hidden = True
 
         if AUTO_PASTE:
             if PRESERVE_CLIPBOARD:  # write text with pynput
@@ -225,22 +226,8 @@ class PingMote():
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
         self.mouse = MouseController()
-        # keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        # keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
-        self.hotkeys = {
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        }
-
-    def custom_hotkey(self, event):
-        for hotkey, func in self.hotkeys.items():
-            pressed = all(
-                keyboard.is_pressed(split_val) != False
-                for split_val in hotkey.split('+')
-            )
-
-            if pressed:
-                func()
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def on_activate(self):
         """ When hotkey is activated, toggle the GUI """
