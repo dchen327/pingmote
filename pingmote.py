@@ -55,6 +55,7 @@ class PingMote():
         self.filename_to_link = self.load_links()
 
         # Setup
+        self.window = None
         self.hidden = True
         self.setup_hardware()
         keyboard.hook(self.custom_hotkey)
@@ -79,6 +80,8 @@ class PingMote():
             self.layout.append([sg.HorizontalSeparator()])
             self.layout += self.layout_frequents_section()
         self.layout += self.layout_main_section()
+        if self.window:  # close old window before opening new
+            self.window.close()
         self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
         ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
         self.hide_gui()
@@ -180,8 +183,11 @@ class PingMote():
             self.frequencies[filename] = 0
         self.frequencies[filename] += 1
         self.write_frequencies(self.frequencies)
+        prev_frequents = self.frequents
         self.frequents = self.get_frequents(
             self.frequencies)  # update frequents list
+        if self.frequents != prev_frequents:  # frequents list has changed, update layout
+            self.layout_gui()
 
     def find_window_location(self):
         """ Open the window near where the mouse currently is """
