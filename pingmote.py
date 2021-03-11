@@ -164,11 +164,17 @@ class PingMote():
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
-        pyperclip.copy(self.filename_to_link[filename])
+        if filename in self.filename_to_link:
+            pyperclip.copy(self.filename_to_link[filename])
+        else:
+            print('Error: link not found')
 
     def paste_selection(self, filename):
         """ Use keyboard to write the link instead of copy paste """
-        keyboard.write(self.filename_to_link[filename])
+        if filename in self.filename_to_link:
+            keyboard.write(self.filename_to_link[filename])
+        else:
+            print('Error: link not found')
 
     def paste_link(self):
         """ Press ctrl + v to paste """
