@@ -1,5 +1,4 @@
 keyboard==0.13.5
 Pillow==8.1.0
-pynput==1.7.3
 pyperclip==1.8.1
 PySimpleGUI==4.34.0
