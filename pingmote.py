@@ -43,6 +43,7 @@ WINDOW_LOCATION = (100, 100)
 SLEEP_TIME = 0  # add delay if pasting/enter not working
 
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
+SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
 
 
 class PingMote():
@@ -84,7 +85,7 @@ class PingMote():
         self.layout += self.layout_main_section()
         if self.window:  # close old window before opening new (for rebuilds)
             self.window.close()
-        no_titlebar = platform.system() == 'Windows'
+        no_titlebar = SYSTEM == 'Windows'
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
                                 keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
         self.hide_gui()
