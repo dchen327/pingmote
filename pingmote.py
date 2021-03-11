@@ -30,7 +30,7 @@ AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
-# NOTE: this pastes with pynput and can be unreliable; SLEEP_TIME might need to be set
+# NOTE: this can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
 PRESERVE_CLIPBOARD = False
 
@@ -159,9 +159,8 @@ class PingMote():
         else:
             self.copy_to_clipboard(event)
 
-        self.update_frequencies(event)  # update count for chosen image
-        print(self.window.current_location())
         self.window_location = self.window.current_location()  # remember window position
+        self.update_frequencies(event)  # update count for chosen image
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
