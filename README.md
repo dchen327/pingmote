@@ -31,28 +31,15 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 # Configs
 - Check the top of `pingmote.py` for configs
 
-# Dependencies
-These can be installed with `pip install -r requirements.txt`
-
-- PySimpleGUI (to display the image picker GUI)
-- pynput (getting mouse position and keyboard commands)
-- pyperclip (copy pasting)
-- PIL (for running `image_resizer.py`)
-
-## For Windows:
-- If you experience issues with hotkeys, check if you have software like Display Fusion installed (for me it was eating my alt hotkeys)
-
 ## For Mac:
-- There seems to be some weird Mac GUI errors with Tkinter (testing soon)
-- Working on testing hotkeys
+- Testing hotkeys; GUI seems ok
 
 # Notes
-- Since this program relies on pasting image/gif URLs as emotes, we can't use inline emotes or reacts.
+- Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts.
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
-- Pretty much only Discord works (Facebook Messenger and Slack don't)
+- Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
 # TODOs
-- Testing on Mac (current issue: pynput permissions and ctrl/alt detection broken, GUI seems fine on Python 3.9)
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
