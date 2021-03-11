@@ -16,7 +16,9 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 - Run `pip install -r requirements.txt` to install all necessary dependencies (use `pip3` if needed)
 
 # Usage
-Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `<alt>+w`), the emote picker will show up, allowing you to click and pick an emote to insert.
+- Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click and pick an emote to insert
+- Note: you need to wait 2-3s for the GUI to load.
+- You can hit the shortcut again to hide the GUI
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
@@ -48,7 +50,6 @@ These can be installed with `pip install -r requirements.txt`
 - Since this program relies on pasting image/gif URLs as emotes, we can't use inline emotes or reacts.
 - Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
 - Pretty much only Discord works (Facebook Messenger and Slack don't)
-- In addition, Facebook and Slack don't look good when images are directly pasted in either
 
 # TODOs
 - Testing on Mac (current issue: pynput permissions and ctrl/alt detection broken, GUI seems fine on Python 3.9)
@@ -57,7 +58,6 @@ These can be installed with `pip install -r requirements.txt`
 - Gif resizing? (idk PIL isn't very good for this)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
-- Some hybrid mode for linux/mac that pastes local images and uses hosted gif links
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
@@ -80,6 +80,7 @@ These can be installed with `pip install -r requirements.txt`
 - Cleaned up links for better file to link mapping
 - Switched to `pynput` for cross-platform global hotkey mapping, fully removed PyAutoGUI dependencies
 - Added section labels and ability to separate images and gifs
+- Switched to `keyboard` from `pynput` to fix hotkey blocking behavior (after 3 weeks of zero progress)
 
 # License
 [MIT License](https://github.com/dchen327/pingmote/blob/master/LICENSE.md)
