@@ -18,7 +18,7 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 # Usage
 - Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click and pick an emote to insert
 - Note: you need to wait 2-3s for the GUI to load.
-- You can hit the shortcut again to hide the GUI
+- Hit the shortcut again to hide the GUI, and drag the GUI to where you want it to show up in the future
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
