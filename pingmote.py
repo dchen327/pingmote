@@ -149,12 +149,14 @@ class PingMote():
         self.hide_gui()
 
         if AUTO_PASTE:
+            err = None
             if PRESERVE_CLIPBOARD:  # write text with pynput
                 self.paste_selection(event)
             else:  # copy to clipboard then paste
-                self.copy_to_clipboard(event)
-                self.paste_link()
-            if AUTO_ENTER:
+                err = self.copy_to_clipboard(event)
+                if err is not None:
+                    self.paste_link()
+            if AUTO_ENTER and err is not None:
                 self.keyboard_enter()
         else:
             self.copy_to_clipboard(event)
@@ -167,14 +169,14 @@ class PingMote():
         if filename in self.filename_to_link:
             pyperclip.copy(self.filename_to_link[filename])
         else:
-            print('Error: link not found')
+            return 'Error: link not found'
 
     def paste_selection(self, filename):
         """ Use keyboard to write the link instead of copy paste """
         if filename in self.filename_to_link:
             keyboard.write(self.filename_to_link[filename])
         else:
-            print('Error: link not found')
+            return 'Error: link not found'
 
     def paste_link(self):
         """ Press ctrl + v to paste """
