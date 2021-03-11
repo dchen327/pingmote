@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 from time import sleep
 from math import ceil
-from pynput.mouse import Controller as MouseController
 
 
 # CONFIGS
@@ -38,9 +37,10 @@ PRESERVE_CLIPBOARD = False
 # ADDITIONAL CONFIGS
 
 # top left corner of emote picker, (0, 0) is screen top left
-WINDOW_LOCATION = None  # if set to None, will open the GUI near the mouse cursor
-# if pasting or enter isn't working, add a short delay (in seconds)
-SLEEP_TIME = 0
+# initial position, GUI is draggable and will stick
+WINDOW_LOCATION = (100, 100)
+SLEEP_TIME = 0  # add delay if pasting/enter not working
+
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
 
 
@@ -57,6 +57,7 @@ class PingMote():
         # Setup
         self.window = None
         self.hidden = True
+        self.window_location = WINDOW_LOCATION
         self.setup_hardware()
         keyboard.hook(self.custom_hotkey)
         self.setup_gui()
@@ -82,8 +83,8 @@ class PingMote():
         self.layout += self.layout_main_section()
         if self.window:  # close old window before opening new (for rebuilds)
             self.window.close()
-        self.window = sg.Window('Emote Picker', self.layout, location=self.find_window_location(
-        ), keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
+        self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
+                                keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
         self.hide_gui()
         print('ready - window created and hidden')
 
@@ -159,6 +160,8 @@ class PingMote():
             self.copy_to_clipboard(event)
 
         self.update_frequencies(event)  # update count for chosen image
+        print(self.window.current_location())
+        self.window_location = self.window.current_location()  # remember window position
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
@@ -196,9 +199,7 @@ class PingMote():
         """ Open the window near where the mouse currently is """
         if WINDOW_LOCATION:  # use user provided location
             return WINDOW_LOCATION
-        mouse_x, mouse_y = self.mouse.position
-        # open window with the mouse cursor somewhere in the middle, near top left (since top left is most frequent)
-        return (mouse_x - 400, mouse_y - 300)
+        return (300, 300)
 
     def load_links(self):
         """ Load image links from links.txt """
@@ -232,7 +233,6 @@ class PingMote():
 
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
-        self.mouse = MouseController()
         self.hotkeys = {
             SHORTCUT: self.on_activate,
             KILL_SHORTCUT: self.kill_all,
