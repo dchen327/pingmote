@@ -8,24 +8,24 @@ Motivation: *Poor Man's Discord Nitro*
 ![pingmote demo](https://user-images.githubusercontent.com/37674516/107857226-1e72f000-6dfb-11eb-8a9a-e938368b65bc.gif)
 
 # How It Works
-All images/gifs (properly sized) are stored in `assets/resized`. These images are shown in the GUI, and clicking on them copies the corresponding URL to clipboard (with options to auto-paste). The URLs are stored in `links.txt`.
+Since Discord autoembeds images, we can paste in links to custom emotes.
 
 # Getting Started
 - Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract
 - Change into the pingmote directory (make sure you can see `pingmote.py`)
-- Run `pip install -r requirements.txt` to install all necessary dependencies (use `pip3` if needed)
+- Run `pip install -r requirements.txt` to install dependencies (`pip3` if needed)
 
 # Usage
-- Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click and pick an emote to insert
+- Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click an emote to insert
 - Note: you need to wait 2-3s for the GUI to load.
 - Hit the shortcut again to hide the GUI, and drag the GUI to where you want it to show up in the future
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
-- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful. After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
-- Upload files to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
-- Imgur doesn't work currently, since Imgur links don't contain the original filename
+- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful. Download and extract the resized gifs (64x64) to `assets/original`, then run `image_resizer.py`
+- Upload files from `assets/resized` to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
+- Note: Imgur doesn't work currently, since Imgur links don't contain the original filename
 - Some emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
 
 # Configs
@@ -67,6 +67,7 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 - Switched to `pynput` for cross-platform global hotkey mapping, fully removed PyAutoGUI dependencies
 - Added section labels and ability to separate images and gifs
 - Switched to `keyboard` from `pynput` to fix hotkey blocking behavior (after 3 weeks of zero progress)
+- Cleaned up `image_resizer.py`
 
 # License
 [MIT License](https://github.com/dchen327/pingmote/blob/master/LICENSE.md)
