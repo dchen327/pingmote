@@ -35,6 +35,10 @@ Motivation: *Poor Man's Discord Nitro*
 - Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
+# Mac
+- The script must be run as root: `sudo python pingmote.py`
+- It seems only keyboard shortcuts with `command` like `command+e` are picked up
+
 # TODOs
 - Mac hotkey + GUI testing
 - Better ordering of emotes (categorization, etc.)

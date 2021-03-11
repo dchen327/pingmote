@@ -84,7 +84,7 @@ class PingMote():
         if self.window:  # close old window before opening new (for rebuilds)
             self.window.close()
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
-                                keep_on_top=True, no_titlebar=True, grab_anywhere=True, finalize=True)
+                                keep_on_top=True, grab_anywhere=True, finalize=True)
         self.hide_gui()
         print('ready - window created and hidden')
 
