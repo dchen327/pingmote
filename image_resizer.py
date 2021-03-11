@@ -48,16 +48,20 @@ def clean_frequencies():
     write_frequencies(frequencies)
 
 
-shutil.rmtree(resized_path)  # clear previous files
-os.mkdir(resized_path)  # re-add resized directory
-for img_path in orig_path.iterdir():
-    # replace underscores with dashes since postimages uses dashes only
-    save_path = resized_path / sanitize_name(img_path.name)
-    if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
-        shutil.copyfile(img_path, save_path)
-    else:
-        img = Image.open(img_path)
-        img_resized = img.resize(new_size, Image.ANTIALIAS)
-        img_resized.save(save_path)
+def create_resized_files():
+    """ Take files in original folder and created a folder with resized emotes """
+    shutil.rmtree(resized_path)  # clear previous files
+    os.mkdir(resized_path)  # re-add resized directory
+    for img_path in orig_path.iterdir():
+        # replace underscores with dashes since postimages uses dashes only
+        save_path = resized_path / sanitize_name(img_path.name)
+        if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
+            shutil.copyfile(img_path, save_path)
+        else:
+            img = Image.open(img_path)
+            img_resized = img.resize(new_size, Image.ANTIALIAS)
+            img_resized.save(save_path)
 
+
+create_resized_files()
 clean_frequencies()
