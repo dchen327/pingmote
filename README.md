@@ -23,16 +23,14 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
-- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful (although you can only resize like 12 max at a time). After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
-- Upload all files to an image hoster (I like [postimages](https://postimages.org/)). Copy all the direct image links (ending in the file extension) and paste them in `links.txt`
-- Imgur will not work in the current implementation, since imgur links do not contain the original filename
-- Here are some good emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
+- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful. After downloading the resized gifs (64x64), extract them to the `original` folder in assets, then run `image_resizer.py` to create the resized folder while ignoring gifs
+- Windows Paint 3D also works for gif resizing
+- Upload files to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
+- Imgur doesn't work currently, since Imgur links don't contain the original filename
+- Some emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/)
 
 # Configs
 - Check the top of `pingmote.py` for configs
-
-## For Mac:
-- Testing hotkeys; GUI seems ok
 
 # Notes
 - Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts.
@@ -40,11 +38,13 @@ All images/gifs (properly sized) are stored in `assets/resized`. These images ar
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
 # TODOs
+- Mac hotkey + GUI testing
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
+- Emote deletion
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
