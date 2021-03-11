@@ -8,17 +8,17 @@ Motivation: *Poor Man's Discord Nitro*
 ![pingmote demo](https://user-images.githubusercontent.com/37674516/107857226-1e72f000-6dfb-11eb-8a9a-e938368b65bc.gif)
 
 # How It Works
-Since Discord autoembeds images, we can paste in links to custom emotes.
+- Since Discord autoembeds images, we can paste in links to custom emotes
+- The emote picker GUI is written in Python, with global hotkeys for activation
 
 # Getting Started
-- Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download the code as a zip and extract
+- Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download as a zip and extract
 - Change into the pingmote directory (make sure you can see `pingmote.py`)
 - Run `pip install -r requirements.txt` to install dependencies (`pip3` if needed)
 
 # Usage
 - Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click an emote to insert
-- Note: you need to wait 2-3s for the GUI to load.
-- Hit the shortcut again to hide the GUI, and drag the GUI to where you want it to show up in the future
+- Hit the shortcut again to toggle the GUI, and drag the GUI somewhere convenient
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
@@ -32,8 +32,7 @@ Since Discord autoembeds images, we can paste in links to custom emotes.
 - Check the top of `pingmote.py` for configs
 
 # Notes
-- Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts.
-- Images have slight padding in discord, so they don't look *exactly* the same as regular emotes
+- Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
 # TODOs
