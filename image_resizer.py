@@ -13,8 +13,7 @@ from PIL import Image
 from pathlib import Path
 
 asset_path = Path(__file__).parent / 'assets'
-orig_path = asset_path / 'original'
-resized_path = asset_path / 'resized'
+orig_path, resized_path = asset_path / 'original', asset_path / 'resized'
 new_size = (64, 64)
 
 
@@ -63,5 +62,26 @@ def create_resized_files():
             img_resized.save(save_path)
 
 
-create_resized_files()
+def update_resized_files():
+    """ Resize new files and remove deleted files """
+    orig_filenames = {img_path.name for img_path in orig_path.iterdir()}
+    resized_filenames = {img_path.name for img_path in resized_path.iterdir()}
+    for img_path in orig_path.iterdir():  # check for new images
+        if img_path.name not in resized_filenames:  # new image
+            # clean up file name for upload
+            save_path = resized_path / sanitize_name(img_path.name)
+            if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
+                shutil.copyfile(img_path, save_path)
+            else:
+                img = Image.open(img_path)
+                img_resized = img.resize(new_size, Image.ANTIALIAS)
+                img_resized.save(save_path)
+
+    for img_path in resized_path.iterdir():  # remove deleted images
+        if img_path.name not in orig_filenames:  # original image deleted
+            os.remove(img_path)
+
+
+# create_resized_files()
+update_resized_files()
 clean_frequencies()
