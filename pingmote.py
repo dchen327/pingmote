@@ -147,16 +147,17 @@ class PingMote():
     def on_select(self, event):
         """ Paste selected image link """
         self.hide_gui()
+        if event not in self.filename_to_link:  # link missing
+            print(f'Error: Link missing ({event})')
+            return
 
         if AUTO_PASTE:
-            err = None
             if PRESERVE_CLIPBOARD:  # write text with pynput
                 self.paste_selection(event)
             else:  # copy to clipboard then paste
-                err = self.copy_to_clipboard(event)
-                if err is not None:
-                    self.paste_link()
-            if AUTO_ENTER and err is not None:
+                self.copy_to_clipboard(event)
+                self.paste_link()
+            if AUTO_ENTER:
                 self.keyboard_enter()
         else:
             self.copy_to_clipboard(event)
@@ -166,17 +167,11 @@ class PingMote():
 
     def copy_to_clipboard(self, filename):
         """ Given an an image, copy the image link to clipboard """
-        if filename in self.filename_to_link:
-            pyperclip.copy(self.filename_to_link[filename])
-        else:
-            return 'Error: link not found'
+        pyperclip.copy(self.filename_to_link[filename])
 
     def paste_selection(self, filename):
         """ Use keyboard to write the link instead of copy paste """
-        if filename in self.filename_to_link:
-            keyboard.write(self.filename_to_link[filename])
-        else:
-            return 'Error: link not found'
+        keyboard.write(self.filename_to_link[filename])
 
     def paste_link(self):
         """ Press ctrl + v to paste """
