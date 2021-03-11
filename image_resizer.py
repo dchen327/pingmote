@@ -64,7 +64,8 @@ def create_resized_files():
 
 def update_resized_files():
     """ Resize new files and remove deleted files """
-    orig_filenames = {img_path.name for img_path in orig_path.iterdir()}
+    orig_filenames = {sanitize_name(img_path.name)
+                      for img_path in orig_path.iterdir()}
     resized_filenames = {img_path.name for img_path in resized_path.iterdir()}
     for img_path in orig_path.iterdir():  # check for new images
         if img_path.name not in resized_filenames:  # new image
