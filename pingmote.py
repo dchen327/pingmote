@@ -8,6 +8,7 @@ import json
 import pyperclip
 import keyboard
 import os
+import platform
 from pathlib import Path
 from time import sleep
 from math import ceil
@@ -15,7 +16,7 @@ from math import ceil
 
 # CONFIGS
 
-SHORTCUT = 'ctrl+q'
+SHORTCUT = 'ctrl+q'  # 'command+e' recommended for Mac users
 KILL_SHORTCUT = 'alt+shift+k'
 # main path is the pingmote directory (containing pingmote.py)
 MAIN_PATH = Path(__file__).parent
@@ -83,8 +84,9 @@ class PingMote():
         self.layout += self.layout_main_section()
         if self.window:  # close old window before opening new (for rebuilds)
             self.window.close()
+        no_titlebar = platform.system() == 'Windows'
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
-                                keep_on_top=True, grab_anywhere=True, finalize=True)
+                                keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
         self.hide_gui()
         print('ready - window created and hidden')
 
