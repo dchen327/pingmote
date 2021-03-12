@@ -179,7 +179,8 @@ class PingMote():
     def paste_link(self):
         """ Press ctrl + v to paste """
         sleep(SLEEP_TIME)  # wait a bit if needed
-        keyboard.send('ctrl+v')
+        paste_cmd = 'command+v' if SYSTEM == 'Darwin' else 'ctrl+v'
+        keyboard.send(paste_cmd)
 
     def keyboard_enter(self):
         """ Hit enter on keyboard to send pasted link """
