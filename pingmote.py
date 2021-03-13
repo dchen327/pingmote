@@ -16,8 +16,8 @@ from math import ceil
 
 # CONFIGS
 
-SHORTCUT = 'ctrl+q'  # 'command+e' recommended for Mac users
-KILL_SHORTCUT = 'alt+shift+k'
+SHORTCUT = 'command+3'  # 'command+e' recommended for Mac users
+KILL_SHORTCUT = 'command+4'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -92,8 +92,9 @@ class PingMote():
         no_titlebar = SYSTEM == 'Windows'
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
                                 keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
-        if SYSTEM != 'Darwin':  # initially hiding GUI creates blank screen on Mac
-            self.hide_gui()
+        if SYSTEM == 'Darwin':  # Mac hacky fix for blank hidden windows
+            self.window.read(timeout=10)  # read the window once, allows for hiding
+        self.hide_gui()
         print('ready - window created and hidden')
 
     def layout_frequents_section(self):
