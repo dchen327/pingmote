@@ -37,11 +37,9 @@ Motivation: *Poor Man's Discord Nitro*
 
 # Mac
 - The script must be run as root: `sudo python pingmote.py`
-- It seems only keyboard shortcuts with `command` like `command+e` are picked up
-- Auto pasting and auto enter are currently broken, since the Python process steals focus
+- It seems only keyboard shortcuts with `command` like `command+e` are picked up, since scan codes are jumbled
 
 # TODOs
-- Mac hotkey + GUI testing
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
