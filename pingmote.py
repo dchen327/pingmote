@@ -201,11 +201,14 @@ class PingMote():
         if self.frequents != prev_frequents:  # frequents list has changed, update layout
             self.layout_gui()
 
-    def find_window_location(self):
-        """ Open the window near where the mouse currently is """
-        if WINDOW_LOCATION:  # use user provided location
-            return WINDOW_LOCATION
-        return (300, 300)
+    def clean_frequencies(self):
+        """ Clean frequencies.json on file changes """
+        frequencies = self.load_frequencies()
+        filenames = {img_path.name for img_path in IMAGE_PATH.iterdir()}
+        for file in list(frequencies):
+            if file not in filenames:
+                del frequencies[file]  # remove key, file not present
+        self.write_frequencies(frequencies)
 
     def load_links(self):
         """ Load image links from links.txt """
