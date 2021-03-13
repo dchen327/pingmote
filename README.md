@@ -38,6 +38,7 @@ Motivation: *Poor Man's Discord Nitro*
 # Mac
 - The script must be run as root: `sudo python pingmote.py`
 - It seems only keyboard shortcuts with `command` like `command+e` are picked up
+- Auto pasting and auto enter are currently broken, since the Python process steals focus
 
 # TODOs
 - Mac hotkey + GUI testing
