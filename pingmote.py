@@ -15,8 +15,7 @@ from math import ceil
 
 
 # CONFIGS
-
-SHORTCUT = 'command+3'  # 'command+e' recommended for Mac users
+SHORTCUT = 'command+3'
 KILL_SHORTCUT = 'command+4'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
