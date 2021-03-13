@@ -35,6 +35,7 @@ SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 # NOTE: this can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
 PRESERVE_CLIPBOARD = False
+CUSTOM_HOTKEY_HANDLER = True  # workaround for alt+tab issues
 
 # ADDITIONAL CONFIGS
 
@@ -63,7 +64,8 @@ class PingMote():
         self.hidden = True
         self.window_location = WINDOW_LOCATION
         self.setup_hardware()
-        # keyboard.hook(self.custom_hotkey)
+        if CUSTOM_HOTKEY_HANDLER:
+            keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -245,12 +247,14 @@ class PingMote():
 
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
-        self.hotkeys = {
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        }
-        keyboard.add_hotkey(SHORTCUT, self.on_activate)
-        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
+        if CUSTOM_HOTKEY_HANDLER:
+            self.hotkeys = {
+                SHORTCUT: self.on_activate,
+                KILL_SHORTCUT: self.kill_all,
+            }
+        else:
+            keyboard.add_hotkey(SHORTCUT, self.on_activate)
+            keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def custom_hotkey(self, event):
         """ Hook and react to hotkeys with custom handler """
