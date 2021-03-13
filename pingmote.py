@@ -13,10 +13,11 @@ from pathlib import Path
 from time import sleep
 from math import ceil
 
+SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
 
 # CONFIGS
-SHORTCUT = 'command+3'
-KILL_SHORTCUT = 'command+4'
+SHORTCUT = 'ctrl+q' if SYSTEM != 'Darwin' else 'command+3'
+KILL_SHORTCUT = 'alt+shift+k' if SYSTEM != 'Darwin' else 'command+4'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -44,7 +45,6 @@ WINDOW_LOCATION = (100, 100)
 SLEEP_TIME = 0  # add delay if pasting/enter not working
 
 GUI_BG_COLOR = '#36393F'  # copied from discord colors
-SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
 
 
 class PingMote():
@@ -92,7 +92,8 @@ class PingMote():
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
                                 keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
         if SYSTEM == 'Darwin':  # Mac hacky fix for blank hidden windows
-            self.window.read(timeout=10)  # read the window once, allows for hiding
+            # read the window once, allows for hiding
+            self.window.read(timeout=10)
         self.hide_gui()
         print('ready - window created and hidden')
 
