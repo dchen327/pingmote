@@ -263,6 +263,8 @@ class PingMote():
     def hide_gui(self):
         self.window.hide()
         self.hidden = True
+        if SYSTEM == 'Darwin':  # Unfocus Python to allow for pasting
+            keyboard.send('command+tab')
 
     def show_gui(self):
         self.window.un_hide()
