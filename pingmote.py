@@ -18,18 +18,19 @@ from math import ceil
 
 SHORTCUT = 'ctrl+q'  # 'command+e' recommended for Mac users
 KILL_SHORTCUT = 'alt+shift+k'
-# main path is the pingmote directory (containing pingmote.py)
-MAIN_PATH = Path(__file__).parent
+AUTO_PASTE = True  # if True, automatically pastes the image after selection
+# if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
+AUTO_ENTER = True
+
+MAIN_PATH = Path(__file__).parent  # directory with pingmote.py
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
+
 NUM_COLS = 12  # max number of images per row in picker
-SHOW_FREQUENTS = True  # show the frequents section at the topaaaa
+SHOW_FREQUENTS = True  # show the frequents section at the top
 NUM_FREQUENT = 12  # max number of images to show in the frequent section
 SHOW_LABELS = True  # show section labels (frequents, static, gifs)
 SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 
-AUTO_PASTE = True  # if True, automatically pastes the image after selection
-# if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = True
 # if True and AUTO_PASTE is True, will paste without affecting clipboard
 # NOTE: this can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
@@ -263,6 +264,8 @@ class PingMote():
     def hide_gui(self):
         self.window.hide()
         self.hidden = True
+        if SYSTEM == 'Darwin':  # Unfocus Python to allow for pasting
+            keyboard.send('command+tab')
 
     def show_gui(self):
         self.window.un_hide()
