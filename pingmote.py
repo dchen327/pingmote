@@ -89,7 +89,8 @@ class PingMote():
         no_titlebar = SYSTEM == 'Windows'
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
                                 keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
-        self.hide_gui()
+        if SYSTEM != 'Darwin':  # initially hiding GUI creates blank screen on Mac
+            self.hide_gui()
         print('ready - window created and hidden')
 
     def layout_frequents_section(self):
@@ -265,6 +266,7 @@ class PingMote():
 
     def show_gui(self):
         self.window.un_hide()
+        self.window.TKroot.focus_force()  # force window to be focused
         self.hidden = False
 
     def on_activate(self):
