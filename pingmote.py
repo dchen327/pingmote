@@ -63,7 +63,7 @@ class PingMote():
         self.hidden = True
         self.window_location = WINDOW_LOCATION
         self.setup_hardware()
-        keyboard.hook(self.custom_hotkey)
+        # keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -249,6 +249,8 @@ class PingMote():
             SHORTCUT: self.on_activate,
             KILL_SHORTCUT: self.kill_all,
         }
+        keyboard.add_hotkey(SHORTCUT, self.on_activate)
+        keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def custom_hotkey(self, event):
         """ Hook and react to hotkeys with custom handler """
