@@ -50,6 +50,7 @@ class PingMote():
 
     def __init__(self):
         # Load frequencies from json for frequents section
+        self.clean_frequencies()
         self.frequencies = self.load_frequencies()
         self.frequents = self.get_frequents(self.frequencies)
 
