@@ -15,7 +15,6 @@ from math import ceil
 
 
 # CONFIGS
-
 SHORTCUT = 'ctrl+q'  # 'command+e' recommended for Mac users
 KILL_SHORTCUT = 'alt+shift+k'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
