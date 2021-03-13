@@ -1,31 +1,20 @@
+"""
+Prints the scan code of all currently pressed keys.
+Updates on every keyboard event.
+"""
 import keyboard
-import chime
+import sys
+sys.path.append('..')
 
-print('hi from kb test')
-
-
-def customHotkey(event):
-    for hotkey, func in hotkeys.items():
-        pressed = all(
-            keyboard.is_pressed(split__value) != False
-            for split__value in hotkey.split('+')
-        )
-
-        if pressed:
-            # do some actions
-            print(pressed, func)
-            func()
-            chime.success()
+SHORTCUT = 'ctrl+q'
 
 
-def print_stuff():
-    print('print stuff')
+def print_pressed_keys(e):
+    line = ', '.join(str(code) for code in keyboard._pressed_events)
+    # '\r' and end='' overwrites the previous line.
+    # ' '*40 prints 40 spaces at the end to ensure the previous line is cleared.
+    print('\r' + line + ' '*40, end='')
 
 
-hotkeys = {
-    "alt+w": print_stuff
-}
-
-
-keyboard.hook(customHotkey)
-keyboard.wait('esc')
+keyboard.hook(print_pressed_keys)
+keyboard.wait()

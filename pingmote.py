@@ -16,8 +16,8 @@ from math import ceil
 
 # CONFIGS
 
-SHORTCUT = 'ctrl+q'  # 'command+e' recommended for Mac users
-KILL_SHORTCUT = 'alt+shift+k'
+SHORTCUT = 'command+3'  # 'command+e' recommended for Mac users
+KILL_SHORTCUT = 'command+4'
 AUTO_PASTE = True  # if True, automatically pastes the image after selection
 # if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
 AUTO_ENTER = True
@@ -35,6 +35,7 @@ SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
 # NOTE: this can be unreliable; SLEEP_TIME might need to be set
 # or else the beginning of the URL might get cut off
 PRESERVE_CLIPBOARD = False
+CUSTOM_HOTKEY_HANDLER = True  # workaround for alt+tab issues
 
 # ADDITIONAL CONFIGS
 
@@ -63,7 +64,8 @@ class PingMote():
         self.hidden = True
         self.window_location = WINDOW_LOCATION
         self.setup_hardware()
-        keyboard.hook(self.custom_hotkey)
+        if CUSTOM_HOTKEY_HANDLER:
+            keyboard.hook(self.custom_hotkey)
         self.setup_gui()
         self.create_window_gui()
 
@@ -90,8 +92,9 @@ class PingMote():
         no_titlebar = SYSTEM == 'Windows'
         self.window = sg.Window('Emote Picker', self.layout, location=self.window_location,
                                 keep_on_top=True, no_titlebar=no_titlebar, grab_anywhere=True, finalize=True)
-        if SYSTEM != 'Darwin':  # initially hiding GUI creates blank screen on Mac
-            self.hide_gui()
+        if SYSTEM == 'Darwin':  # Mac hacky fix for blank hidden windows
+            self.window.read(timeout=10)  # read the window once, allows for hiding
+        self.hide_gui()
         print('ready - window created and hidden')
 
     def layout_frequents_section(self):
@@ -245,17 +248,24 @@ class PingMote():
 
     def setup_hardware(self):
         """ Create mouse controller, setup hotkeys """
-        self.hotkeys = {
-            SHORTCUT: self.on_activate,
-            KILL_SHORTCUT: self.kill_all,
-        }
+        if CUSTOM_HOTKEY_HANDLER:
+            self.hotkeys = {
+                SHORTCUT: self.on_activate,
+                KILL_SHORTCUT: self.kill_all,
+            }
+        else:
+            keyboard.add_hotkey(SHORTCUT, self.on_activate)
+            keyboard.add_hotkey(KILL_SHORTCUT, self.kill_all)
 
     def custom_hotkey(self, event):
         """ Hook and react to hotkeys with custom handler """
+        pressed_scan_codes = keyboard._pressed_events.keys()
         for hotkey, func in self.hotkeys.items():
+            hotkey_codes = [keyboard.key_to_scan_codes(
+                key)[0] for key in hotkey.split('+')]
             pressed = all(
-                keyboard.is_pressed(split_val) != False
-                for split_val in hotkey.split('+')
+                scan_code in pressed_scan_codes
+                for scan_code in hotkey_codes
             )
 
             if pressed:
