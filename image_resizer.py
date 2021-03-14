@@ -21,7 +21,7 @@ new_size = (64, 64)
 
 def resize_gif(gif_path, save_path):
     """ Resize a gif using the command line utility `gifsicle` """
-    cmd = 'gifsicle --resize 64x64 -i {} > {}'.format(
+    cmd = 'gifsicle --resize 64x64 --colors 256 -i {} > {}'.format(
         str(gif_path), str(save_path))
     subprocess.run(cmd, shell=True)  # run as string with > (shell = True)
 
