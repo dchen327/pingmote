@@ -24,4 +24,4 @@ IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'  # resized emotes
 SHOW_FREQUENTS = True  # show frequents section (disabling removes hide button)
 SLEEP_TIME = 0  # add delay if pasting/enter not working
 PRESERVE_CLIPBOARD = False  # avoids copying link to clipboard (unreliable)
-CUSTOM_HOTKEY_HANDLER = True  # workaround for alt+tab issues
+CUSTOM_HOTKEY_HANDLER = True  # workaround for alt+tab issues and broken scan codes
