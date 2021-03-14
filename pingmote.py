@@ -9,42 +9,12 @@ import pyperclip
 import keyboard
 import os
 import platform
+from config import *
 from pathlib import Path
 from time import sleep
 from math import ceil
 
 SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
-
-# CONFIGS
-SHORTCUT = 'ctrl+q' if SYSTEM != 'Darwin' else 'command+3'
-KILL_SHORTCUT = 'alt+shift+k' if SYSTEM != 'Darwin' else 'command+4'
-AUTO_PASTE = True  # if True, automatically pastes the image after selection
-# if True and AUTO_PASTE is True, hits enter after pasting (useful in Discord)
-AUTO_ENTER = True
-
-MAIN_PATH = Path(__file__).parent  # directory with pingmote.py
-IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'
-
-NUM_COLS = 12  # max number of images per row in picker
-SHOW_FREQUENTS = True  # show the frequents section at the top
-NUM_FREQUENT = 12  # max number of images to show in the frequent section
-SHOW_LABELS = True  # show section labels (frequents, static, gifs)
-SEPARATE_GIFS = True  # separate static emojis and gifs into different sections
-
-# if True and AUTO_PASTE is True, will paste without affecting clipboard
-# NOTE: this can be unreliable; SLEEP_TIME might need to be set
-# or else the beginning of the URL might get cut off
-PRESERVE_CLIPBOARD = False
-CUSTOM_HOTKEY_HANDLER = True  # workaround for alt+tab issues
-
-# ADDITIONAL CONFIGS
-
-# top left corner of emote picker, (0, 0) is screen top left
-# initial position, GUI is draggable and will stick
-WINDOW_LOCATION = (100, 100)
-SLEEP_TIME = 0  # add delay if pasting/enter not working
-
-GUI_BG_COLOR = '#36393F'  # copied from discord colors
 
 
 class PingMote():
