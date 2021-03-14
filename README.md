@@ -17,7 +17,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Run `pip install -r requirements.txt` to install dependencies (`pip3` if needed)
 
 # Usage
-- Running `python3 pingmote.py` (Mac and Linux: `sudo python3 pingmote.py`) starts the script, and when you hit the hotkey at the top of `config.py` (default `ctrl+q`, `command+3` for Mac), the emote picker will show up, allowing you to click an emote to insert
+- Running `python3 pingmote.py` (Mac and Linux: `sudo python3 pingmote.py`) starts the script, and when you hit the hotkey at the top of `config.py` (default `ctrl+q`), the emote picker will show up, allowing you to click an emote to insert
 - Hit the hotkey again to toggle the GUI, and drag the GUI somewhere convenient
 
 # Configs
