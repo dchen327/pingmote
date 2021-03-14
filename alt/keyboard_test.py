@@ -1,6 +1,4 @@
 import keyboard
-import chime
-
 print('hi from kb test')
 
 
@@ -15,7 +13,6 @@ def customHotkey(event):
             # do some actions
             print(pressed, func)
             func()
-            chime.success()
 
 
 def print_stuff():
@@ -27,5 +24,7 @@ hotkeys = {
 }
 
 
-keyboard.hook(customHotkey)
-keyboard.wait('esc')
+# keyboard.hook(customHotkey)
+# keyboard.wait('esc')
+
+print(keyboard.read_hotkey())
