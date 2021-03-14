@@ -25,24 +25,25 @@ Motivation: *Poor Man's Discord Nitro*
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
-- Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
-- Unfortunately, `image_resizer.py` is currently unable to resize gifs, so a website like [this](https://www.iloveimg.com/resize-image/resize-gif) is useful. Download and extract the resized gifs (64x64) to `assets/original`, then run `image_resizer.py`
+- Drop files in `assets/original`, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in `assets/resized`
+- Gif resizing (disabled by default) requires `gifsicle`, but a website like [ezgif](https://ezgif.com/resize) also works
+- Resize gifs to 64x64 and drop them in `assets/original` (they'll be ignored when the resizer is run)
 - Upload files from `assets/resized` to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
 - Note: Imgur doesn't work currently, since Imgur links don't contain the original filename
-- Some emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
+- Some emote sources (right click > save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
 
 # Notes
-- Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
-- Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
+- Since this program relies on autoembedding, we can't use inline emotes or reacts
+- Pretty much only Discord works (Facebook Messenger and Slack make embeds ugly)
 - The Apple M1 chip is currently unsupported (bus error)
 
 # TODOs
 - Better ordering of emotes (categorization, etc.)
+- Simplify install process
 - Simplify the process for adding new emotes
-- Gif resizing? (idk PIL isn't very good for this)
+- Emote deletion in GUI
 - Ensure gif thumbnail isn't blank (not fully sure how to do this)
 - Search emotes by keyword (would require files to be named, since most of my files now are just a bunch of numbers)
-- Emote deletion
 
 # Reasons you should still buy Discord Nitro
 - Support Discord!
