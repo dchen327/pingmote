@@ -229,8 +229,11 @@ class PingMote():
 
     def custom_hotkey(self, event):
         """ Hook and react to hotkeys with custom handler """
-        pressed_keys = [e.name.lower()
-                        for e in keyboard._pressed_events.values()]
+        try:
+            pressed_keys = [e.name.lower()
+                            for e in keyboard._pressed_events.values()]
+        except AttributeError:  # Fn might return as None
+            pressed_keys = []
         for hotkey, func in self.hotkeys.items():
             pressed = all(
                 key in pressed_keys
