@@ -62,6 +62,10 @@ def update_resized_files():
                       for img_path in orig_path.iterdir()}
     resized_filenames = {img_path.name for img_path in resized_path.iterdir()}
     for img_path in orig_path.iterdir():  # check for new images
+        if img_path.suffix not in ['.png', '.gif', '.jpg', '.jpeg']:
+            # delete other files (e.g. weird Zone.Identifiers)
+            os.remove(img_path)
+            continue
         if sanitize_name(img_path.name) not in resized_filenames:  # new image
             # clean up file name for upload
             save_path = resized_path / sanitize_name(img_path.name)
