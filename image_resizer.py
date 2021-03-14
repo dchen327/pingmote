@@ -10,6 +10,7 @@ import shutil
 import os
 import json
 import subprocess
+from config import RESIZE_GIFS
 from PIL import Image
 from pathlib import Path
 
@@ -64,9 +65,11 @@ def update_resized_files():
         if sanitize_name(img_path.name) not in resized_filenames:  # new image
             # clean up file name for upload
             save_path = resized_path / sanitize_name(img_path.name)
-            if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
-                resize_gif(img_path, save_path)
-                # shutil.copyfile(img_path, save_path)
+            if img_path.suffix == '.gif':  # gifs
+                if RESIZE_GIFS:  # resize with gifsicle
+                    resize_gif(img_path, save_path)
+                else:  # copy gif to resized (assume already resized)
+                    shutil.copyfile(img_path, save_path)
             else:
                 img = Image.open(img_path)
                 img_resized = img.resize(new_size, Image.ANTIALIAS)
