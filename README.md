@@ -17,7 +17,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Run `pip install -r requirements.txt` to install dependencies (`pip3` if needed)
 
 # Usage
-- Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the hotkey at the top of `config.py` (default `ctrl+q`, `command+3` for Mac), the emote picker will show up, allowing you to click an emote to insert
+- Running `python3 pingmote.py` (Mac and Linux: `sudo python3 pingmote.py`) starts the script, and when you hit the hotkey at the top of `config.py` (default `ctrl+q`, `command+3` for Mac), the emote picker will show up, allowing you to click an emote to insert
 - Hit the hotkey again to toggle the GUI, and drag the GUI somewhere convenient
 
 # Configs
@@ -36,8 +36,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
 # Mac
-- The script must be run as root: `sudo python pingmote.py`
-- It seems only keyboard shortcuts with `command` like `command+e` are picked up, since scan codes are jumbled
+- It seems only keyboard shortcuts with `command` like `command+e` are picked up, since scan codes are jumbled (`shift` doesn't seem to work either)
 
 # TODOs
 - Better ordering of emotes (categorization, etc.)
@@ -70,6 +69,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Added section labels and ability to separate images and gifs
 - Switched to `keyboard` from `pynput` to fix hotkey blocking behavior (after 3 weeks of zero progress)
 - Cleaned up `image_resizer.py`
+- Shifted configs to separate file
 
 # License
 [MIT License](https://github.com/dchen327/pingmote/blob/master/LICENSE.md)
