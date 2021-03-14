@@ -16,6 +16,9 @@ GUI_BG_COLOR = '#36393F'  # background color (copied from discord colors)
 AUTO_PASTE = True  # automatically paste the image after selection
 AUTO_ENTER = True  # hit enter after pasting (useful in Discord)
 
+""" Image Resizer """
+RESIZE_GIFS = False  # requires `gifsicle`
+
 """ Paths """
 MAIN_PATH = Path(__file__).parent  # directory with pingmote.py
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'  # resized emotes
