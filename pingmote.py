@@ -127,7 +127,7 @@ class PingMote():
         """ Paste selected image link """
         self.hide_gui()
         if event not in self.filename_to_link:  # link missing
-            print(f'Error: Link missing ({event})')
+            print('Error: Link missing -', event)
             return
 
         if AUTO_PASTE:

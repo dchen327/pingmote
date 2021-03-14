@@ -27,6 +27,7 @@ MAIN_PATH = Path(__file__).parent  # directory with pingmote.py
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'  # resized emotes
 
 """ Experimental """
+SHOW_FREQUENTS = True  # show frequents section (disabling removes hide button)
 SLEEP_TIME = 0  # add delay if pasting/enter not working
 PRESERVE_CLIPBOARD = False  # avoids copying link to clipboard (unreliable)
 CUSTOM_HOTKEY_HANDLER = False  # workaround for alt+tab issues
