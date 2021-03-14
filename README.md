@@ -34,9 +34,7 @@ Motivation: *Poor Man's Discord Nitro*
 # Notes
 - Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
-
-# Mac
-- It seems only keyboard shortcuts with `command` like `command+e` are picked up, since scan codes are jumbled (`shift` doesn't seem to work either)
+- The Apple M1 chip is currently unsupported (bus error)
 
 # TODOs
 - Better ordering of emotes (categorization, etc.)
