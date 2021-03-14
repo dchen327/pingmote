@@ -20,6 +20,9 @@ Motivation: *Poor Man's Discord Nitro*
 - Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`, `command+3` for Mac), the emote picker will show up, allowing you to click an emote to insert
 - Hit the shortcut again to toggle the GUI, and drag the GUI somewhere convenient
 
+# Configs
+- Check `config.py` for configs
+
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
 - Drop image files in the `original` folder, then run `image_resizer.py` which will resize all the images (ignoring gifs) and drop them in the `resized` folder
@@ -27,9 +30,6 @@ Motivation: *Poor Man's Discord Nitro*
 - Upload files from `assets/resized` to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
 - Note: Imgur doesn't work currently, since Imgur links don't contain the original filename
 - Some emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
-
-# Configs
-- Check the top of `pingmote.py` for configs
 
 # Notes
 - Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
