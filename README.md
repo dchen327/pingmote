@@ -17,8 +17,11 @@ Motivation: *Poor Man's Discord Nitro*
 - Run `pip install -r requirements.txt` to install dependencies (`pip3` if needed)
 
 # Usage
-- Running `python pingmote.py` (or `python3 pingmote.py`) will start the script, and when you hit the shortcut specified at the top of `pingmote.py` (default `ctrl+q`), the emote picker will show up, allowing you to click an emote to insert
-- Hit the shortcut again to toggle the GUI, and drag the GUI somewhere convenient
+- Running `python3 pingmote.py` (Mac and Linux: `sudo python3 pingmote.py`) starts the script, and when you hit the hotkey at the top of `config.py` (default `ctrl+q`, `command+3` for Mac), the emote picker will show up, allowing you to click an emote to insert
+- Hit the hotkey again to toggle the GUI, and drag the GUI somewhere convenient
+
+# Configs
+- Check `config.py` for configs
 
 # Adding Your Own Emotes
 - Sorry for this being a bit complicated, I'm working on simplifying the workflow
@@ -28,20 +31,14 @@ Motivation: *Poor Man's Discord Nitro*
 - Note: Imgur doesn't work currently, since Imgur links don't contain the original filename
 - Some emote sources (right click save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
 
-# Configs
-- Check the top of `pingmote.py` for configs
-
 # Notes
 - Since this program pastes image/gif URLs as emotes, we can't use inline emotes or reacts
 - Pretty much only Discord works (Facebook Messenger and Slack don't autoembed)
 
 # Mac
-- The script must be run as root: `sudo python pingmote.py`
-- It seems only keyboard shortcuts with `command` like `command+e` are picked up
-- Auto pasting and auto enter are currently broken, since the Python process steals focus
+- It seems only keyboard shortcuts with `command` like `command+e` are picked up, since scan codes are jumbled (`shift` doesn't seem to work either)
 
 # TODOs
-- Mac hotkey + GUI testing
 - Better ordering of emotes (categorization, etc.)
 - Simplify the process for adding new emotes
 - Gif resizing? (idk PIL isn't very good for this)
@@ -72,6 +69,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Added section labels and ability to separate images and gifs
 - Switched to `keyboard` from `pynput` to fix hotkey blocking behavior (after 3 weeks of zero progress)
 - Cleaned up `image_resizer.py`
+- Shifted configs to separate file
 
 # License
 [MIT License](https://github.com/dchen327/pingmote/blob/master/LICENSE.md)
