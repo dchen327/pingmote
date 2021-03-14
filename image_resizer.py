@@ -9,12 +9,20 @@ Author: David Chen
 import shutil
 import os
 import json
+import subprocess
 from PIL import Image
 from pathlib import Path
 
 asset_path = Path(__file__).parent / 'assets'
 orig_path, resized_path = asset_path / 'original', asset_path / 'resized'
 new_size = (64, 64)
+
+
+def resize_gif(gif_path, save_path):
+    """ Resize a gif using the command line utility `gifsicle` """
+    cmd = 'gifsicle --resize 64x64 -i {} > {}'.format(
+        str(gif_path), str(save_path))
+    subprocess.run(cmd, shell=True)  # run as string with > (shell = True)
 
 
 def sanitize_name(name):
@@ -57,7 +65,8 @@ def update_resized_files():
             # clean up file name for upload
             save_path = resized_path / sanitize_name(img_path.name)
             if img_path.suffix == '.gif':  # don't try and resize gifs, just copy them directly
-                shutil.copyfile(img_path, save_path)
+                resize_gif(img_path, save_path)
+                # shutil.copyfile(img_path, save_path)
             else:
                 img = Image.open(img_path)
                 img_resized = img.resize(new_size, Image.ANTIALIAS)
