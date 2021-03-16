@@ -71,7 +71,7 @@ class PingMote():
         """ Return a list of frequent emotes """
         return self.list_to_table([
             sg.Button('', key=img_name, image_filename=IMAGE_PATH /
-                      img_name, image_subsample=2)
+                      img_name, image_subsample=2, tooltip=img_name)
             for img_name in self.frequents
         ])
 
@@ -85,7 +85,7 @@ class PingMote():
             if SHOW_FREQUENTS and img.name in self.frequents:  # don't show same image in both sections
                 continue
             button = sg.Button(
-                '', key=img.name, image_filename=img, image_subsample=2)
+                '', key=img.name, image_filename=img, image_subsample=2, tooltip=img.name)
             if SEPARATE_GIFS:
                 if img.suffix == '.png':
                     statics.append(button)
