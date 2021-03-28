@@ -36,6 +36,8 @@ Motivation: *Poor Man's Discord Nitro*
 - Since this program relies on autoembedding, we can't use inline emotes or reacts
 - Pretty much only Discord works (Facebook Messenger and Slack make embeds ugly)
 - The Apple M1 chip is currently unsupported (bus error)
+- On Linux, if you get the error `KeyError: 'XDG_SESSION_TYPE'`, set the environment variable by running
+  > `sudo XDG_SESSION_TYPE=x11 python3 pingmote.py`
 
 # TODOs
 - Better ordering of emotes (categorization, etc.)
