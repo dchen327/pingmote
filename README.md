@@ -5,7 +5,8 @@ Motivation: *Poor Man's Discord Nitro*
 
 
 # Demo
-![pingmote demo](https://user-images.githubusercontent.com/37674516/107857226-1e72f000-6dfb-11eb-8a9a-e938368b65bc.gif)
+![pingmote demo](https://user-images.githubusercontent.com/37674516/113481499-eafe2a80-9467-11eb-886c-3bd7981f1add.gif)
+
 
 # How It Works
 - Since Discord autoembeds images, we can paste in links to custom emotes
