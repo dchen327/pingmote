@@ -10,7 +10,7 @@ Motivation: *Poor Man's Discord Nitro*
 
 # How It Works
 - Since Discord autoembeds images, we can paste in links to custom emotes
-- The emote picker GUI is written in Python, with global hotkeys for activation
+- The emote picker is written in Python with [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI), with global hotkeys for activation (using [keyboard](https://github.com/boppreh/keyboard))
 
 # Getting Started
 - Clone this repo: `git clone https://github.com/dchen327/pingmote.git` or download as a zip and extract
