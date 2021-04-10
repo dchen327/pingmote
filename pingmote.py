@@ -26,7 +26,10 @@ class PingMote():
         self.frequents = self.get_frequents(self.frequencies)
 
         # Load links and file paths
-        self.filename_to_link = self.load_links()
+        if GITHUB_URL:
+            self.filename_to_link = self.get_github_links()
+        else:
+            self.filename_to_link = self.load_links()
 
         # Setup
         self.window = None
@@ -208,6 +211,20 @@ class PingMote():
         desc_frequencies = sorted(
             frequencies.items(), key=lambda x: x[-1], reverse=True)
         return [img for img, _ in desc_frequencies[:NUM_FREQUENT]]
+
+    def get_github_links(self):
+        """ If a GITHUB_URL is provided, use raw GitHub links instead of an alternate provider like PostImages
+        NOTE: this current implementation of storing a dict mapping filenames to links is pretty bad, since all the links are prefixed with the same thing. I'm only currently using this for compatibility with the original image hoster method.
+        """
+        github_raw_prefix = 'https://raw.githubusercontent.com/'
+        user_repo = GITHUB_URL.split('github.com/')[-1]
+        url = github_raw_prefix + user_repo + '/master/assets/resized/'
+        # ex) https://raw.githubusercontent.com/dchen327/pingmote/master/assets/resized/
+
+        return {
+            img.name: url + img.name
+            for img in sorted(IMAGE_PATH.iterdir())
+        }
 
     def list_to_table(self, a, num_cols=NUM_COLS):
         """ Given a list a, convert it to rows and columns
