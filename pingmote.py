@@ -26,9 +26,10 @@ class PingMote():
         self.frequents = self.get_frequents(self.frequencies)
 
         # Load links and file paths
-        self.filename_to_link = self.load_links()
         if GITHUB_URL:
             self.filename_to_link = self.get_github_links()
+        else:
+            self.filename_to_link = self.load_links()
 
         # Setup
         self.window = None
