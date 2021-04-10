@@ -268,7 +268,7 @@ class PingMote():
 
     def show_gui(self):
         self.window.un_hide()
-        self.window.TKroot.focus_force()  # force window to be focused
+        self.window.force_focus()  # force window to be focused
         self.hidden = False
 
     def on_activate(self):
