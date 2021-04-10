@@ -30,6 +30,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Gif resizing (disabled by default) requires `gifsicle`, but a website like [ezgif](https://ezgif.com/resize) also works
 - Resize gifs to 64x64 and drop them in `assets/original` (they'll be ignored when the resizer is run)
 - Upload files from `assets/resized` to an image hoster (I like [postimages](https://postimages.org/)). Copy the direct image links (ending in file extension) and paste in `links.txt`
+- A simpler alternative using GitHub: fork this repo and push your images, then drop your forked repo's URL in config.py (GITHUB_URL). This method doesn't require alternate hosting or `links.txt`
 - Note: Imgur doesn't work currently, since Imgur links don't contain the original filename
 - Some emote sources (right click > save image): [discordmojis.com](https://discordmojis.com/), [emoji.gg](https://emoji.gg/), [discord.st](https://discord.st/emojis/)
 
