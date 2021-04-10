@@ -23,8 +23,8 @@ RESIZE_GIFS = False  # requires `gifsicle`
 MAIN_PATH = Path(__file__).parent  # directory with pingmote.py
 IMAGE_PATH = MAIN_PATH / 'assets' / 'resized'  # resized emotes
 # If you've forked the repo and have uploaded your own custom emotes, GitHub raw links can be used instead of postimages or something else
-# ex) https://github.com/dchen327/pingmote/
-GITHUB_URL = None
+# To use PostImages or another image hoster and links.txt, use `GITHUB_URL = None`
+GITHUB_URL = 'https://github.com/dchen327/pingmote/'
 
 """ Experimental """
 SHOW_FREQUENTS = True  # show frequents section (disabling removes hide button)
