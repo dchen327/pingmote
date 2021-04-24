@@ -61,6 +61,7 @@ Motivation: *Poor Man's Discord Nitro*
 - Thanks to [Luke Tong](https://github.com/luke-rt) for cross-platform GUI and clipboard testing
 - Thanks to [Stephane Morel](https://github.com/SoAsEr) for Windows testing
 - Thanks to [Brazil-0034](https://github.com/Brazil-0034) for adding support for non-destructive pasting
+- Thanks to [PySimpleGUI](https://github.com/PySimpleGUI) for major feature additions and debugging
 
 # Progress Timeline
 - Initial method (50 lines): `xclip` for copying local images, `xdotool` for pasting and keyboard commands
