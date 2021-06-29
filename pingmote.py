@@ -129,19 +129,16 @@ class PingMote():
                 if event == self.system_tray.key:
                     event = values[event]
 
-                print(event, values)
-
                 if event in ('Exit', sg.WINDOW_CLOSED):
                     break
                 elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
                     self.on_activate()
                 elif event == 'Settings':
-                    print('hi?')
-                    self.system_tray.show_message('Please edit settings in config.py')
+                    self.system_tray.show_message('Settings', 'Please edit settings in config.py')
                 elif event in self.filename_to_link:
                     self.on_select(event)
                 else:
-                    self.system_tray.show_message(f'NOT FOUND: selection event = {event}')
+                    self.system_tray.show_message('ERROR', f'NOT FOUND: selection event = {event}')
         except Exception as e:
             sg.popup('Pingmote - error in event loop - CLOSING', e)
 
