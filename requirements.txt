@@ -1,4 +1,5 @@
-keyboard==0.13.5
-Pillow==8.1.0
-pyperclip==1.8.1
-PySimpleGUI==4.38.0
+keyboard
+Pillow
+pyperclip
+PySimpleGUI
+psgtray
