@@ -136,6 +136,7 @@ class PingMote():
                 elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
                     self.on_activate()
                 elif event == 'Settings':
+                    print('hi?')
                     self.system_tray.show_message('Please edit settings in config.py')
                 elif event in self.filename_to_link:
                     self.on_select(event)
@@ -302,7 +303,7 @@ class PingMote():
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
         print('exit program')
-        self.system_tray.exit()
+        self.system_tray.close()
         self.window.close()
         os._exit(1)  # exit the entire program
 
