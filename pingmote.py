@@ -9,10 +9,11 @@ import pyperclip
 import keyboard
 import os
 import platform
-from config import *
+from psgtray import SystemTray
 from pathlib import Path
 from time import sleep
 from math import ceil
+from config import *
 
 SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
 
