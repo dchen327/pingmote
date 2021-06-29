@@ -121,15 +121,30 @@ class PingMote():
     def create_window_gui(self):
         """ Run the event loop for the GUI, listening for clicks """
         # Event loop
-        while True:
-            event, values = self.window.read()
-            if event == sg.WINDOW_CLOSED:
-                break
-            elif event == 'Hide':
-                self.hide_gui()
-            else:
-                self.on_select(event)
+        try:
+            while True:
+                event, values = self.window.read()
+                self.system_tray.show_message(event, values)  # for debugging
 
+                if event == self.system_tray.key:
+                    event = values[event]
+
+                if event in ('Exit', sg.WINDOW_CLOSED):
+                    break
+                elif event == 'Hide':
+                    self.hide_gui()
+                elif event == 'Edit Me':
+                    sg.execute_editor(__file__)
+                elif event in ('Show', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
+                    self.on_activate()
+                elif event in self.filename_to_link:
+                    self.on_select(event)
+                else:
+                    self.system_tray.show_message(f'NOT FOUND: selection event = {event}')
+        except Exception as e:
+            sg.popup('Pingmote - error in event loop - CLOSING', e)
+
+        self.system_tray.close()
         self.window.close()
 
     def on_select(self, event):
