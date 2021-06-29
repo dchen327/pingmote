@@ -40,6 +40,8 @@ class PingMote():
         if CUSTOM_HOTKEY_HANDLER:
             keyboard.hook(self.custom_hotkey)
         self.setup_gui()
+        if TRAY_ICON:
+            self.setup_tray()
         self.create_window_gui()
 
     def setup_gui(self):
@@ -70,6 +72,11 @@ class PingMote():
             self.window.read(timeout=10)
         self.hide_gui()
         print('ready - window created and hidden')
+
+    def setup_tray(self):
+        """ Set up psgtray SystemTray """
+        self.system_tray = SystemTray(menu=['_', ['Show', 'Hide', 'Edit Me', 'Settings', 'Exit']], icon=ICON, window=self.window, single_click_events=True)
+        self.system_tray.show_message('Ready', 'Window created and hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """

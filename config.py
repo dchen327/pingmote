@@ -1,8 +1,9 @@
 from pathlib import Path
 
-""" Hotkeys """
+""" Control """
 SHORTCUT = 'ctrl+q'
 KILL_SHORTCUT = 'alt+shift+k'
+TRAY_ICON = True  # Use psgtray SystemTray (works best in Windows I think?)
 
 """ Emote Picker """
 NUM_COLS = 12  # max number of images per row in picker
