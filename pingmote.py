@@ -129,6 +129,8 @@ class PingMote():
                 if event == self.system_tray.key:
                     event = values[event]
 
+                print(event, values)
+                
                 if event in ('Exit', sg.WINDOW_CLOSED):
                     break
                 elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
