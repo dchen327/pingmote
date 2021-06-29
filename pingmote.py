@@ -130,7 +130,7 @@ class PingMote():
                     event = values[event]
 
                 print(event, values)
-                
+
                 if event in ('Exit', sg.WINDOW_CLOSED):
                     break
                 elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
@@ -302,6 +302,7 @@ class PingMote():
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
         print('exit program')
+        self.system_tray.exit()
         self.window.close()
         os._exit(1)  # exit the entire program
 
