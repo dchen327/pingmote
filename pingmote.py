@@ -114,12 +114,9 @@ class PingMote():
         """ Run the event loop for the GUI, listening for clicks """
         # Event loop
         while True:
-            # event, _ = self.window.read(timeout=100, timeout_key='timeout')
             event, values = self.window.read()
             if event == sg.WINDOW_CLOSED:
                 break
-            elif event == 'timeout':
-                continue
             elif event == 'Hide':
                 self.hide_gui()
             else:
