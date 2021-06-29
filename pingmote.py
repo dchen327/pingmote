@@ -46,9 +46,12 @@ class PingMote():
 
     def setup_gui(self):
         sg.theme('LightBrown1')  # Use this as base theme
-        # Set location for where the window opens, (0, 0) is top left
-        sg.SetOptions(button_color=(GUI_BG_COLOR, GUI_BG_COLOR), background_color=GUI_BG_COLOR,
-                      text_element_background_color=GUI_BG_COLOR, text_color='white', border_width=0)
+        button_color = sg.theme_button_color()
+        sg.theme_background_color(GUI_BG_COLOR)
+        sg.theme_text_element_background_color(GUI_BG_COLOR)
+        sg.theme_text_color('white')
+        sg.theme_button_color((button_color[0], GUI_BG_COLOR))
+        sg.theme_border_width(0)
         self.layout_gui()
 
     def layout_gui(self):
