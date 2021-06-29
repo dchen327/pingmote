@@ -9,10 +9,11 @@ import pyperclip
 import keyboard
 import os
 import platform
-from config import *
+from psgtray import SystemTray
 from pathlib import Path
 from time import sleep
 from math import ceil
+from config import *
 
 SYSTEM = platform.system()  # Windows, Linux, Darwin (Mac OS)
 
@@ -39,6 +40,8 @@ class PingMote():
         if CUSTOM_HOTKEY_HANDLER:
             keyboard.hook(self.custom_hotkey)
         self.setup_gui()
+        if TRAY_ICON:
+            self.setup_tray()
         self.create_window_gui()
 
     def setup_gui(self):
@@ -69,6 +72,11 @@ class PingMote():
             self.window.read(timeout=10)
         self.hide_gui()
         print('ready - window created and hidden')
+
+    def setup_tray(self):
+        """ Set up psgtray SystemTray """
+        self.system_tray = SystemTray(menu=['_', ['Toggle', 'Settings', 'Exit']], icon=ICON, window=self.window, single_click_events=True)
+        self.system_tray.show_message('Ready', 'Window created and hidden')
 
     def layout_frequents_section(self):
         """ Return a list of frequent emotes """
@@ -113,17 +121,28 @@ class PingMote():
     def create_window_gui(self):
         """ Run the event loop for the GUI, listening for clicks """
         # Event loop
-        while True:
-            event, _ = self.window.read(timeout=100, timeout_key='timeout')
-            if event == sg.WINDOW_CLOSED:
-                break
-            elif event == 'timeout':
-                continue
-            elif event == 'Hide':
-                self.hide_gui()
-            else:
-                self.on_select(event)
+        try:
+            while True:
+                event, values = self.window.read()
+                # self.system_tray.show_message(event, values)  # for debugging
 
+                if event == self.system_tray.key:
+                    event = values[event]
+
+                if event in ('Exit', sg.WINDOW_CLOSED):
+                    break
+                elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
+                    self.on_activate()
+                elif event == 'Settings':
+                    self.system_tray.show_message('Settings', 'Please edit settings in config.py')
+                elif event in self.filename_to_link:
+                    self.on_select(event)
+                else:
+                    self.system_tray.show_message('ERROR', f'NOT FOUND: selection event = {event}')
+        except Exception as e:
+            sg.popup('Pingmote - error in event loop - CLOSING', e)
+
+        self.system_tray.close()
         self.window.close()
 
     def on_select(self, event):
@@ -281,6 +300,7 @@ class PingMote():
     def kill_all(self):
         """ Kill the script in case it's frozen or buggy """
         print('exit program')
+        self.system_tray.close()
         self.window.close()
         os._exit(1)  # exit the entire program
 
