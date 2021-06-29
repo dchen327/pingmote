@@ -75,7 +75,7 @@ class PingMote():
 
     def setup_tray(self):
         """ Set up psgtray SystemTray """
-        self.system_tray = SystemTray(menu=['_', ['Show', 'Hide', 'Edit Me', 'Settings', 'Exit']], icon=ICON, window=self.window, single_click_events=True)
+        self.system_tray = SystemTray(menu=['_', ['Toggle', 'Settings', 'Exit']], icon=ICON, window=self.window, single_click_events=True)
         self.system_tray.show_message('Ready', 'Window created and hidden')
 
     def layout_frequents_section(self):
@@ -124,19 +124,17 @@ class PingMote():
         try:
             while True:
                 event, values = self.window.read()
-                self.system_tray.show_message(event, values)  # for debugging
+                # self.system_tray.show_message(event, values)  # for debugging
 
                 if event == self.system_tray.key:
                     event = values[event]
 
                 if event in ('Exit', sg.WINDOW_CLOSED):
                     break
-                elif event == 'Hide':
-                    self.hide_gui()
-                elif event == 'Edit Me':
-                    sg.execute_editor(__file__)
-                elif event in ('Show', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
+                elif event in ('Toggle', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED, sg.EVENT_SYSTEM_TRAY_ICON_ACTIVATED):
                     self.on_activate()
+                elif event == 'Settings':
+                    self.system_tray.show_message('Please edit settings in config.py')
                 elif event in self.filename_to_link:
                     self.on_select(event)
                 else:
