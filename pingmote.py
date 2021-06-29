@@ -218,7 +218,7 @@ class PingMote():
         """
         github_raw_prefix = 'https://raw.githubusercontent.com/'
         user_repo = GITHUB_URL.split('github.com/')[-1]
-        url = github_raw_prefix + user_repo + 'master/assets/resized/'
+        url = github_raw_prefix + user_repo + '/master/assets/resized/'
         # ex) https://raw.githubusercontent.com/dchen327/pingmote/master/assets/resized/
 
         return {
